@@ -1,0 +1,12 @@
+C:\Users\User\OneDrive\Desktop\TVT\src\TVT.Core\bin\Debug\net8.0\TVT.Core.deps.json
+C:\Users\User\OneDrive\Desktop\TVT\src\TVT.Core\bin\Debug\net8.0\TVT.Core.dll
+C:\Users\User\OneDrive\Desktop\TVT\src\TVT.Core\bin\Debug\net8.0\TVT.Core.pdb
+C:\Users\User\OneDrive\Desktop\TVT\src\TVT.Core\obj\Debug\net8.0\TVT.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\OneDrive\Desktop\TVT\src\TVT.Core\obj\Debug\net8.0\TVT.Core.AssemblyInfoInputs.cache
+C:\Users\User\OneDrive\Desktop\TVT\src\TVT.Core\obj\Debug\net8.0\TVT.Core.AssemblyInfo.cs
+C:\Users\User\OneDrive\Desktop\TVT\src\TVT.Core\obj\Debug\net8.0\TVT.Core.csproj.CoreCompileInputs.cache
+C:\Users\User\OneDrive\Desktop\TVT\src\TVT.Core\obj\Debug\net8.0\TVT.Core.sourcelink.json
+C:\Users\User\OneDrive\Desktop\TVT\src\TVT.Core\obj\Debug\net8.0\TVT.Core.dll
+C:\Users\User\OneDrive\Desktop\TVT\src\TVT.Core\obj\Debug\net8.0\refint\TVT.Core.dll
+C:\Users\User\OneDrive\Desktop\TVT\src\TVT.Core\obj\Debug\net8.0\TVT.Core.pdb
+C:\Users\User\OneDrive\Desktop\TVT\src\TVT.Core\obj\Debug\net8.0\ref\TVT.Core.dll
