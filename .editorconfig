@@ -1,0 +1,24 @@
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+end_of_line = crlf
+
+[*.cs]
+dotnet_diagnostic.IDE0007.severity = silent
+dotnet_diagnostic.IDE0008.severity = silent
+
+# Nullable enabled
+csharp_style_prefer_var_when_type_is_apparent = true
+csharp_style_prefer_var_elsewhere = false
+
+# Naming
+csharp_naming_rule.pascal_case.severity = suggestion
+csharp_naming_rule.pascal_case.symbols = publicly_readable_symbols
+csharp_naming_rule.pascal_case.style = pascal_case_style
+
+csharp_naming_style.pascal_case_style.capitalization = pascal_case

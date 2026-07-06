@@ -1,0 +1,28 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio
+.vs/
+.vscode/
+*.suo
+*.user
+*.userprefs
+*.userosscache
+*.sln.docstates
+*.sln.ide
+
+# NuGet
+*.nupkg
+**/packages/*
+
+# Publish folders
+[Pp]ublish/
+[Pp]ublished/
+
+# Rider
+.idea/
+*.sln.iml
