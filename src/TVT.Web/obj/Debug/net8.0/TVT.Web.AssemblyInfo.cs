@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TVT.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+028cef7c1b3adaa1b5d5b4b1a45210b16fba5ee6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+565da54173a1bf86b2a7c66ab4847eac4631bc42")]
 [assembly: System.Reflection.AssemblyProductAttribute("TVT.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TVT.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
