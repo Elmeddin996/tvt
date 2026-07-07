@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TVT.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b10a59896f690f51b6dad4a683fd05527860f8e0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+028cef7c1b3adaa1b5d5b4b1a45210b16fba5ee6")]
 [assembly: System.Reflection.AssemblyProductAttribute("TVT.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TVT.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
