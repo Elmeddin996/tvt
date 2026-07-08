@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MxBn34SCUlVgKHJarqZ4lj7tmLi8AQo4cKKHxlLh59Oolisszm/ptiDA37oTnjopmbZFqd5q6anAdC0bMh+5hg==",
+  "dgSpecHash": "weJg5V873jRWT9BNk67KOde1TJJyyvng4S1bfUDc2M9LGDdzQx59dgg07ZMY+bWrTSAgXKzav2PRHy6bvHNghQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\User\\OneDrive\\Desktop\\TVT\\src\\TVT.Core\\TVT.Core.csproj",
+  "projectFilePath": "C:\\Projects\\TVT\\src\\TVT.Core\\TVT.Core.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
