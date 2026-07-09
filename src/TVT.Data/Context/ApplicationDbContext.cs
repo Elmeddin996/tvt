@@ -23,4 +23,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<Subscriber> Subscribers { get; set; }
     public DbSet<Page> Pages { get; set; }
     public DbSet<News> News { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+    }
 }
