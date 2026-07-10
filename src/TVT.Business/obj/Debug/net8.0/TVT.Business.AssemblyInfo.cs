@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TVT.Business")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fb7b28e68b53f6b0914e4d0fc09f182d8daa4295")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+53ff1770a8f5e824dd9914a8d331abeacc455e6f")]
 [assembly: System.Reflection.AssemblyProductAttribute("TVT.Business")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TVT.Business")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -116,15 +116,11 @@ C:\Projects\TVT\tests\TVT.Tests\obj\Debug\net8.0\ref\TVT.Tests.dll
 C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.dll
 C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll
 C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll
-C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\Microsoft.Extensions.Caching.Abstractions.dll
 C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\Microsoft.Extensions.Caching.Memory.dll
-C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
 C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\Microsoft.Extensions.Logging.dll
 C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
-C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
 C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\Npgsql.dll
 C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
-C:\Projects\TVT\tests\TVT.Tests\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
