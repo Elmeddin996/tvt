@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\TVT.Web.props" />
-</Project>
