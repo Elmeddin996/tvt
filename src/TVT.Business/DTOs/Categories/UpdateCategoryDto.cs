@@ -2,6 +2,7 @@ namespace TVT.Business.DTOs.Categories;
 
 public class UpdateCategoryDto
 {
+    public int Id { get; set; }
     public int? ParentId { get; set; }
     public string NameAz { get; set; } = null!;
     public string NameEn { get; set; } = null!;

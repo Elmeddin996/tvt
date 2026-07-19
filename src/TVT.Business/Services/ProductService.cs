@@ -1,30 +1,73 @@
+using AutoMapper;
 using TVT.Business.Abstractions.Services;
-using TVT.Core.Abstractions.Repositories;
+using TVT.Business.DTOs.Products;
+using TVT.Core.Abstractions.UnitOfWork;
 using TVT.Core.Entities;
 
 namespace TVT.Business.Services;
 
 public class ProductService : IProductService
 {
-    private readonly IProductRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public ProductService(IProductRepository repository)
+    public ProductService(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _repository = repository;
+        _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
-    public async Task<List<Product>> GetFeaturedProductsAsync()
+    public async Task<List<ProductListDto>> GetAllAsync()
     {
-        return await _repository.GetFeaturedProductsAsync();
+        var products = await _unitOfWork.Products.GetAllAsync();
+        return _mapper.Map<List<ProductListDto>>(products);
     }
 
-    public async Task<List<Product>> GetNewProductsAsync()
+    public async Task<ProductDetailDto?> GetByIdAsync(int id)
     {
-        return await _repository.GetNewProductsAsync();
+        var product = await _unitOfWork.Products.GetByIdAsync(id);
+        if (product == null)
+            return null;
+        return _mapper.Map<ProductDetailDto>(product);
     }
 
-    public async Task<Product?> GetBySlugAsync(string slug)
+    public async Task<ProductDetailDto?> GetBySlugAsync(string slug)
     {
-        return await _repository.GetBySlugAsync(slug);
+        var product = await _unitOfWork.Products.GetBySlugAsync(slug);
+        if (product == null)
+            return null;
+        return _mapper.Map<ProductDetailDto>(product);
+    }
+
+    public async Task<int> CreateAsync(CreateProductDto dto)
+    {
+        var product = _mapper.Map<Product>(dto);
+        await _unitOfWork.Products.AddAsync(product);
+        await _unitOfWork.SaveChangesAsync();
+        return product.Id;
+    }
+
+    public async Task UpdateAsync(UpdateProductDto dto)
+    {
+        var product = await _unitOfWork.Products.GetByIdAsync(dto.Id);
+        if (product == null)
+            throw new KeyNotFoundException("Product not found.");
+        _mapper.Map(dto, product);
+        await _unitOfWork.Products.UpdateAsync(product);
+        await _unitOfWork.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        var product = await _unitOfWork.Products.GetByIdAsync(id);
+        if (product == null)
+            throw new KeyNotFoundException("Product not found.");
+        await _unitOfWork.Products.DeleteAsync(product);
+        await _unitOfWork.SaveChangesAsync();
+    }
+
+    public async Task<bool> ExistsAsync(int id)
+    {
+        return await _unitOfWork.Products.ExistsAsync(id);
     }
 }

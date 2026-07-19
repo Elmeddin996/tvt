@@ -2,6 +2,7 @@ namespace TVT.Business.DTOs.Products;
 
 public class UpdateProductDto
 {
+    public int Id { get; set; }
     public int BrandId { get; set; }
     public string Code { get; set; } = null!;
     public string Model { get; set; } = null!;
