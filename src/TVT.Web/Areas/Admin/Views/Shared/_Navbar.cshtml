@@ -1,0 +1,41 @@
+<nav class="navbar navbar-light bg-white border-bottom px-4 py-2">
+
+    <span class="navbar-brand mb-0 h4">
+        @(ViewData["Title"] ?? "Dashboard")
+    </span>
+
+    <div class="dropdown">
+        <button class="btn btn-outline-secondary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false">
+            <i class="bi bi-person-circle me-1"></i>
+            Admin
+        </button>
+
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+                <a class="dropdown-item"
+                   asp-area="Admin"
+                   asp-controller="Profile"
+                   asp-action="Index">
+                    Profile
+                </a>
+            </li>
+
+            <li>
+                <hr class="dropdown-divider" />
+            </li>
+
+            <li>
+                <a class="dropdown-item"
+                   asp-area="Admin"
+                   asp-controller="Account"
+                   asp-action="Logout">
+                    Logout
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</nav>

@@ -1,0 +1,98 @@
+<nav class="bg-dark text-white p-3 d-flex flex-column" style="width:250px; min-height:100vh;">
+    <h5 class="mb-4">
+        <i class="bi bi-speedometer2 me-2"></i>
+        TVT Admin
+    </h5>
+
+    <ul class="nav flex-column">
+
+        <li class="nav-item">
+            <a class="nav-link text-white"
+               asp-area="Admin"
+               asp-controller="Dashboard"
+               asp-action="Index">
+                <i class="bi bi-grid me-2"></i>
+                Dashboard
+            </a>
+        </li>
+
+        <li class="nav-item mt-3">
+            <span class="text-white-50 text-uppercase small ps-3">
+                Catalog
+            </span>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-white"
+               asp-area="Admin"
+               asp-controller="Category"
+               asp-action="Index">
+                <i class="bi bi-tags me-2"></i>
+                Categories
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-white"
+               asp-area="Admin"
+               asp-controller="Brand"
+               asp-action="Index">
+                <i class="bi bi-building me-2"></i>
+                Brands
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-white"
+               asp-area="Admin"
+               asp-controller="Product"
+               asp-action="Index">
+                <i class="bi bi-box me-2"></i>
+                Products
+            </a>
+        </li>
+
+        <li class="nav-item mt-3">
+            <span class="text-white-50 text-uppercase small ps-3">
+                Sales
+            </span>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-white"
+               asp-area="Admin"
+               asp-controller="Order"
+               asp-action="Index">
+                <i class="bi bi-cart me-2"></i>
+                Orders
+            </a>
+        </li>
+
+        <li class="nav-item mt-3">
+            <span class="text-white-50 text-uppercase small ps-3">
+                System
+            </span>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-white"
+               asp-area="Admin"
+               asp-controller="User"
+               asp-action="Index">
+                <i class="bi bi-people me-2"></i>
+                Users
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-white"
+               asp-area="Admin"
+               asp-controller="Setting"
+               asp-action="Index">
+                <i class="bi bi-gear me-2"></i>
+                Settings
+            </a>
+        </li>
+
+    </ul>
+</nav>
