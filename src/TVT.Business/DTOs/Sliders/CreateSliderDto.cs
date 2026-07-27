@@ -1,4 +1,4 @@
-﻿namespace TVT.Business.DTOs.Sliders;
+namespace TVT.Business.DTOs.Sliders;
 
 public class CreateSliderDto
 {
@@ -8,10 +8,12 @@ public class CreateSliderDto
     public string? DescriptionAz { get; set; }
     public string? DescriptionEn { get; set; }
     public string? DescriptionRu { get; set; }
-    public string Image { get; set; } = null!;
+    public string? Image { get; set; } = null!;
     public string? ButtonTextAz { get; set; }
     public string? ButtonTextEn { get; set; }
     public string? ButtonTextRu { get; set; }
     public string? ButtonLink { get; set; }
     public int DisplayOrder { get; set; }
+    public bool IsActive { get; set; }
+
 }

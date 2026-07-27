@@ -15,4 +15,5 @@ public class SliderDetailDto
     public string? ButtonTextRu { get; set; }
     public string? ButtonLink { get; set; }
     public int DisplayOrder { get; set; }
+    public bool IsActive { get; set; }
 }

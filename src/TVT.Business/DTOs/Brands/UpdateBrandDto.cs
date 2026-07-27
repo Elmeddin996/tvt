@@ -1,4 +1,4 @@
-﻿namespace TVT.Business.DTOs.Brands;
+namespace TVT.Business.DTOs.Brands;
 
 public class UpdateBrandDto
 {
@@ -14,4 +14,5 @@ public class UpdateBrandDto
     public string? DescriptionRu { get; set; }
     public string? Logo { get; set; }
     public string? Website { get; set; }
+    public bool IsActive { get; set; }
 }

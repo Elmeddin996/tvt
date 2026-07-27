@@ -2,6 +2,7 @@ namespace TVT.Business.DTOs.Sliders;
 
 public class UpdateSliderDto
 {
+    public int Id { get; set; }
     public string? TitleAz { get; set; }
     public string? TitleEn { get; set; }
     public string? TitleRu { get; set; }
@@ -14,4 +15,5 @@ public class UpdateSliderDto
     public string? ButtonTextRu { get; set; }
     public string? ButtonLink { get; set; }
     public int DisplayOrder { get; set; }
+    public bool IsActive { get; set; }
 }

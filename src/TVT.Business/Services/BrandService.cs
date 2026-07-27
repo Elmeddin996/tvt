@@ -2,6 +2,7 @@ using AutoMapper;
 using TVT.Business.Abstractions.Services;
 using TVT.Business.DTOs.Brands;
 using TVT.Core.Abstractions.UnitOfWork;
+using TVT.Core.Common.Pagination;
 using TVT.Core.Entities;
 
 namespace TVT.Business.Services;
@@ -17,10 +18,17 @@ public class BrandService : IBrandService
         _mapper = mapper;
     }
 
-    public async Task<List<BrandListDto>> GetAllAsync()
+    public async Task<PagedResult<BrandListDto>> GetPagedAsync(PagedRequest request)
     {
-        var brands = await _unitOfWork.Brands.GetAllAsync();
-        return _mapper.Map<List<BrandListDto>>(brands);
+        var result = await _unitOfWork.Brands.GetPagedAsync(request);
+
+        return new PagedResult<BrandListDto>
+        {
+            Items = _mapper.Map<List<BrandListDto>>(result.Items),
+            CurrentPage = result.CurrentPage,
+            PageSize = result.PageSize,
+            TotalCount = result.TotalCount
+        };
     }
 
     public async Task<BrandDetailDto?> GetByIdAsync(int id)
@@ -41,9 +49,17 @@ public class BrandService : IBrandService
 
     public async Task<int> CreateAsync(CreateBrandDto dto)
     {
+        var existing = await _unitOfWork.Brands.GetBySlugAsync(dto.SlugAz);
+
+        if (existing != null)
+            throw new InvalidOperationException("Brand slug already exists.");
+
         var brand = _mapper.Map<Brand>(dto);
+
         await _unitOfWork.Brands.AddAsync(brand);
+
         await _unitOfWork.SaveChangesAsync();
+
         return brand.Id;
     }
 

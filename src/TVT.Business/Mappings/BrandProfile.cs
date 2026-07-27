@@ -23,10 +23,9 @@ public sealed class BrandProfile : Profile
             .ForMember(dest => dest.IsDeleted, opt => opt.Ignore());
 
         CreateMap<UpdateBrandDto, Brand>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore())
-            .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
-            .ForMember(dest => dest.UpdatedDate, opt => opt.Ignore())
-            .ForMember(dest => dest.IsActive, opt => opt.Ignore())
-            .ForMember(dest => dest.IsDeleted, opt => opt.Ignore());
+    .ForMember(dest => dest.Id, opt => opt.Ignore())
+    .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
+    .ForMember(dest => dest.UpdatedDate, opt => opt.Ignore())
+    .ForMember(dest => dest.IsDeleted, opt => opt.Ignore());
     }
 }
