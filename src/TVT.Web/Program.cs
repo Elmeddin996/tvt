@@ -1,5 +1,7 @@
 using TVT.Business;
 using TVT.Data;
+using TVT.Web.Services;
+using TVT.Web.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDataServices(builder.Configuration);
 builder.Services.AddBusinessServices();
+builder.Services.AddScoped<IFileService, FileService>();
+builder.Services.Configure<FileSettings>(
+    builder.Configuration.GetSection("FileSettings"));
 
 var app = builder.Build();
 
@@ -24,6 +29,11 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+
 
 app.MapControllerRoute(
     name: "default",

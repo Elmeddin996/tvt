@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TVT Admin</title>
+
     @await Html.PartialAsync("_Styles")
 </head>
 <body>
@@ -22,5 +23,7 @@
     </div>
 
     @await Html.PartialAsync("_Scripts")
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

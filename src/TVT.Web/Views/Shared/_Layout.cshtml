@@ -1,49 +1,1610 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+
+<html lang="az"
+      dir="ltr"
+      prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb# business: https://ogp.me/ns/business# place: http://ogp.me/ns/place#">
+<meta charset="utf-8" />
 <head>
     <meta charset="utf-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TVT.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/TVT.Web.styles.css" asp-append-version="true" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>@ViewData["Title"] - TVT</title>
+
+    <meta name="description"
+          content="@(ViewData["Description"] ?? "TVT Elektronika və Texnologiya Məhsulları")" />
+
+    <meta name="keywords"
+          content="TVT, Elektronika, Kamera, Təhlükəsizlik sistemləri, Şəbəkə avadanlıqları" />
+
+    <meta name="author" content="TVT" />
+
+    <meta name="robots" content="index,follow" />
+
+    <base href="~/" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:description" content="@(ViewData["Description"] ?? "TVT Elektronika və Texnologiya Məhsulları")" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="TVT" />
+    <meta property="og:url" content="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}")" />
+    <meta property="og:image" content="~/images/logo.png" />
+
+    <!-- Favicon -->
+    <link rel="icon"
+          type="image/png"
+          href="~/images/favicon.png"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/custom.css"
+          asp-append-version="true" />
+
+    <!-- Canonical -->
+    <link rel="canonical"
+          href="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}")" />
+
+    <!-- Preload Logo -->
+    <link rel="preload"
+          as="image"
+          href="~/images/logo.png" />
+
+    <!-- CSS -->
+    
+
+          <link rel="stylesheet" href="~/css/theme.css">
+
+    <link rel="stylesheet"
+          href="~/css/custom.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/catalog/view/theme/oct_remarket/stylesheet/oct-fonts.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <!-- JavaScript -->
+   
+
+    <script src="~/js/search.js" asp-append-version="true"></script>
+
+    <script src="~/js/theme.js"></script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+        {
+            "@@context":"https://schema.org",
+            "@@type":"WebSite",
+            "name":"TVT",
+            "url":"https://tvt.az",
+            "potentialAction":{
+                "@@type":"SearchAction",
+                "target":"https://tvt.az/search?search={search_term_string}",
+                "query-input":"required name=search_term_string"
+            }
+        }
+    </script>
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TVT.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="oct-fixed-bar fixed-right d-none d-lg-block">
+
+        <div onclick="octPopupCart();"
+             class="oct-fixed-bar-item oct-fixed-bar-item-cart"
+             title="Səbət">
+
+            <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--fixed-bar-cart"
+                 alt="Səbət"
+                 width="24"
+                 height="24">
+
+            <span class="oct-fixed-bar-quantity oct-fixed-bar-quantity-cart">
+                0
+            </span>
+
+        </div>
+
+        <a asp-controller="Compare"
+           asp-action="Index"
+           class="oct-fixed-bar-item oct-fixed-bar-item-compare"
+           title="Müqayisə">
+
+            <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--fixed-bar-compare"
+                 alt="Müqayisə"
+                 width="24"
+                 height="24">
+
+            <span class="oct-fixed-bar-quantity oct-fixed-bar-compare-quantity">
+                0
+            </span>
+
+        </a>
+
+        <a asp-controller="Wishlist"
+           asp-action="Index"
+           class="oct-fixed-bar-item oct-fixed-bar-item-wishlist"
+           title="İstək siyahısı">
+
+            <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--fixed-bar-wishlist"
+                 alt="İstək siyahısı"
+                 width="24"
+                 height="20">
+
+            <span class="oct-fixed-bar-quantity oct-fixed-bar-wishlist-quantity">
+                0
+            </span>
+
+        </a>
+
+    </div>
+    <nav id="rm_mobile_nav"
+         class="d-lg-none fixed-top d-flex align-items-center justify-content-between">
+
+        <button type="button"
+                id="rm_mobile_menu_button"
+                class="rm-btn primary rm_mobile_sidebar_toggle"
+                onclick="rmSidebar('Menyu', 'menu');"
+                aria-label="Menu">
+
+            <span class="rm-btn-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+
+        </button>
+
+        <div class="rm-mobile-nav-buttons d-flex">
+
+            <button type="button"
+                    class="rm-mobile-nav-buttons-btn rm-mobile-locatons-btn"
+                    onclick="rmSidebar('Ünvan', 'locations');"
+                    aria-label="Locations">
+
+                <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--mobile-locations-icon"
+                     alt="Ünvan"
+                     width="20"
+                     height="20">
+
+            </button>
+
+            <button type="button"
+                    class="rm-mobile-nav-buttons-btn rm-mobile-contacts-btn"
+                    onclick="rmSidebar('Əlaqə', 'contacts');"
+                    aria-label="Contacts">
+
+                <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--mobile-contacts-icon"
+                     alt="Əlaqə"
+                     width="21"
+                     height="21">
+
+            </button>
+
+        </div>
+
+    </nav>
+    <div id="rm_sidebar" class="rm-sidebar">
+        <div class="rm-sidebar-content">
+
+            <div class="rm-sidebar-title d-flex alig-items-center justify-content-between">
+                <span class="rm-sidebar-title-text">Menyu</span>
+
+                <span class="rm-sidebar-title-close modal-close">
+                    <span aria-hidden="true" class="modal-close-icon modal-close-left"></span>
+                    <span aria-hidden="true" class="modal-close-icon modal-close-right"></span>
+                </span>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+            <div id="rm_sidebar_content"></div>
+
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - TVT.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <nav id="top" class="top-nav d-none d-lg-block">
+
+        <div class="container d-flex justify-content-between">
+
+            <ul class="top-nav-info-list list-unstyled d-flex align-items-center text-uppercase">
+
+                <li>
+                    <a href="javascript:void(0);">
+                        <div class="dropdown">
+                            <i class="fas fa-user-circle"></i>
+                            Şirkət
+
+                            <div class="dropdown-content">
+                                <a asp-controller="About" asp-action="Index">Haqqımızda</a>
+                                <a asp-controller="Certificate" asp-action="Index">Sertifikatlarımız</a>
+                                <a asp-controller="Partner" asp-action="Index">Partnyorlarımız</a>
+                                <a asp-controller="Brand" asp-action="Index">Brendlər</a>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-controller="Blog" asp-action="Index">
+                        <i class="fas fa-rss-square"></i>
+                        Bloq/Xəbərlər
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-controller="Quote" asp-action="Index">
+                        <i class="fas fa-cog"></i>
+                        Qiymət təklifi al
+                    </a>
+                </li>
+
+                <li>
+                    <a asp-controller="Campaign" asp-action="Index">
+                        <span class="text-danger fw-bold">
+                            <i class="fab fa-hotjar"></i>
+                            Endirimlər
+                        </span>
+                    </a>
+                </li>
+
+            </ul>
+
+            <div class="top-nav-account-links list-unstyled d-flex">
+
+                <div id="oct_desktop_language" class="top-nav-account-links-item rm-dropdown-box">
+
+                    <div id="language" class="language">
+
+                        <button class="btn-lang rm-dropdown-toggle d-flex align-items-center">
+
+                            <img src="~/images/flags/az.png"
+                                 alt="Azərbaycan"
+                                 title="Azərbaycan"
+                                 class="lang"
+                                 width="16"
+                                 height="11" />
+
+                            <span>Dil</span>
+
+                        </button>
+
+                        <div class="rm-dropdown">
+
+                            <ul class="rm-dropdown-inner list-unstyled">
+
+                                <li>
+                                    <button class="btn-block language-select active-item">
+                                        <img src="~/images/flags/az.png"
+                                             alt="Azərbaycan"
+                                             width="16"
+                                             height="11" />
+                                        Azərbaycan
+                                    </button>
+                                </li>
+
+                                <li>
+                                    <button class="btn-block language-select">
+                                        <img src="~/images/flags/ru.png"
+                                             alt="Русский"
+                                             width="16"
+                                             height="11" />
+                                        Русский
+                                    </button>
+                                </li>
+
+                                <li>
+                                    <button class="btn-block language-select">
+                                        <img src="~/images/flags/en.png"
+                                             alt="English"
+                                             width="16"
+                                             height="11" />
+                                        English
+                                    </button>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="top-nav-account-links-item rm-dropdown-box">
+
+                    <span onclick="octPopupLogin();"
+                          class="d-flex align-items-center"
+                          role="button"
+                          aria-haspopup="true"
+                          title="Hesabım">
+                        Hesabım
+                    </span>
+
+                </div>
+
+            </div>
+
         </div>
+
+    </nav>
+    <header>
+        <div class="container-fluid container-sm">
+            <div class="row align-items-center flex-column flex-md-row">
+                <div class="col-md-3 col-lg-2 order-0">
+                    <div id="logo" class="d-flex align-items-center justify-content-center">
+
+                        <a asp-controller="Home" asp-action="Index">
+                            <img src="~/images/logo.png"
+                                 title="TVT"
+                                 alt="TVT"
+                                 class="img-fluid"
+                                 width="141"
+                                 height="64" />
+                        </a>
+
+                    </div>
+                </div>
+                <div class="col-2 d-none d-lg-block order-1">
+
+                    <button id="menu_toggle_button"
+                            type="button"
+                            class="rm-btn primary d-flex align-items-center justify-content-between"
+                            aria-label="Məhsul kataloqu">
+
+                        <span class="rm-btn-icon">
+
+                            <img class="catalog-icon"
+                                 src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--footer-catalog-icon"
+                                 alt="Kataloq"
+                                 width="14"
+                                 height="14" />
+
+                            <img class="close-icon"
+                                 src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--close-catalog-icon"
+                                 alt="Bağla"
+                                 width="14"
+                                 height="14" />
+
+                        </span>
+
+                        <span class="rm-btn-text">
+                            Məhsul kataloqu
+                        </span>
+
+                    </button>
+
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 order-3 order-md-2 mt-lg-2 mt-xl-3">
+                    <div id="search" class="rm-search">
+
+                        <input id="input_search"
+                               type="text"
+                               name="search"
+                               placeholder="Axtar"
+                               class="w-100 h-100" />
+
+                        <button type="button"
+                                id="rm-search-button"
+                                class="btn-search d-flex align-items-center justify-content-center"
+                                aria-label="Axtar">
+
+                            <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--header-search-icon"
+                                 alt="Axtar"
+                                 width="20"
+                                 height="20" />
+
+                        </button>
+
+                        <div id="rm_livesearch_close"
+                             onclick="clearLiveSearch();"
+                             class="d-flex align-items-center justify-content-center">
+
+                            <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--livesearch-close-icon"
+                                 alt="Bağla"
+                                 width="25"
+                                 height="25" />
+
+                        </div>
+
+                        <div id="rm_livesearch"></div>
+
+                    </div>
+
+
+                    <div class="rm-header-address d-none d-lg-block">
+
+                        <div class="rm-dropdown-box w-100">
+
+                            <div class="rm-dropdown-toggle">
+
+                                <span>Ünvan:</span>
+
+                                <span class="rm-header-address-link">
+                                    Sederek Tm
+                                </span>
+
+                            </div>
+
+                            <div class="rm-dropdown">
+
+                                <div id="rm_header_locations" class="rm-dropdown-inner">
+
+                                    <div class="rm-header-location active">
+
+                                        <div class="d-flex align-items-center">
+
+                                            <div class="rm-header-location-address">
+                                                Sederek Tm
+                                            </div>
+
+                                            <button class="rm-btn secondary ml-auto">
+
+                                                <span class="rm-btn-icon">
+
+                                                    <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--header-location-chevron"
+                                                         alt=""
+                                                         width="18"
+                                                         height="12" />
+
+                                                </span>
+
+                                            </button>
+
+                                        </div>
+
+                                        <div class="rm-header-location-collapsed">
+
+                                            <div class="rm-header-location-phones">
+
+                                                <span>Əlaqə nömrəmiz:</span>
+
+                                                <a href="tel:00">
+                                                    00
+                                                </a>
+
+                                            </div>
+
+                                            <div class="rm-header-location-shedule">
+
+                                                <span>İş saatlarımız:</span>
+                                                <br />
+
+                                                <span>
+                                                    00
+                                                </span>
+
+                                            </div>
+
+                                            <div class="rm-header-location-map">
+
+                                                
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 col-lg-2 d-none d-md-flex justify-content-center order-2 order-md-3">
+
+                    <div class="rm-header-phones d-flex align-items-center">
+
+                        <div class="rm-header-phones-icon">
+                            <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--header-phones-icon"
+                                 alt="Telefon"
+                                 width="30"
+                                 height="30" />
+                        </div>
+
+                        <div class="rm-header-phones-list">
+
+                            <a href="tel:00"
+                               class="rm-header-phones-list-item">
+                                00
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-md-2 d-lg-flex justify-content-center order-4">
+
+                    <button id="cart"
+                            type="button"
+                            class="rm-header-cart d-flex flex-column align-items-center"
+                            title="Səbət"
+                            onclick="tvtCart.open();">
+
+                        <span class="rm-header-cart-icon position-relative">
+
+                            <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--header-cart-icon"
+                                 alt="Səbət"
+                                 width="21"
+                                 height="21" />
+
+                            <span id="cart-quantity" class="rm-header-cart-quantity">
+                                0
+                            </span>
+
+                        </span>
+
+                        <span id="cart-total" class="rm-header-cart-text">
+                            00 ₼
+                        </span>
+
+                    </button>
+
+                </div>
+
+                
+                <div id="rm-menu" class="rm-menu d-flex">
+                    <nav>
+                        <ul class="rm-menu-list list-unstyled">
+                            <li class="rm-menu-list-item">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <a href="surveillance-system/index.html" class="rm-menu-list-item-link d-flex align-items-center">
+                                        <img class="rm-menu-list-item-icon" src="image/catalog/icons/category/cctv-kamera.svg" alt="Videomüşahidə sistemləri" width="50" height="50">
+                                        <span class="rm-menu-list-item-name">Videomüşahidə sistemləri</span>
+                                    </a>
+                                    <span class="rm-menu-list-item-chevron"></span>
+                                </div>
+                                <div class="rm-menu-list-item-child">
+                                    <ul class="rm-menu-list list-unstyled">
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category"
+                                                   asp-action="Index"
+                                                   asp-route-slug="hdcvi-kamera"
+                                                   class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">HDCVI Kameralar</span>
+                                                </a>
+                                                <span class="rm-menu-list-item-chevron"></span>
+                                            </div>
+
+                                            <div class="rm-menu-list-item-child rm-menu-list-item-child-2">
+                                                <ul class="rm-menu-list list-unstyled">
+
+                                                    <li class="rm-menu-list-item">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <a asp-controller="Category" asp-action="Index" asp-route-slug="1-mpx-hdcvi-kameralar" class="rm-menu-list-item-link d-flex align-items-center">
+                                                                <span class="rm-menu-list-item-name">1 MP HD-CVI Kameralar</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="rm-menu-list-item">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <a asp-controller="Category" asp-action="Index" asp-route-slug="2-mpx-hdcvi-kameralar" class="rm-menu-list-item-link d-flex align-items-center">
+                                                                <span class="rm-menu-list-item-name">2 MP HD-CVI Kameralar</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="rm-menu-list-item">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <a asp-controller="Category" asp-action="Index" asp-route-slug="4-mpx-hdcvi-kameralar" class="rm-menu-list-item-link d-flex align-items-center">
+                                                                <span class="rm-menu-list-item-name">4 MP HD-CVI Kameralar</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="rm-menu-list-item">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <a asp-controller="Category" asp-action="Index" asp-route-slug="5-mpx-hdcvi-kameralar" class="rm-menu-list-item-link d-flex align-items-center">
+                                                                <span class="rm-menu-list-item-name">5 MP HD-CVI Kameralar</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="rm-menu-list-item">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <a asp-controller="Category" asp-action="Index" asp-route-slug="6-mpx-hdcvi-kameralar" class="rm-menu-list-item-link d-flex align-items-center">
+                                                                <span class="rm-menu-list-item-name">6 MP HD-CVI Kameralar</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="rm-menu-list-item">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <a asp-controller="Category" asp-action="Index" asp-route-slug="8-mpx-hdcvi-kameralar" class="rm-menu-list-item-link d-flex align-items-center">
+                                                                <span class="rm-menu-list-item-name">8 MP HD-CVI Kameralar</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category"
+                                                   asp-action="Index"
+                                                   asp-route-slug="turbo-hd-kameralar"
+                                                   class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Turbo HD Kameralar (HDTVI)</span>
+                                                </a>
+                                            </div>
+                                        </li>
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category"
+                                                   asp-action="Index"
+                                                   asp-route-slug="ip-kameralar"
+                                                   class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">IP Kameralar</span>
+                                                </a>
+
+                                                <span class="rm-menu-list-item-chevron"></span>
+                                            </div>
+
+                                            <div class="rm-menu-list-item-child rm-menu-list-item-child-2">
+                                                <ul class="rm-menu-list list-unstyled">
+
+                                                    <li class="rm-menu-list-item">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <a asp-controller="Category" asp-action="Index" asp-route-slug="2-mpx-ip-kameralar" class="rm-menu-list-item-link d-flex align-items-center">
+                                                                <span class="rm-menu-list-item-name">2 MP IP Kameralar</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="rm-menu-list-item">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <a asp-controller="Category" asp-action="Index" asp-route-slug="3-mpx-ip-kameralar" class="rm-menu-list-item-link d-flex align-items-center">
+                                                                <span class="rm-menu-list-item-name">3 MP IP Kameralar</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="rm-menu-list-item">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <a asp-controller="Category" asp-action="Index" asp-route-slug="4-mpx-ip-kameralar" class="rm-menu-list-item-link d-flex align-items-center">
+                                                                <span class="rm-menu-list-item-name">4 MP IP Kameralar</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="rm-menu-list-item">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <a asp-controller="Category" asp-action="Index" asp-route-slug="5-mpx-ip-kameralar" class="rm-menu-list-item-link d-flex align-items-center">
+                                                                <span class="rm-menu-list-item-name">5 MP IP Kameralar</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="rm-menu-list-item">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <a asp-controller="Category" asp-action="Index" asp-route-slug="8-mpx-ip-kameralar" class="rm-menu-list-item-link d-flex align-items-center">
+                                                                <span class="rm-menu-list-item-name">8 MP IP Kameralar</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+
+                                                    <li class="rm-menu-list-item">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <a asp-controller="Category" asp-action="Index" asp-route-slug="12-mpx-ip-kameralar" class="rm-menu-list-item-link d-flex align-items-center">
+                                                                <span class="rm-menu-list-item-name">12 MP IP Kameralar</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="rm-menu-list-item">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <a asp-controller="Category"
+                                       asp-action="Index"
+                                       asp-route-slug="sebeke-avadanliqlari"
+                                       class="rm-menu-list-item-link d-flex align-items-center">
+                                        <img class="rm-menu-list-item-icon"
+                                             src="~/images/icons/category/router.svg"
+                                             alt="Şəbəkə avadanlıqları"
+                                             width="50"
+                                             height="50">
+                                        <span class="rm-menu-list-item-name">Şəbəkə avadanlıqları</span>
+                                    </a>
+                                    <span class="rm-menu-list-item-chevron"></span>
+                                </div>
+
+                                <div class="rm-menu-list-item-child">
+                                    <ul class="rm-menu-list list-unstyled">
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category" asp-action="Index" asp-route-slug="wifi-siqnal-guclendiriciler" class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Wi-Fi Siqnal Gücləndiricilər</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category" asp-action="Index" asp-route-slug="router" class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Router</span>
+                                                </a>
+                                                <span class="rm-menu-list-item-chevron"></span>
+                                            </div>
+
+                                            <div class="rm-menu-list-item-child rm-menu-list-item-child-2">
+                                                <ul class="rm-menu-list list-unstyled">
+                                                    <li class="rm-menu-list-item">
+                                                        <div class="d-flex align-items-center justify-content-between">
+                                                            <a asp-controller="Category" asp-action="Index" asp-route-slug="3g-4g-router" class="rm-menu-list-item-link d-flex align-items-center">
+                                                                <span class="rm-menu-list-item-name">3G/4G Router</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category" asp-action="Index" asp-route-slug="modemler" class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Modem</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category" asp-action="Index" asp-route-slug="switch" class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Switch</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category" asp-action="Index" asp-route-slug="access-point" class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Access Point</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category" asp-action="Index" asp-route-slug="antenalar" class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Antenalar</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category" asp-action="Index" asp-route-slug="sebeke-adapterleri" class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Şəbəkə adapterləri</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category" asp-action="Index" asp-route-slug="wifi-adapter" class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Wi-Fi Adapter</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category" asp-action="Index" asp-route-slug="sebeke-karti" class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Şəbəkə kartı</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category" asp-action="Index" asp-route-slug="injectors-media-converters" class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Enjektorlar, Media çeviriciləri</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category" asp-action="Index" asp-route-slug="kontroller-ve-idareetme-sistemleri" class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Kontroller və İdarəetmə sistemləri</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category" asp-action="Index" asp-route-slug="sfp-modul-transiverler" class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">SFP Modul, transiverlər</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category" asp-action="Index" asp-route-slug="kabel-konnektorlar" class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Kabel, Konnektorlar</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category" asp-action="Index" asp-route-slug="filter-ve-adapterler" class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Filter və Adapterlər</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="rm-menu-list-item">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <a asp-controller="Category"
+                                       asp-action="Index"
+                                       asp-route-slug="cantalar-ve-cexollar"
+                                       class="rm-menu-list-item-link d-flex align-items-center">
+                                        <img class="rm-menu-list-item-icon"
+                                             src="~/images/icons/category/notebook-bags.svg"
+                                             alt="Çantalar, Bel çantaları və Çexollar"
+                                             width="50"
+                                             height="50">
+                                        <span class="rm-menu-list-item-name">Çantalar, Bel çantaları və Çexollar</span>
+                                    </a>
+                                    <span class="rm-menu-list-item-chevron"></span>
+                                </div>
+
+                                <div class="rm-menu-list-item-child">
+                                    <ul class="rm-menu-list list-unstyled">
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category"
+                                                   asp-action="Index"
+                                                   asp-route-slug="noutbuk-cantalari"
+                                                   class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Noutbuk çantaları</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category"
+                                                   asp-action="Index"
+                                                   asp-route-slug="idman-ve-seyahet-cantalari"
+                                                   class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">İdman və Səyahət çantaları</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category"
+                                                   asp-action="Index"
+                                                   asp-route-slug="kemer-cantalari-ve-cross-bodi"
+                                                   class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Kəmər çantaları və Cross-bodi</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category"
+                                                   asp-action="Index"
+                                                   asp-route-slug="seher-bel-cantalari"
+                                                   class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Şəhər bel çantaları</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category"
+                                                   asp-action="Index"
+                                                   asp-route-slug="aksesuar-ucun-cantalar"
+                                                   class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Aksesuarlar üçün çantalar</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category"
+                                                   asp-action="Index"
+                                                   asp-route-slug="termocanta-ve-termoslar"
+                                                   class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Termoçanta və Termoslar</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="rm-menu-list-item">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <a asp-controller="Category"
+                                       asp-action="Index"
+                                       asp-route-slug="telefon-aksesuarlari"
+                                       class="rm-menu-list-item-link d-flex align-items-center">
+                                        <img class="rm-menu-list-item-icon"
+                                             src="~/images/icons/category/smartphone.svg"
+                                             alt="Telefon aksesuarları"
+                                             width="50"
+                                             height="50">
+                                        <span class="rm-menu-list-item-name">Telefon aksesuarları</span>
+                                    </a>
+                                    <span class="rm-menu-list-item-chevron"></span>
+                                </div>
+
+                                <div class="rm-menu-list-item-child">
+                                    <ul class="rm-menu-list list-unstyled">
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category"
+                                                   asp-action="Index"
+                                                   asp-route-slug="powerbank"
+                                                   class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Power Bank</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category"
+                                                   asp-action="Index"
+                                                   asp-route-slug="telefon-qulaqciqlari"
+                                                   class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Qulaqlıqlar</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category"
+                                                   asp-action="Index"
+                                                   asp-route-slug="enerji-toplama-kabelleri"
+                                                   class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Enerji toplama üçün kabellər</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category"
+                                                   asp-action="Index"
+                                                   asp-route-slug="enerji-toplama-cihazlari"
+                                                   class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Enerji toplama cihazları</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                        <li class="rm-menu-list-item">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <a asp-controller="Category"
+                                                   asp-action="Index"
+                                                   asp-route-slug="telefon-holderleri"
+                                                   class="rm-menu-list-item-link d-flex align-items-center">
+                                                    <span class="rm-menu-list-item-name">Phone Holders</span>
+                                                </a>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                
+
+            </div>
+        </div>
+    </header>
+
+    <div id="common-home" class="container">
+        <div class="row row-padding-top">
+            <div class="col-xl-9">
+                <div id="ocdbanner-46" class="ocdbanner">
+
+                    <div class="banner-group group-grid">
+                        <div class="respgrid respgrid-1" data-group="1" data-gutter="30">
+
+                            <div class="item-grid item-grid-1" data-colspan="12" data-rowspan="6">
+                                <div class="type-slider">
+                                    <div id="slider-1-1" class="splide slider-splide-1">
+                                        <div class="splide__track">
+                                            <div class="splide__list">
+
+                                                <div class="splide__slide item-slide slider-46-1-1-1">
+                                                    <a asp-controller="Product"
+                                                       asp-action="Detail"
+                                                       asp-route-slug="ruijie-reyee-aksiya">
+                                                        <img src="~/images/banner/home/img01-1600x800.jpg"
+                                                             title="Ruijie &amp; Reyee Aksiya"
+                                                             alt=""
+                                                             class="img-responsive" />
+                                                    </a>
+                                                </div>
+
+                                                <div class="splide__slide item-slide slider-46-1-1-2">
+                                                    <a asp-controller="Product"
+                                                       asp-action="Detail"
+                                                       asp-route-slug="reyee-rg-ew1200r-dual-band-mesh-wi-fi-extender">
+                                                        <img src="~/images/banner/home/img02-1600x800.jpg"
+                                                             title="Ruijie &amp; Reyee Aksiya"
+                                                             alt=""
+                                                             class="img-responsive" />
+                                                    </a>
+                                                </div>
+
+                                                <div class="splide__slide item-slide slider-46-1-1-3">
+                                                    <a asp-controller="Product"
+                                                       asp-action="Detail"
+                                                       asp-route-slug="home-wifi-router-rg-ew1200">
+                                                        <img src="~/images/banner/home/img03-1600x800.jpg"
+                                                             title="Ruijie &amp; Reyee Aksiya"
+                                                             alt=""
+                                                             class="img-responsive" />
+                                                    </a>
+                                                </div>
+
+                                                <div class="splide__slide item-slide slider-46-1-1-4">
+                                                    <a asp-controller="Product"
+                                                       asp-action="Detail"
+                                                       asp-route-slug="ruijie-reyee-aksiya-2">
+                                                        <img src="~/images/banner/home/img04-1600x800.jpg"
+                                                             title="Ruijie &amp; Reyee Aksiya"
+                                                             alt=""
+                                                             class="img-responsive" />
+                                                    </a>
+                                                </div>
+
+                                                <div class="splide__slide item-slide slider-46-1-1-5">
+                                                    <a asp-controller="Product"
+                                                       asp-action="Detail"
+                                                       asp-route-slug="home-wifi-router-ruijie-rg-ew1200g-pro">
+                                                        <img src="~/images/banner/home/img05-1600x800.jpg"
+                                                             title="Ruijie &amp; Reyee Aksiya"
+                                                             alt=""
+                                                             class="img-responsive" />
+                                                    </a>
+                                                </div>
+
+                                                <div class="splide__slide item-slide slider-46-1-1-6">
+                                                    <a asp-controller="Page"
+                                                       asp-action="Index"
+                                                       asp-route-slug="ustalar-klubu">
+                                                        <img src="~/images/banner/home/ustalar-klubu-na-uzv-ol-1608x800.jpg"
+                                                             title="Ustalar klubu"
+                                                             alt="AEM Elektron müştəriləri üçün «Ustalar klubu»."
+                                                             class="img-responsive" />
+                                                    </a>
+                                                </div>
+
+                                                <div class="splide__slide item-slide slider-46-1-1-7">
+                                                    <a asp-controller="Blog"
+                                                       asp-action="Detail"
+                                                       asp-route-slug="yeni-tetbiq-aem-usta-artiq-istifadede">
+                                                        <img src="~/images/banner/home/AEM-Usta-(Sayt-slayd)-1600x797.jpg"
+                                                             title="AEM Usta mobil tətbiqi üçün qeydiyyat forması."
+                                                             alt="AEM Usta mobil tətbiqi üçün qeydiyyat forması."
+                                                             class="img-responsive" />
+                                                    </a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <script>
+                        var settings = {
+                            gutter: "30px",
+                            itemclass: "#ocdbanner-46 .respgrid-1 .item-grid",
+                            breakpoints: {
+                                "*": {
+                                    range: "*",
+                                    options: {
+                                        column: 12
+                                    }
+                                }
+                            }
+                        };
+
+                        respgrid("#ocdbanner-46 .respgrid-1", settings);
+                    </script>
+
+                    <script>
+                        new Splide("#ocdbanner-46 #slider-1-1", {
+                            rewind: true,
+                            type: "loop",
+                            perPage: 1,
+                            autoplay: true,
+                            interval: 3000
+                        }).mount();
+                    </script>
+
+                </div>
+            </div>
+            <div class="col-xl-3">
+                <div id="ocdbanner-82" class="ocdbanner">
+
+                    <div class="banner-group group-bootstrap" data-group-rows="1">
+                        <div class="row">
+
+                            <div class="item-banner col-sm-12">
+                                <div class="type-slider">
+                                    <div id="slider-1-1" class="splide slider-splide-1">
+                                        <div class="splide__track">
+                                            <div class="splide__list">
+
+                                                <div class="splide__slide item-slide slider-82-1-1-1">
+                                                    <img src="~/images/banner/home/hikvision-brand-banner-az-480x740.jpg"
+                                                         title="Hikvision"
+                                                         alt="Hikvision"
+                                                         class="img-responsive" />
+
+                                                    <div class="block-desc">
+                                                        <div class="slide-desc">
+                                                            <div class="slide-desc0">
+                                                                <a asp-controller="Brand"
+                                                                   asp-action="Detail"
+                                                                   asp-route-slug="hikvision"
+                                                                   class="button button2">
+                                                                    Kataloqa keç
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="splide__slide item-slide slider-82-1-1-2">
+                                                    <img src="~/images/banner/home/dahua-brand-banner-480x740.jpg"
+                                                         title="Dahua"
+                                                         alt="Dahua"
+                                                         class="img-responsive" />
+
+                                                    <div class="block-desc">
+                                                        <div class="slide-desc">
+                                                            <div class="slide-desc0">
+                                                                <a asp-controller="Brand"
+                                                                   asp-action="Detail"
+                                                                   asp-route-slug="dahua"
+                                                                   class="button button2">
+                                                                    Kataloqa keç
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <script>
+                        new Splide("#ocdbanner-82 #slider-1-1", {
+                            rewind: true,
+                            type: "loop",
+                            perPage: 1,
+                            autoplay: true,
+                            interval: 3000
+                        }).mount();
+                    </script>
+
+                </div>
+            </div>
+        </div>
+
+
+
+       
+    </div>
+
+    @RenderBody();
+    <footer>
+        <div class="rm-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-4 text-center text-lg-left rm-footer-first">
+                        <div class="rm-footer-mobile-inner">
+                            <div class="rm-footer-title">Xəbərlərə və yeniliklərə abunə olun:</div>
+                            <form action="javascript:;" id="footer-subscribe" class="rm-footer-subscribe">
+                                <div class="input-group">
+                                    <input type="email" id="InputSubscribeEmail" class="form-control rm-input-with-btn" name="email" placeholder="E-poçtunuzu daxil edin">
+                                    <button type="submit" id="footer-make-subscribe" class="rm-btn dark">Abunə ol</button>
+                                </div>
+                                <div class="form-checkbox-group">
+                                    <label>
+                                        <input type="checkbox" class="rm-form-checkbox-input" name="agree" id="oct-scales-static">
+                                        <span class="check-box"></span>
+                                        <a href="tehlukesizlik-siyaseti.html" target="_blank">Məxfilik siyasəti</a> ilə tanış oldum və heç bir iradım yoxdur.
+                                    </label>
+                                </div>
+                            </form>
+                            <script>
+                                $("#InputSubscribeEmail, #oct-scales-static").on("change paste keyup", function () {
+                                    $(this).removeClass('error_style');
+                                });
+                                $('#footer-make-subscribe').on('click', function () {
+                                    $.ajax({
+                                        type: 'post',
+                                        url: 'index.php?route=octemplates/module/oct_subscribe/makeSubscribe',
+                                        dataType: 'json',
+                                        cache: false,
+                                        data: $('#footer-subscribe').serialize(),
+                                        success: function (json) {
+                                            if (json['error']) {
+                                                $('#us-subscribe-modal .text-danger').remove();
+                                                let errorOption = '';
+
+                                                $.each(json['error'], function (i, val) {
+                                                    $('#footer-subscribe [name="' + i + '"]').addClass('error_style');
+                                                    errorOption += '<div class="alert-text-item">' + val + '</div>';
+                                                });
+
+                                                rmNotify('danger', errorOption);
+                                            } else {
+                                                if (json['output']) {
+                                                    $('#footer-subscribe [name="email"]').val('');
+                                                    rmNotify('success', '<div class="alert-text-item">' + json['output'] + '</div>');
+                                                }
+                                            }
+                                        }
+                                    });
+                                });
+                            </script>
+
+                            <div class="rm-footer-title">Ünvan:</div>
+                            <div class="rm-footer-text rm-footer-address">28 May metrosu, Süleyman Rüstəm küç. 15F</div>
+                            <div class="rm-footer-title">Bizə zəng edin:</div>
+                            <ul class="list-unstyled rm-footer-phones">
+                                <li class="d-flex align-items-center justify-content-center justify-content-lg-start">
+                                    <img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--phone-icon" alt="" width="14" height="16" />
+                                    <a href="tel:+994513937089
+">
+                                        +994 (51) 393 70 89
+                                    </a>
+                                </li>
+                                <li class="d-flex align-items-center justify-content-center justify-content-lg-start">
+                                    <img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--phone-icon" alt="" width="14" height="16" />
+                                    <a href="tel:+994553919785">+994 (55) 391 97 85</a>
+                                </li>
+                            </ul>
+                            <div class="rm-footer-contacts-btn d-md-none">
+                                <a href="contact-us/index.html" class="rm-btn secondary"><span class="rm-btn-text">Filiallarımız</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3 text-center text-lg-left rm-footer-second">
+                        <div class="rm-footer-mobile-inner">
+                            <div class="rm-footer-title">İş günləri</div>
+                            <ul class="rm-footer-text rm-footer-shedule-list list-unstyled">
+                                <li class="rm-footer-shedule-list-item">
+                                    Bayram günləri istisna:
+                                </li>
+                                <li class="rm-footer-shedule-list-item">
+                                    Be-Ş: 09:00 - 19:00
+                                </li>
+                                <li class="rm-footer-shedule-list-item">B: qeyri-iş günü</li>
+                            </ul>
+                            <div class="rm-footer-title">Bizi izləyin:</div>
+                            <ul class="rm-social list-unstyled d-flex flex-wrap justify-content-center justify-content-lg-start">
+                                <li class="rm-social-item"><a rel="noopener noreferrer" href="https://www.facebook.com/aemelektron/" class="rm-social-fa-facebook-f d-flex align-items-center justify-content-center" target="_blank"><i class="fab fa-facebook-f"></i>https://www.facebook.com/aemelektron/</a></li>
+                                <li class="rm-social-item"><a rel="noopener noreferrer" href="https://www.instagram.com/aem.elektron/" class="rm-social-fa-instagram d-flex align-items-center justify-content-center" target="_blank"><i class="fab fa-instagram"></i>https://www.instagram.com/aem.elektron/</a></li>
+                                <li class="rm-social-item"><a rel="noopener noreferrer" href="https://www.youtube.com/channel/UCvDHjw6tWG4PJbKYezoIeOQ?view_as=subscriber" class="rm-social-fa-youtube d-flex align-items-center justify-content-center" target="_blank"><i class="fab fa-youtube"></i>https://www.youtube.com/channel/UCvDHjw6tWG4PJbKYezoIeOQ?view_as=subscriber</a></li>
+                                <li class="rm-social-item"><a rel="noopener noreferrer" href="https://t.me/aemelektron" class="rm-social-fa-telegram-plane d-flex align-items-center justify-content-center" target="_blank"><i class="fab fa-telegram-plane"></i>https://t.me/aemelektron</a></li>
+                            </ul>
+                            <ul class="rm-footer-payments-list list-unstyled d-flex align-items-center justify-content-center justify-content-lg-start">
+                                <li class="rm-footer-payments-item visa"></li>
+                                <li class="rm-footer-payments-item mastercard"></li>
+                                <li class="rm-footer-payments-item maestro"></li>
+                                <li class="rm-footer-payments-item custom-payment"><img src="image/cache/catalog/paymetod/birkart-52x32.png" alt=""></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3 text-md-center text-lg-left rm-footer-third">
+                        <div class="rm-footer-mobile-inner white">
+                            <div class="rm-footer-title rm-footer-title-toggle d-flex align-items-center justify-content-md-center justify-content-lg-start">
+                                <span class="rm-footer-title-toggle-icon d-md-none">
+                                    <img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--footer-categories-icon" alt="" width="14" height="14" />
+                                </span>
+                                <span class="rm-footer-title-toggle-text">Populyar kateqoriyalar</span>
+                                <span class="rm-footer-title-toggle-btn d-md-none">
+                                    <img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--footer-toggle-icon" alt="" width="18" height="12" />
+                                </span>
+                            </div>
+                            <ul class="rm-footer-links-list list-unstyled">
+                                <li><a href="dahua-technologu/index.html" title="Dahua müşahidə sistemləri‎">Dahua müşahidə sistemləri‎</a></li>
+                                <li><a href="chantalar-pul-kiseleri-ve-chexollar/bags-canta/index.html" title="Noutbuk çantaları">Noutbuk çantaları</a></li>
+                                <li><a href="surveillance-system/wifi-daye-kamera/index.html" title="WiFi Dayə Kameraları">WiFi Dayə Kameraları</a></li>
+                                <li><a href="sebeke-avadanliqi/router/index.html" title="Router">Router</a></li>
+                                <li><a href="audio-avadanliq/qulaqciq-ve-qarnituralar/bluetooth-qulaqciq/index.html" title="Bluetooth qulaqcıqlar">Bluetooth qulaqcıqlar</a></li>
+                                <li><a href="batteries-energy/powerbank/index.html" title="Power Bank">Power Bank</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-2 text-md-center text-lg-left rm-footer-fourth">
+                        <div class="rm-footer-mobile-inner white">
+                            <div class="rm-footer-title rm-footer-title-toggle d-flex align-items-center justify-content-md-center justify-content-lg-start">
+                                <span class="rm-footer-title-toggle-icon d-md-none"><img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--footer-information-icon" alt="" width="16" height="16" /></span>
+                                <span class="rm-footer-title-toggle-text">Məlumat</span>
+                                <span class="rm-footer-title-toggle-btn d-md-none">
+                                    <img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--footer-toggle-icon" alt="" width="18" height="12" />
+                                </span>
+                            </div>
+                            <ul class="rm-footer-links-list list-unstyled">
+                                <li><a href="about.html" title="Haqqımızda">Haqqımızda</a></li>
+                                <li><a href="sertifikatlarimiz.html" title="Sertifikatlarımız">Sertifikatlarımız</a></li>
+                                <li><a href="zemanet.html" title="Zəmanətin şərtləri">Zəmanətin şərtləri</a></li>
+                                <li><a href="tehlukesizlik-siyaseti.html" title="Məxfilik siyasəti">Məxfilik siyasəti</a></li>
+                                <li><a href="terms.html" title="Razılaşmanın şərtləri">Razılaşmanın şərtləri</a></li>
+                                <li><a href="ustalar-klubu.html" title="Ustalar klubu">Ustalar klubu</a></li>
+                                <li><a href="contact-us/index.html" title="Əlaqə">Əlaqə</a></li>
+                                <li><a href="brands/index.html" title="Brendlər">Brendlər</a></li>
+                                <li><a href="aksiyalar/index.html" title="Xüsusi təkliflər">Xüsusi təkliflər</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-md-none">
+                    <div class="col-12">
+                        <button type="button" class="rm-btn primary rm-footer-catalog-btn w-100" onclick="rmSidebar('Menyu', 'menu', 1);">
+                            <span class="rm-btn-icon">
+                                <img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--footer-catalog-icon" alt="" width="14" height="14">
+                            </span>
+                            <span class="rm-btn-text">Məhsul kataloqu</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="rm-footer-credits text-center">Bütün hüquqlar qorunur<br>TVT</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--microdatapro <?php echo $version; ?> search start [json-ld] -->
+        <script type="application/ld+json">
+            {
+            "@@context": "https://schema.org",
+            "@@type": "WebSite",
+            "url": "https://tvt.az/",
+            "potentialAction": {
+            "@@type": "SearchAction",
+            "target": {
+            "@@type": "EntryPoint",
+            "urlTemplate": "https://tvt.az/index.php?route=product/search&search={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+            }
+            }
+        </script>
+        <!--microdatapro <?php echo $version; ?> search end [json-ld] -->
+        <!--microdatapro 7.8 company start [json-ld] -->
+        <script type="application/ld+json">
+            {
+            "@@context": "https://schema.org",
+            "@@type": "ElectronicsStore",
+            "name": "«TVT»",
+            "url": "https://tvt.az/",
+            "image": "https://tvt.az",
+            "logo": "https://tvt.az",
+            "telephone" : "+(994) ",
+            "email": "sales@tvt.az",
+            "priceRange": "AZN",
+            "address": {
+            "@@type": "PostalAddress",
+            "addressLocality": "Baku, Azerbaijan",
+            "postalCode": "AZ1014",
+            "streetAddress": "sederek tm"
+            },
+            "location": {
+            "@@type": "Place",
+            "address": {
+            "@@type": "PostalAddress",
+            "addressLocality": "Baku, Azerbaijan",
+            "postalCode": "AZ1014",
+            "streetAddress": "Sederek tm"
+            },
+            "geo": {
+            "@@type": "GeoCoordinates",
+            "latitude": "40.3804253",
+            "longitude": "49.8461362"
+            }
+            },
+            "potentialAction": {
+            "@@type": "SearchAction",
+            "target": "https://tvt.az/index.php?route=product/search&search={search_term_string}",
+            "query-input": "required name=search_term_string"
+            },
+            "contactPoint" : [
+             {
+            "@@type" : "ContactPoint",
+            "telephone" : "+(994) ",
+            "contactType" : "customer service"
+            },{
+            "@@type" : "ContactPoint",
+            "telephone" : "+(994) ",
+            "contactType" : "customer service"
+            },{
+            "@@type" : "ContactPoint",
+            "telephone" : "+(994) ",
+            "contactType" : "customer service"
+            },{
+            "@@type" : "ContactPoint",
+            "telephone" : "+(994)",
+            "contactType" : "customer service"
+            }],
+            "sameAs" : [
+            "https://www.tvt.az","https://www.tvt.az"],
+            "openingHoursSpecification":[
+             {
+            "@@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Monday",
+            "opens": "09:00",
+            "closes": "19:00"
+            },{
+            "@@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Tuesday",
+            "opens": "09:00",
+            "closes": "19:00"
+            },{
+            "@@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Wednesday",
+            "opens": "09:00",
+            "closes": "19:00"
+            },{
+            "@@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Thursday",
+            "opens": "09:00",
+            "closes": "19:00"
+            },{
+            "@@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Friday",
+            "opens": "09:00",
+            "closes": "19:00"
+            },{
+            "@@type": "OpeningHoursSpecification",
+            "dayOfWeek": "Saturday",
+            "opens": "09:00",
+            "closes": "19:00"
+            }]
+            }
+        </script>
+        <!--microdatapro 7.8 company end [json-ld] -->
+        <!--microdatapro 7.8 company start [hCard] -->
+        <span class="vcard">
+            <span class="fn org"><span class="value-title" title="«TVT»"></span></span>
+            <span class="org"><span class="value-title" title="«TVT»"></span></span>
+            <span class="url"><span class="value-title" title="https://tvt.az/"></span></span>
+            <span class="adr">
+                <span class="locality"><span class="value-title" title="Baku, Azerbaijan"></span></span>
+                <span class="street-address"><span class="value-title" title="Sederek TM"></span></span>
+                <span class="postal-code"><span class="value-title" title="AZ1014"></span></span>
+            </span>
+            <span class="geo">
+                <span class="latitude"><span class="value-title" title="40.3804253"></span></span>
+                <span class="longitude"><span class="value-title" title="49.8461362"></span></span>
+            </span>
+            <span class="tel"><span class="value-title" title="+(994) "></span></span>
+            <span class="tel"><span class="value-title" title="+(994) "></span></span>
+            <span class="tel"><span class="value-title" title="+(994) "></span></span>
+            <span class="tel"><span class="value-title" title="+(994) "></span></span>
+            <span class="photo"><span class="value-title" title="https://tvt.az"></span></span>
+        </span>
+        <!--microdatapro 7.8 company end [hCard ] -->
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <div id="rm_overlay"></div>
+    <script src="catalog/view/theme/oct_remarket/js/lozad.js"></script>
+    <div class="modal-holder"></div>
+    <script>
+        $("img.rm-menu-list-item-icon").each(function () {
+            var $img = $(this);
+            var imgClass = $img.attr("class");
+            var imgURL = $img.attr("src");
+            $.get(imgURL, function (data) {
+                var $svg = $(data).find("svg");
+                if (typeof imgClass !== "undefined") {
+                    $svg = $svg.attr("class", imgClass + " replaced-svg");
+                }
+                $svg = $svg.removeAttr("xmlns:a");
+                if (!$svg.attr("viewBox") && $svg.attr("height") && $svg.attr("width")) {
+                    $svg.attr("viewBox", "0 0 " + $svg.attr("height") + " " + $svg.attr("width"))
+                }
+                $img.replaceWith($svg);
+            }, "xml");
+        });
+        $('.gp-group0').each(function () { $(this).appendTo($(this).closest('.product-layout').find('.gp-prices-unstyled')).show(); });
+        $('.gp-group00').each(function () { $(this).appendTo($(this).closest('#product').find('.gp-prices-unstyled')).show(); });
+
+
+        const btn = document.getElementById('addToCart');
+        const tooltip = document.getElementById('tooltip');
+
+        const rect = btn.getBoundingClientRect();
+        tooltip.style.top = rect.bottom + 10 + 'px';
+        tooltip.style.left = rect.left + 'px';
+
+        document.getElementById('closeTip').onclick = () => {
+            document.getElementById('overlay').remove();
+            tooltip.remove();
+        };
+
+    </script>
+    <script async src="catalog/view/theme/oct_remarket/js/oct-fonts.js"></script>
+    <link rel="stylesheet" href="catalog/view/theme/oct_remarket/stylesheet/all.css" media="print" onload="this.media='all'">
+    <!-- CustomCode footer code -->
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WVDFPDG"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+
+
+
+    <script>
+        if (jQuery.magnificPopup == undefined) {
+            $('head').append('<link rel="stylesheet" href="catalog/view/javascript/jquery/magnific/magnific-popup.css" type="text/css" />');
+            $('<script />', { type: 'text/javascript', src: 'catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js' }).appendTo('head');
+        }
+        $(document).on('click', '.popup-youtube', function (e) {
+            e.preventDefault();
+            $(this).magnificPopup({
+                type: 'iframe',
+                iframe: {
+                    patterns: {
+                        youtube: {
+                            src: 'https://www.youtube.com/embed/%id%?autoplay=1&rel=0'
+                        }
+                    }
+                }
+            }).magnificPopup('open');
+        });
+    </script>
+
 </body>
+
+<!-- Mirrored from aem-elektron.az/ by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Jul 2026 18:41:22 GMT -->
 </html>
+

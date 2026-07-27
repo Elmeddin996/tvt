@@ -5,25 +5,22 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{801A7272-49DF-4B73-8CB0-D004F4DABD15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVT.Web", "src\TVT.Web\TVT.Web.csproj", "{B16853E6-6638-4162-A46F-695D996D31CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TVT.Web", "src\TVT.Web\TVT.Web.csproj", "{B16853E6-6638-4162-A46F-695D996D31CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVT.Business", "src\TVT.Business\TVT.Business.csproj", "{17C6D534-A6BA-4A61-B2E9-CF2166E01B4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TVT.Business", "src\TVT.Business\TVT.Business.csproj", "{17C6D534-A6BA-4A61-B2E9-CF2166E01B4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVT.Data", "src\TVT.Data\TVT.Data.csproj", "{BB24DE08-2F08-42B5-BCC3-0D6344E79088}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TVT.Data", "src\TVT.Data\TVT.Data.csproj", "{BB24DE08-2F08-42B5-BCC3-0D6344E79088}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVT.Core", "src\TVT.Core\TVT.Core.csproj", "{ADEF6533-5F95-4955-B3D4-3CF8B5447FEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TVT.Core", "src\TVT.Core\TVT.Core.csproj", "{ADEF6533-5F95-4955-B3D4-3CF8B5447FEB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{13189FD4-93C7-40B7-8006-E94AE9025B51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVT.Tests", "tests\TVT.Tests\TVT.Tests.csproj", "{CE0F3B7A-A106-4650-B987-E44F54B6B034}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TVT.Tests", "tests\TVT.Tests\TVT.Tests.csproj", "{CE0F3B7A-A106-4650-B987-E44F54B6B034}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B16853E6-6638-4162-A46F-695D996D31CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -47,11 +44,17 @@ Global
 		{CE0F3B7A-A106-4650-B987-E44F54B6B034}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE0F3B7A-A106-4650-B987-E44F54B6B034}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B16853E6-6638-4162-A46F-695D996D31CA} = {801A7272-49DF-4B73-8CB0-D004F4DABD15}
 		{17C6D534-A6BA-4A61-B2E9-CF2166E01B4E} = {801A7272-49DF-4B73-8CB0-D004F4DABD15}
 		{BB24DE08-2F08-42B5-BCC3-0D6344E79088} = {801A7272-49DF-4B73-8CB0-D004F4DABD15}
 		{ADEF6533-5F95-4955-B3D4-3CF8B5447FEB} = {801A7272-49DF-4B73-8CB0-D004F4DABD15}
 		{CE0F3B7A-A106-4650-B987-E44F54B6B034} = {13189FD4-93C7-40B7-8006-E94AE9025B51}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {75E32A21-27EF-4FD7-A2B3-A4B1668A33C2}
 	EndGlobalSection
 EndGlobal

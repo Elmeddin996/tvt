@@ -1,3 +1,4 @@
+using TVT.Core.Common.Pagination;
 using TVT.Business.DTOs.Categories;
 
 namespace TVT.Business.Abstractions.Services;
@@ -11,4 +12,7 @@ public interface ICategoryService
     Task UpdateAsync(UpdateCategoryDto dto);
     Task DeleteAsync(int id);
     Task<bool> ExistsAsync(int id);
+
+    Task<List<CategoryListDto>> GetParentCategoriesAsync(int? excludeCategoryId = null);
+    Task<PagedResult<CategoryListDto>> GetPagedAsync(PagedRequest request);
 }
