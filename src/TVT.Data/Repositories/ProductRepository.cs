@@ -7,7 +7,8 @@ namespace TVT.Data.Repositories;
 
 public class ProductRepository : GenericRepository<Product>, IProductRepository
 {
-    public ProductRepository(ApplicationDbContext context) : base(context)
+    public ProductRepository(ApplicationDbContext context)
+        : base(context)
     {
     }
 
@@ -15,7 +16,13 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
         return await DbSet
             .AsNoTracking()
-            .Where(p => p.IsFeatured && p.IsActive)
+            .Include(x => x.Category)
+            .Include(x => x.Brand)
+            .Include(x => x.ProductImages)
+            .Where(x =>
+                x.IsFeatured &&
+                x.IsActive &&
+                !x.IsDeleted)
             .ToListAsync();
     }
 
@@ -23,7 +30,13 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
         return await DbSet
             .AsNoTracking()
-            .Where(p => p.IsNew && p.IsActive)
+            .Include(x => x.Category)
+            .Include(x => x.Brand)
+            .Include(x => x.ProductImages)
+            .Where(x =>
+                x.IsNew &&
+                x.IsActive &&
+                !x.IsDeleted)
             .ToListAsync();
     }
 
@@ -31,6 +44,41 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
         return await DbSet
             .AsNoTracking()
-            .FirstOrDefaultAsync(p => p.SlugAz == slug || p.SlugEn == slug || p.SlugRu == slug);
+            .Include(x => x.Category)
+            .Include(x => x.Brand)
+            .Include(x => x.ProductImages)
+            .Include(x => x.ProductSpecifications)
+                .ThenInclude(x => x.Specification)
+                    .ThenInclude(x => x.SpecificationGroup)
+            .FirstOrDefaultAsync(x =>
+                !x.IsDeleted &&
+                (
+                    x.SlugAz == slug ||
+                    x.SlugEn == slug ||
+                    x.SlugRu == slug
+                ));
+    }
+
+    public override async Task<List<Product>> GetAllAsync()
+    {
+        return await DbSet
+            .AsNoTracking()
+            .Include(x => x.Category)
+            .Include(x => x.Brand)
+            .Include(x => x.ProductImages)
+            .Where(x => !x.IsDeleted)
+            .ToListAsync();
+    }
+
+    public override async Task<Product?> GetByIdAsync(int id)
+    {
+        return await DbSet
+            .Include(x => x.Category)
+            .Include(x => x.Brand)
+            .Include(x => x.ProductImages)
+            .Include(x => x.ProductSpecifications)
+                .ThenInclude(x => x.Specification)
+                    .ThenInclude(x => x.SpecificationGroup)
+            .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
     }
 }

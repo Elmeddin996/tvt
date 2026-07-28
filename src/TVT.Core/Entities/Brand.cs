@@ -22,4 +22,5 @@ public class Brand : BaseEntity
     public string? SeoKeywordsAz { get; set; }
     public string? SeoKeywordsEn { get; set; }
     public string? SeoKeywordsRu { get; set; }
+    public ICollection<Product> Products { get; set; } = new List<Product>();
 }

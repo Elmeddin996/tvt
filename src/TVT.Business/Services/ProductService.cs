@@ -1,6 +1,7 @@
 using AutoMapper;
 using TVT.Business.Abstractions.Services;
 using TVT.Business.DTOs.Products;
+using TVT.Business.Helpers;
 using TVT.Core.Abstractions.UnitOfWork;
 using TVT.Core.Entities;
 
@@ -11,7 +12,9 @@ public class ProductService : IProductService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public ProductService(IUnitOfWork unitOfWork, IMapper mapper)
+    public ProductService(
+        IUnitOfWork unitOfWork,
+        IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
@@ -20,39 +23,59 @@ public class ProductService : IProductService
     public async Task<List<ProductListDto>> GetAllAsync()
     {
         var products = await _unitOfWork.Products.GetAllAsync();
+
         return _mapper.Map<List<ProductListDto>>(products);
     }
 
     public async Task<ProductDetailDto?> GetByIdAsync(int id)
     {
         var product = await _unitOfWork.Products.GetByIdAsync(id);
-        if (product == null)
+
+        if (product is null)
             return null;
+
         return _mapper.Map<ProductDetailDto>(product);
     }
 
     public async Task<ProductDetailDto?> GetBySlugAsync(string slug)
     {
         var product = await _unitOfWork.Products.GetBySlugAsync(slug);
-        if (product == null)
+
+        if (product is null)
             return null;
+
         return _mapper.Map<ProductDetailDto>(product);
     }
 
     public async Task<int> CreateAsync(CreateProductDto dto)
     {
         var product = _mapper.Map<Product>(dto);
+
+        product.SlugAz = $"{SlugHelper.Generate(product.NameAz)}-{SlugHelper.Generate(product.Code)}";
+        product.SlugEn = $"{SlugHelper.Generate(product.NameEn)}-{SlugHelper.Generate(product.Code)}";
+        product.SlugRu = $"{SlugHelper.Generate(product.NameRu)}-{SlugHelper.Generate(product.Code)}";
+
         await _unitOfWork.Products.AddAsync(product);
         await _unitOfWork.SaveChangesAsync();
+
         return product.Id;
     }
 
     public async Task UpdateAsync(UpdateProductDto dto)
     {
         var product = await _unitOfWork.Products.GetByIdAsync(dto.Id);
-        if (product == null)
+
+        if (product is null)
             throw new KeyNotFoundException("Product not found.");
+
         _mapper.Map(dto, product);
+
+        product.SlugAz = $"{SlugHelper.Generate(product.NameAz)}-{SlugHelper.Generate(product.Code)}";
+        product.SlugEn = $"{SlugHelper.Generate(product.NameEn)}-{SlugHelper.Generate(product.Code)}";
+        product.SlugRu = $"{SlugHelper.Generate(product.NameRu)}-{SlugHelper.Generate(product.Code)}";
+
+        product.UpdatedDate = DateTime.UtcNow;
+
         await _unitOfWork.Products.UpdateAsync(product);
         await _unitOfWork.SaveChangesAsync();
     }
@@ -60,9 +83,16 @@ public class ProductService : IProductService
     public async Task DeleteAsync(int id)
     {
         var product = await _unitOfWork.Products.GetByIdAsync(id);
-        if (product == null)
+
+        if (product is null)
             throw new KeyNotFoundException("Product not found.");
-        await _unitOfWork.Products.DeleteAsync(product);
+
+        // Soft Delete
+        product.IsDeleted = true;
+        product.IsActive = false;
+        product.UpdatedDate = DateTime.UtcNow;
+
+        await _unitOfWork.Products.UpdateAsync(product);
         await _unitOfWork.SaveChangesAsync();
     }
 

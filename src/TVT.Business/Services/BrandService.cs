@@ -86,4 +86,11 @@ public class BrandService : IBrandService
     {
         return await _unitOfWork.Brands.ExistsAsync(id);
     }
+
+    public async Task<List<BrandListDto>> GetAllAsync()
+    {
+        var brands = await _unitOfWork.Brands.GetAllAsync();
+
+        return _mapper.Map<List<BrandListDto>>(brands);
+    }
 }

@@ -8,67 +8,45 @@ public sealed class ProductProfile : Profile
 {
     public ProductProfile()
     {
+        // Entity -> List DTO
         CreateMap<Product, ProductListDto>()
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.NameAz))
-            .ForMember(dest => dest.Slug, opt => opt.MapFrom(src => src.SlugAz))
-            .ForMember(dest => dest.Image, opt => opt.Ignore());
+            .ForMember(dest => dest.NameAz,
+                opt => opt.MapFrom(src => src.NameAz))
+            .ForMember(dest => dest.CategoryName,
+                opt => opt.MapFrom(src => src.Category.NameAz))
+            .ForMember(dest => dest.BrandName,
+                opt => opt.MapFrom(src => src.Brand.NameAz))
+            .ForMember(dest => dest.MainImage,
+                opt => opt.MapFrom(src =>
+                    src.ProductImages
+                        .Where(x => x.IsMain)
+                        .Select(x => x.Image)
+                        .FirstOrDefault()));
 
-        CreateMap<Product, ProductDetailDto>()
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.NameAz))
-            .ForMember(dest => dest.Slug, opt => opt.MapFrom(src => src.SlugAz))
-            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.DescriptionAz))
-            .ForMember(dest => dest.Image, opt => opt.Ignore());
+        // Entity -> Detail DTO
+        CreateMap<Product, ProductDetailDto>();
 
+        // Create DTO -> Entity
         CreateMap<CreateProductDto, Product>()
-            .ForMember(dest => dest.NameAz, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.NameEn, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.NameRu, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.SlugAz, opt => opt.MapFrom(src => src.Slug))
-            .ForMember(dest => dest.SlugEn, opt => opt.MapFrom(src => src.Slug))
-            .ForMember(dest => dest.SlugRu, opt => opt.MapFrom(src => src.Slug))
-            .ForMember(dest => dest.DescriptionAz, opt => opt.MapFrom(src => src.Description))
-            .ForMember(dest => dest.DescriptionEn, opt => opt.MapFrom(src => src.Description))
-            .ForMember(dest => dest.DescriptionRu, opt => opt.MapFrom(src => src.Description))
             .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
             .ForMember(dest => dest.UpdatedDate, opt => opt.Ignore())
             .ForMember(dest => dest.IsActive, opt => opt.Ignore())
             .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
+            .ForMember(dest => dest.Category, opt => opt.Ignore())
             .ForMember(dest => dest.Brand, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoTitleAz, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoTitleEn, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoTitleRu, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoDescriptionAz, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoDescriptionEn, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoDescriptionRu, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoKeywordsAz, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoKeywordsEn, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoKeywordsRu, opt => opt.Ignore());
+            .ForMember(dest => dest.ProductImages, opt => opt.Ignore())
+            .ForMember(dest => dest.ProductSpecifications, opt => opt.Ignore());
 
+        // Update DTO -> Entity
         CreateMap<UpdateProductDto, Product>()
-            .ForMember(dest => dest.NameAz, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.NameEn, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.NameRu, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.SlugAz, opt => opt.MapFrom(src => src.Slug))
-            .ForMember(dest => dest.SlugEn, opt => opt.MapFrom(src => src.Slug))
-            .ForMember(dest => dest.SlugRu, opt => opt.MapFrom(src => src.Slug))
-            .ForMember(dest => dest.DescriptionAz, opt => opt.MapFrom(src => src.Description))
-            .ForMember(dest => dest.DescriptionEn, opt => opt.MapFrom(src => src.Description))
-            .ForMember(dest => dest.DescriptionRu, opt => opt.MapFrom(src => src.Description))
-            .ForMember(dest => dest.Id, opt => opt.Ignore())
             .ForMember(dest => dest.CreatedDate, opt => opt.Ignore())
             .ForMember(dest => dest.UpdatedDate, opt => opt.Ignore())
             .ForMember(dest => dest.IsActive, opt => opt.Ignore())
             .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
+            .ForMember(dest => dest.Category, opt => opt.Ignore())
             .ForMember(dest => dest.Brand, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoTitleAz, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoTitleEn, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoTitleRu, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoDescriptionAz, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoDescriptionEn, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoDescriptionRu, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoKeywordsAz, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoKeywordsEn, opt => opt.Ignore())
-            .ForMember(dest => dest.SeoKeywordsRu, opt => opt.Ignore());
+            .ForMember(dest => dest.ProductImages, opt => opt.Ignore())
+            .ForMember(dest => dest.ProductSpecifications, opt => opt.Ignore());
     }
 }

@@ -12,11 +12,30 @@ public class ProductImageConfiguration : IEntityTypeConfiguration<ProductImage>
 
         builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.Image).IsRequired().HasMaxLength(500);
+        // Properties
+        builder.Property(x => x.Image)
+            .IsRequired()
+            .HasMaxLength(500);
 
+        // Relationships
         builder.HasOne(x => x.Product)
-            .WithMany()
+            .WithMany(x => x.ProductImages)
             .HasForeignKey(x => x.ProductId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Indexes
+        builder.HasIndex(x => x.ProductId);
+
+        builder.HasIndex(x => new
+        {
+            x.ProductId,
+            x.DisplayOrder
+        });
+
+        builder.HasIndex(x => new
+        {
+            x.ProductId,
+            x.IsMain
+        });
     }
 }

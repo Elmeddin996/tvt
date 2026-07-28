@@ -1,0 +1,227 @@
+@model TVT.Web.Areas.Admin.ViewModels.Products.CreateProductViewModel
+
+@{
+    ViewData["Title"] = "Create Product";
+}
+
+<partial name="_PageHeader" />
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Create Product</h5>
+
+        <a asp-area="Admin"
+           asp-controller="Product"
+           asp-action="Index"
+           class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i>
+            Back to List
+        </a>
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="Create" method="post">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <h5 class="border-bottom pb-2 mb-4">
+                General Information
+            </h5>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Product.CategoryId" class="form-label"></label>
+                    <select asp-for="Product.CategoryId"
+                            asp-items="Model.Categories"
+                            class="form-select"></select>
+                    <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Product.BrandId" class="form-label"></label>
+                    <select asp-for="Product.BrandId"
+                            asp-items="Model.Brands"
+                            class="form-select"></select>
+                    <span asp-validation-for="Product.BrandId" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Product.Code" class="form-label"></label>
+                    <input asp-for="Product.Code" class="form-control" />
+                    <span asp-validation-for="Product.Code" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Product.Model" class="form-label"></label>
+                    <input asp-for="Product.Model" class="form-control" />
+                </div>
+
+            </div>
+
+            <hr />
+
+            <h5 class="border-bottom pb-2 mb-4">
+                Product Names
+            </h5>
+
+            <div class="mb-3">
+                <label asp-for="Product.NameAz" class="form-label"></label>
+                <input asp-for="Product.NameAz" class="form-control" />
+                <span asp-validation-for="Product.NameAz" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Product.NameEn" class="form-label"></label>
+                <input asp-for="Product.NameEn" class="form-control" />
+                <span asp-validation-for="Product.NameEn" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Product.NameRu" class="form-label"></label>
+                <input asp-for="Product.NameRu" class="form-control" />
+                <span asp-validation-for="Product.NameRu" class="text-danger"></span>
+            </div>
+
+            <hr />
+
+            
+
+            <h5 class="border-bottom pb-2 mb-4">
+                Descriptions
+            </h5>
+
+            <div class="mb-3">
+                <label asp-for="Product.DescriptionAz" class="form-label"></label>
+                <textarea asp-for="Product.DescriptionAz" class="form-control" rows="4"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Product.DescriptionEn" class="form-label"></label>
+                <textarea asp-for="Product.DescriptionEn" class="form-control" rows="4"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Product.DescriptionRu" class="form-label"></label>
+                <textarea asp-for="Product.DescriptionRu" class="form-control" rows="4"></textarea>
+            </div>
+
+            <hr />
+
+            <h5 class="border-bottom pb-2 mb-4">
+                Pricing & Stock
+            </h5>
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Product.Price" class="form-label"></label>
+                    <input asp-for="Product.Price" class="form-control" />
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Product.OldPrice" class="form-label"></label>
+                    <input asp-for="Product.OldPrice" class="form-control" />
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Product.StockQuantity" class="form-label"></label>
+                    <input asp-for="Product.StockQuantity" class="form-control" />
+                </div>
+
+            </div>
+
+            <hr />
+
+            <h5 class="border-bottom pb-2 mb-4">
+                Product Options
+            </h5>
+
+            <div class="form-check mb-2">
+                <input asp-for="Product.IsFeatured" class="form-check-input" />
+                <label asp-for="Product.IsFeatured" class="form-check-label"></label>
+            </div>
+
+            <div class="form-check mb-4">
+                <input asp-for="Product.IsNew" class="form-check-input" />
+                <label asp-for="Product.IsNew" class="form-check-label"></label>
+            </div>
+
+            <hr />
+
+            <h5 class="border-bottom pb-2 mb-4">
+                SEO
+            </h5>
+
+            <div class="mb-3">
+                <label asp-for="Product.SeoTitleAz" class="form-label"></label>
+                <input asp-for="Product.SeoTitleAz" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Product.SeoTitleEn" class="form-label"></label>
+                <input asp-for="Product.SeoTitleEn" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Product.SeoTitleRu" class="form-label"></label>
+                <input asp-for="Product.SeoTitleRu" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Product.SeoDescriptionAz" class="form-label"></label>
+                <textarea asp-for="Product.SeoDescriptionAz" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Product.SeoDescriptionEn" class="form-label"></label>
+                <textarea asp-for="Product.SeoDescriptionEn" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Product.SeoDescriptionRu" class="form-label"></label>
+                <textarea asp-for="Product.SeoDescriptionRu" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Product.SeoKeywordsAz" class="form-label"></label>
+                <input asp-for="Product.SeoKeywordsAz" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Product.SeoKeywordsEn" class="form-label"></label>
+                <input asp-for="Product.SeoKeywordsEn" class="form-control" />
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Product.SeoKeywordsRu" class="form-label"></label>
+                <input asp-for="Product.SeoKeywordsRu" class="form-control" />
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+
+                <a asp-action="Index"
+                   class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="btn btn-success">
+                    <i class="bi bi-check-lg"></i>
+                    Save
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
