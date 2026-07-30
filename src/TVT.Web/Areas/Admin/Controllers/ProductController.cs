@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TVT.Business.Abstractions.Services;
+using TVT.Business.DTOs.ProductImages;
 using TVT.Business.DTOs.Products;
+using TVT.Business.Services;
 using TVT.Web.Areas.Admin.ViewModels.Products;
+using TVT.Web.Services;
 
 namespace TVT.Web.Areas.Admin.Controllers;
 
@@ -12,15 +15,21 @@ public class ProductController : Controller
     private readonly IProductService _productService;
     private readonly ICategoryService _categoryService;
     private readonly IBrandService _brandService;
+    private readonly IProductImageService _productImageService;
+    private readonly IFileService _fileService;
 
     public ProductController(
-        IProductService productService,
-        ICategoryService categoryService,
-        IBrandService brandService)
+    IProductService productService,
+    ICategoryService categoryService,
+    IBrandService brandService,
+     IFileService fileService,
+    IProductImageService productImageService)
     {
         _productService = productService;
         _categoryService = categoryService;
         _brandService = brandService;
+        _productImageService = productImageService;
+        _fileService = fileService;
     }
 
     public async Task<IActionResult> Index()
@@ -56,11 +65,11 @@ public class ProductController : Controller
 
         try
         {
-            await _productService.CreateAsync(model.Product);
+            var productId = await _productService.CreateAsync(model.Product);
 
             TempData["Success"] = "Product created successfully.";
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Edit), new { id = productId });
         }
         catch (InvalidOperationException ex)
         {
@@ -123,6 +132,10 @@ public class ProductController : Controller
 
         await LoadDropdowns(model);
 
+        model.Images = await _productImageService.GetByProductIdAsync(id);
+
+        model.UploadImage.ProductId = id;
+
         ViewData["Title"] = "Edit Product";
 
         return View(model);
@@ -162,22 +175,31 @@ public class ProductController : Controller
     {
         var product = await _productService.GetByIdAsync(id);
 
-        if (product == null)
+        if (product is null)
             return NotFound();
 
         try
         {
+            var images = await _productImageService.GetByProductIdAsync(id);
+
+            foreach (var image in images)
+            {
+                await _fileService.DeleteAsync(image.Image);
+            }
+
+           
             await _productService.DeleteAsync(id);
 
             TempData["Success"] = "Product deleted successfully.";
         }
-        catch (InvalidOperationException ex)
+        catch (Exception ex)
         {
             TempData["Error"] = ex.Message;
         }
 
         return RedirectToAction(nameof(Index));
     }
+
 
 
     private async Task LoadDropdowns(CreateProductViewModel model)
@@ -256,4 +278,80 @@ public class ProductController : Controller
         });
     }
 
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> UploadImage(UploadProductImageViewModel model)
+    {
+
+        if (!ModelState.IsValid)
+        {
+            TempData["Error"] = "Please select an image.";
+
+            return RedirectToAction(nameof(Edit), new { id = model.ProductId });
+        }
+
+        var uploadResult = await _fileService.UploadAsync(model.Image, "products");
+
+        if (!uploadResult.Success)
+        {
+            TempData["Error"] = uploadResult.ErrorMessage;
+
+            return RedirectToAction(nameof(Edit), new { id = model.ProductId });
+        }
+
+        await _productImageService.UploadAsync(new UploadProductImageDto
+        {
+            ProductId = model.ProductId,
+            Image = uploadResult.FilePath!,
+            IsMain = model.IsMain,
+            DisplayOrder = model.DisplayOrder
+        });
+
+        TempData["Success"] = "Image uploaded successfully.";
+
+        return RedirectToAction(nameof(Edit), new { id = model.ProductId });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> SetMainImage(int imageId, int productId)
+    {
+        try
+        {
+            await _productImageService.SetMainImageAsync(imageId);
+
+            TempData["Success"] = "Main image updated successfully.";
+        }
+        catch (Exception ex)
+        {
+            TempData["Error"] = ex.Message;
+        }
+
+        return RedirectToAction(nameof(Edit), new { id = productId });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteImage(int imageId, int productId)
+    {
+        try
+        {
+            var image = await _productImageService.GetByIdAsync(imageId);
+
+            if (image is null)
+                return NotFound();
+
+            await _fileService.DeleteAsync(image.Image);
+
+            await _productImageService.DeleteAsync(imageId);
+
+            TempData["Success"] = "Image deleted successfully.";
+        }
+        catch (Exception ex)
+        {
+            TempData["Error"] = ex.Message;
+        }
+
+        return RedirectToAction(nameof(Edit), new { id = productId });
+    }
 }

@@ -10,4 +10,5 @@ public interface IGenericRepository<TEntity> where TEntity : class
     Task<bool> ExistsAsync(int id);
     Task<int> CountAsync();
     IQueryable<TEntity> GetQueryable();
+    Task DeleteRangeAsync(IEnumerable<TEntity> entities);
 }

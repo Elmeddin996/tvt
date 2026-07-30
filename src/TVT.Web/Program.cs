@@ -13,6 +13,7 @@ builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.Configure<FileSettings>(
     builder.Configuration.GetSection("FileSettings"));
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

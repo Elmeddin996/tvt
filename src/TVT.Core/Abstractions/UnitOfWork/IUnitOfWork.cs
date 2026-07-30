@@ -14,5 +14,7 @@ public interface IUnitOfWork
     ISubscriberRepository Subscribers { get; }
     IContactMessageRepository ContactMessages { get; }
 
+    IProductImageRepository ProductImages { get; }
+
     Task<int> SaveChangesAsync();
 }

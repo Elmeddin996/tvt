@@ -219,6 +219,157 @@
 
         </form>
 
+        <hr class="my-5" />
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Product Images</h5>
+            </div>
+
+            <div class="card-body">
+
+                <form asp-action="UploadImage"
+                      method="post"
+                      enctype="multipart/form-data">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden"
+                           name="ProductId"
+                           value="@Model.Product.Id" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Image</label>
+
+                        <input type="file"
+                               name="Image"
+                               class="form-control"
+                               accept="image/*" />
+                    </div>
+
+                    <div class="form-check mb-3">
+                        <input type="checkbox"
+                               name="IsMain"
+                               value="true"
+                               class="form-check-input"
+                               id="IsMain" />
+
+                        <input type="hidden"
+                               name="IsMain"
+                               value="false" />
+
+                        <label class="form-check-label" for="IsMain">
+                            Main Image
+                        </label>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Display Order</label>
+
+                        <input type="number"
+                               name="DisplayOrder"
+                               class="form-control"
+                               value="0" />
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Upload
+                    </button>
+
+                </form>
+
+                <hr />
+
+                @if (Model.Images.Any())
+                {
+                    <div class="row">
+
+                        @foreach (var image in Model.Images)
+                        {
+                            <div class="col-md-3 mb-4">
+
+                                <div class="card h-100">
+
+                                    <img src="@image.Image"
+                                         class="card-img-top"
+                                         style="height:220px;object-fit:contain;padding:10px;" />
+
+                                    <div class="card-body text-center">
+
+                                        @if (image.IsMain)
+                                        {
+                                            <span class="badge bg-success mb-2">
+                                                Main Image
+                                            </span>
+                                        }
+
+                                        <div class="d-grid gap-2">
+
+                                            @if (!image.IsMain)
+                                            {
+                                                <form asp-action="SetMainImage"
+                                                      method="post">
+
+                                                    @Html.AntiForgeryToken()
+
+                                                    <input type="hidden"
+                                                           name="imageId"
+                                                           value="@image.Id" />
+
+                                                    <input type="hidden"
+                                                           name="productId"
+                                                           value="@Model.Product.Id" />
+
+                                                    <button type="submit"
+                                                            class="btn btn-outline-primary btn-sm">
+                                                        Set Main
+                                                    </button>
+
+                                                </form>
+                                            }
+
+                                            <form asp-action="DeleteImage"
+                                                  method="post">
+
+                                                @Html.AntiForgeryToken()
+
+                                                <input type="hidden"
+                                                       name="imageId"
+                                                       value="@image.Id" />
+
+                                                <input type="hidden"
+                                                       name="productId"
+                                                       value="@Model.Product.Id" />
+
+                                                <button type="submit"
+                                                        class="btn btn-outline-danger btn-sm">
+                                                    Delete
+                                                </button>
+
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info mb-0">
+                        No images uploaded yet.
+                    </div>
+                }
+
+            </div>
+        </div>
+
     </div>
 
 </div>

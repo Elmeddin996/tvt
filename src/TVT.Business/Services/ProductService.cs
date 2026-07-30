@@ -76,7 +76,6 @@ public class ProductService : IProductService
 
         product.UpdatedDate = DateTime.UtcNow;
 
-        await _unitOfWork.Products.UpdateAsync(product);
         await _unitOfWork.SaveChangesAsync();
     }
 
@@ -87,12 +86,15 @@ public class ProductService : IProductService
         if (product is null)
             throw new KeyNotFoundException("Product not found.");
 
-        // Soft Delete
+        if (product.ProductImages.Any())
+        {
+            await _unitOfWork.ProductImages.DeleteRangeAsync(product.ProductImages);
+        }
+
         product.IsDeleted = true;
         product.IsActive = false;
         product.UpdatedDate = DateTime.UtcNow;
 
-        await _unitOfWork.Products.UpdateAsync(product);
         await _unitOfWork.SaveChangesAsync();
     }
 

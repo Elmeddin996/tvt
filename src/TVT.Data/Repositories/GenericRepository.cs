@@ -42,6 +42,12 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         return Task.CompletedTask;
     }
 
+    public virtual Task DeleteRangeAsync(IEnumerable<TEntity> entities)
+    {
+        DbSet.RemoveRange(entities);
+        return Task.CompletedTask;
+    }
+
     public virtual async Task<bool> ExistsAsync(int id)
     {
         var entity = await DbSet.FindAsync(id);
