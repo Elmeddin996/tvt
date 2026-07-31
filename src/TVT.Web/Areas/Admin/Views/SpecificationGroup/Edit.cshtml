@@ -1,0 +1,79 @@
+@model TVT.Web.Areas.Admin.ViewModels.SpecificationGroups.UpdateSpecificationGroupViewModel
+
+@{
+    ViewData["Title"] = "Edit Specification Group";
+}
+
+<partial name="_PageHeader" />
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Edit Specification Group</h5>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i>
+            Back to List
+        </a>
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="Edit" method="post">
+
+            @Html.AntiForgeryToken()
+
+            <input asp-for="SpecificationGroup.Id" type="hidden" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="SpecificationGroup.NameAz" class="form-label"></label>
+                <input asp-for="SpecificationGroup.NameAz" class="form-control" />
+                <span asp-validation-for="SpecificationGroup.NameAz" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="SpecificationGroup.NameEn" class="form-label"></label>
+                <input asp-for="SpecificationGroup.NameEn" class="form-control" />
+                <span asp-validation-for="SpecificationGroup.NameEn" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="SpecificationGroup.NameRu" class="form-label"></label>
+                <input asp-for="SpecificationGroup.NameRu" class="form-control" />
+                <span asp-validation-for="SpecificationGroup.NameRu" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="SpecificationGroup.DisplayOrder" class="form-label"></label>
+                <input asp-for="SpecificationGroup.DisplayOrder" class="form-control" />
+                <span asp-validation-for="SpecificationGroup.DisplayOrder" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+
+                <a asp-action="Index"
+                   class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    <i class="bi bi-check-lg"></i>
+                    Update
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

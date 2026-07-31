@@ -15,6 +15,7 @@ public interface IUnitOfWork
     IContactMessageRepository ContactMessages { get; }
 
     IProductImageRepository ProductImages { get; }
+    ISpecificationGroupRepository SpecificationGroups { get; }
 
     Task<int> SaveChangesAsync();
 }

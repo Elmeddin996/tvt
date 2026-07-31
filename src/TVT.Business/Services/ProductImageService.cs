@@ -34,10 +34,7 @@ public class ProductImageService : IProductImageService
 
         var hasMainImage = await _unitOfWork.ProductImages.ExistsMainImageAsync(dto.ProductId);
 
-        if (!hasMainImage)
-        {
-            dto.IsMain = true;
-        }
+        dto.IsMain = dto.IsMain || !hasMainImage;
 
         if (dto.IsMain)
         {

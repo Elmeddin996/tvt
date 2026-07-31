@@ -20,6 +20,7 @@ public class UnitOfWork : IUnitOfWork
         ISettingRepository settingRepository,
         ISubscriberRepository subscriberRepository,
         IContactMessageRepository contactMessageRepository,
+        ISpecificationGroupRepository specificationGroupRepository,
         IProductImageRepository productImageRepository)
     {
         _context = context;
@@ -33,9 +34,11 @@ public class UnitOfWork : IUnitOfWork
         Settings = settingRepository;
         Subscribers = subscriberRepository;
         ContactMessages = contactMessageRepository;
+        SpecificationGroups = specificationGroupRepository;
     }
 
     public IProductRepository Products { get; }
+    public ISpecificationGroupRepository SpecificationGroups { get; }
     public ICategoryRepository Categories { get; }
     public IProductImageRepository ProductImages { get; }
     public IBrandRepository Brands { get; }

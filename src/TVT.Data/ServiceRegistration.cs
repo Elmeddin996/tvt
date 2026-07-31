@@ -31,6 +31,7 @@ public static class ServiceRegistration
         services.AddScoped<ISubscriberRepository, SubscriberRepository>();
         services.AddScoped<IContactMessageRepository, ContactMessageRepository>();
         services.AddScoped<IProductImageRepository, ProductImageRepository>();
+        services.AddScoped<ISpecificationGroupRepository, SpecificationGroupRepository>();
         // Unit of Work
         services.AddScoped<IUnitOfWork, TVT.Data.UnitOfWork.UnitOfWork>();
 

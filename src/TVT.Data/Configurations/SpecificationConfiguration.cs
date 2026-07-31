@@ -27,9 +27,9 @@ public class SpecificationConfiguration : IEntityTypeConfiguration<Specification
 
         // Relationships
         builder.HasOne(x => x.SpecificationGroup)
-            .WithMany(x => x.Specifications)
-            .HasForeignKey(x => x.SpecificationGroupId)
-            .OnDelete(DeleteBehavior.Cascade);
+     .WithMany(x => x.Specifications)
+     .HasForeignKey(x => x.SpecificationGroupId)
+     .OnDelete(DeleteBehavior.Restrict);
 
         // Indexes
         builder.HasIndex(x => x.SpecificationGroupId);
