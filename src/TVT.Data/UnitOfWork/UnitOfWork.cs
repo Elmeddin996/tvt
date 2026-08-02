@@ -21,11 +21,13 @@ public class UnitOfWork : IUnitOfWork
         ISubscriberRepository subscriberRepository,
         IContactMessageRepository contactMessageRepository,
         ISpecificationGroupRepository specificationGroupRepository,
+        ISpecificationRepository specificationRepository,
         IProductImageRepository productImageRepository)
     {
         _context = context;
         Products = productRepository;
         ProductImages = productImageRepository;
+        Specifications = specificationRepository;
         Categories = categoryRepository;
         Brands = brandRepository;
         News = newsRepository;
@@ -39,6 +41,7 @@ public class UnitOfWork : IUnitOfWork
 
     public IProductRepository Products { get; }
     public ISpecificationGroupRepository SpecificationGroups { get; }
+    public ISpecificationRepository Specifications { get; }
     public ICategoryRepository Categories { get; }
     public IProductImageRepository ProductImages { get; }
     public IBrandRepository Brands { get; }

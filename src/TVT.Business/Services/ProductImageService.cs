@@ -95,7 +95,7 @@ public class ProductImageService : IProductImageService
         await _unitOfWork.SaveChangesAsync();
     }
 
-    public async Task UpdateDisplayOrderAsync(List<UpdateProductImageOrderDto> dto)
+    public Task UpdateDisplayOrderAsync(List<UpdateProductImageOrderDto> dto)
     {
         throw new NotImplementedException();
     }

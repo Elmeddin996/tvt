@@ -64,7 +64,7 @@ public class SliderService : ISliderService
 
         _mapper.Map(dto, slider);
 
-        _unitOfWork.Sliders.UpdateAsync(slider);
+        await _unitOfWork.Sliders.UpdateAsync(slider);
 
         await _unitOfWork.SaveChangesAsync();
     }
@@ -76,7 +76,7 @@ public class SliderService : ISliderService
         if (slider == null)
             throw new KeyNotFoundException($"Slider with ID {id} was not found.");
 
-        _unitOfWork.Sliders.DeleteAsync(slider);
+        await _unitOfWork.Sliders.DeleteAsync(slider);
 
         await _unitOfWork.SaveChangesAsync();
     }
