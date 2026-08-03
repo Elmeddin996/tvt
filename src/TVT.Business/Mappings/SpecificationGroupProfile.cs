@@ -8,14 +8,27 @@ public class SpecificationGroupProfile : Profile
 {
     public SpecificationGroupProfile()
     {
-        CreateMap<SpecificationGroup, SpecificationGroupListDto>();
+        CreateMap<SpecificationGroup, SpecificationGroupListDto>()
+            .ForMember(x => x.Categories,
+                opt => opt.MapFrom(src =>
+                    string.Join(", ",
+                        src.CategorySpecificationGroups
+                            .Select(x => x.Category.NameAz))));
 
-        CreateMap<SpecificationGroup, SpecificationGroupDetailDto>();
+        CreateMap<SpecificationGroup, SpecificationGroupDetailDto>()
+            .ForMember(x => x.CategoryIds,
+                opt => opt.MapFrom(src =>
+                    src.CategorySpecificationGroups
+                        .Select(x => x.CategoryId)));
 
         CreateMap<CreateSpecificationGroupDto, SpecificationGroup>();
 
         CreateMap<UpdateSpecificationGroupDto, SpecificationGroup>();
 
-        CreateMap<SpecificationGroup, UpdateSpecificationGroupDto>();
+        CreateMap<SpecificationGroup, UpdateSpecificationGroupDto>()
+            .ForMember(x => x.CategoryIds,
+                opt => opt.MapFrom(src =>
+                    src.CategorySpecificationGroups
+                        .Select(x => x.CategoryId)));
     }
 }

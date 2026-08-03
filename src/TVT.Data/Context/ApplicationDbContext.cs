@@ -36,6 +36,8 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<News> News { get; set; }
 
+    public DbSet<CategorySpecificationGroup> CategorySpecificationGroups => Set<CategorySpecificationGroup>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

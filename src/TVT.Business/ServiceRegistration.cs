@@ -20,6 +20,7 @@ public static class ServiceRegistration
         services.AddScoped<IProductImageService, ProductImageService>();
         services.AddScoped<ISpecificationGroupService, SpecificationGroupService>();
         services.AddScoped<ISpecificationService, SpecificationService>();
+        services.AddScoped<IProductSpecificationService, ProductSpecificationService>();
 
         return services;
     }

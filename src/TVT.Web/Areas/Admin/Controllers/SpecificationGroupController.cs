@@ -9,11 +9,14 @@ namespace TVT.Web.Areas.Admin.Controllers;
 public class SpecificationGroupController : Controller
 {
     private readonly ISpecificationGroupService _specificationGroupService;
+    private readonly ICategoryService _categoryService;
 
     public SpecificationGroupController(
-        ISpecificationGroupService specificationGroupService)
+        ISpecificationGroupService specificationGroupService,
+        ICategoryService categoryService)
     {
         _specificationGroupService = specificationGroupService;
+        _categoryService = categoryService;
     }
 
     public async Task<IActionResult> Index()
@@ -26,11 +29,13 @@ public class SpecificationGroupController : Controller
     }
 
     [HttpGet]
-    public IActionResult Create()
+    public async Task<IActionResult> Create()
     {
         ViewData["Title"] = "Create Specification Group";
 
         var model = new CreateSpecificationGroupViewModel();
+
+        await LoadDropdowns(model);
 
         return View(model);
     }
@@ -41,6 +46,7 @@ public class SpecificationGroupController : Controller
     {
         if (!ModelState.IsValid)
         {
+            await LoadDropdowns(model);
             return View(model);
         }
 
@@ -55,6 +61,8 @@ public class SpecificationGroupController : Controller
         catch (Exception ex)
         {
             ModelState.AddModelError(string.Empty, ex.Message);
+
+            await LoadDropdowns(model);
 
             return View(model);
         }
@@ -76,9 +84,12 @@ public class SpecificationGroupController : Controller
                 NameAz = specificationGroup.NameAz,
                 NameEn = specificationGroup.NameEn,
                 NameRu = specificationGroup.NameRu,
+                CategoryIds = specificationGroup.CategoryIds,
                 DisplayOrder = specificationGroup.DisplayOrder
             }
         };
+
+        await LoadDropdowns(model);
 
         ViewData["Title"] = "Edit Specification Group";
 
@@ -90,7 +101,10 @@ public class SpecificationGroupController : Controller
     public async Task<IActionResult> Edit(UpdateSpecificationGroupViewModel model)
     {
         if (!ModelState.IsValid)
+        {
+            await LoadDropdowns(model);
             return View(model);
+        }
 
         try
         {
@@ -103,6 +117,8 @@ public class SpecificationGroupController : Controller
         catch (Exception ex)
         {
             ModelState.AddModelError(string.Empty, ex.Message);
+
+            await LoadDropdowns(model);
 
             return View(model);
         }
@@ -128,5 +144,31 @@ public class SpecificationGroupController : Controller
         }
 
         return RedirectToAction(nameof(Index));
+    }
+
+    private async Task LoadDropdowns(CreateSpecificationGroupViewModel model)
+    {
+        var categories = await _categoryService.GetAllAsync();
+
+        model.Categories = categories
+            .Select(x => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.NameAz
+            })
+            .ToList();
+    }
+
+    private async Task LoadDropdowns(UpdateSpecificationGroupViewModel model)
+    {
+        var categories = await _categoryService.GetAllAsync();
+
+        model.Categories = categories
+            .Select(x => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.NameAz
+            })
+            .ToList();
     }
 }

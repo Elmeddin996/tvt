@@ -17,6 +17,7 @@ public interface IUnitOfWork
     IProductImageRepository ProductImages { get; }
     ISpecificationGroupRepository SpecificationGroups { get; }
     ISpecificationRepository Specifications { get; }
+    IProductSpecificationRepository ProductSpecifications { get; }
 
     Task<int> SaveChangesAsync();
 }

@@ -6,7 +6,7 @@ public class UploadProductImageViewModel
 {
     public int ProductId { get; set; }
 
-    public IFormFile Image { get; set; } = null!;
+    public IFormFile? Image { get; set; }
 
     public bool IsMain { get; set; }
 

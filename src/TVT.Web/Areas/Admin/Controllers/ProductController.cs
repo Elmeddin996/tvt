@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using TVT.Business.Abstractions.Services;
 using TVT.Business.DTOs.ProductImages;
 using TVT.Business.DTOs.Products;
+using TVT.Business.DTOs.ProductSpecifications;
 using TVT.Business.Services;
 using TVT.Web.Areas.Admin.ViewModels.Products;
 using TVT.Web.Services;
@@ -17,12 +18,14 @@ public class ProductController : Controller
     private readonly IBrandService _brandService;
     private readonly IProductImageService _productImageService;
     private readonly IFileService _fileService;
+    private readonly IProductSpecificationService _productSpecificationService;
 
     public ProductController(
     IProductService productService,
     ICategoryService categoryService,
     IBrandService brandService,
      IFileService fileService,
+     IProductSpecificationService productSpecificationService,
     IProductImageService productImageService)
     {
         _productService = productService;
@@ -30,6 +33,7 @@ public class ProductController : Controller
         _brandService = brandService;
         _productImageService = productImageService;
         _fileService = fileService;
+        _productSpecificationService = productSpecificationService;
     }
 
     public async Task<IActionResult> Index()
@@ -134,8 +138,20 @@ public class ProductController : Controller
 
         model.Images = await _productImageService.GetByProductIdAsync(id);
 
-        model.UploadImage.ProductId = id;
+        model.Specifications = (await _productSpecificationService
+            .GetByProductIdAsync(id))
+            .Select(x => new UpdateProductSpecificationViewModel
+            {
+                SpecificationId = x.SpecificationId,
+                GroupName = x.GroupName,
+                SpecificationName = x.SpecificationName,
+                ValueAz = x.ValueAz,
+                ValueEn = x.ValueEn,
+                ValueRu = x.ValueRu
+            })
+            .ToList();
 
+        model.UploadImage.ProductId = id;
         ViewData["Title"] = "Edit Product";
 
         return View(model);
@@ -148,12 +164,30 @@ public class ProductController : Controller
         if (!ModelState.IsValid)
         {
             await LoadDropdowns(model);
+
+            throw new Exception(
+    string.Join("\n",
+        ModelState
+            .Where(x => x.Value.Errors.Any())
+            .SelectMany(x => x.Value.Errors.Select(e => $"{x.Key} => {e.ErrorMessage}"))));
             return View(model);
         }
 
         try
         {
             await _productService.UpdateAsync(model.Product);
+
+            await _productSpecificationService.UpdateAsync(
+                model.Product.Id,
+                model.Specifications
+                    .Select(x => new UpdateProductSpecificationDto
+                    {
+                        SpecificationId = x.SpecificationId,
+                        ValueAz = x.ValueAz,
+                        ValueEn = x.ValueEn,
+                        ValueRu = x.ValueRu
+                    })
+                    .ToList());
 
             TempData["Success"] = "Product updated successfully.";
 

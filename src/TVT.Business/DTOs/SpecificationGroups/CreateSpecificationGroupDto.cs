@@ -8,5 +8,7 @@ public class CreateSpecificationGroupDto
 
     public string NameRu { get; set; } = null!;
 
+    public ICollection<int> CategoryIds { get; set; } = new List<int>();
+
     public int DisplayOrder { get; set; }
 }

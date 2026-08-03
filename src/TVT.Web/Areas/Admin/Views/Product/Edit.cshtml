@@ -202,6 +202,80 @@
                 <input asp-for="Product.SeoKeywordsRu" class="form-control" />
             </div>
 
+            <hr />
+
+            <h5 class="border-bottom pb-2 mb-4">
+                Specifications
+            </h5>
+
+            @if (Model.Specifications.Any())
+            {
+                var currentGroup = "";
+
+                @for (int i = 0; i < Model.Specifications.Count; i++)
+                {
+                    if (currentGroup != Model.Specifications[i].GroupName)
+                    {
+                        currentGroup = Model.Specifications[i].GroupName;
+
+                        <div class="mt-4 mb-3">
+                            <h6 class="text-primary fw-bold">
+                                @currentGroup
+                            </h6>
+                        </div>
+                    }
+
+                    <input asp-for="Specifications[i].SpecificationId" type="hidden" />
+                    <input asp-for="Specifications[i].GroupName" type="hidden" />
+                    <input asp-for="Specifications[i].SpecificationName" type="hidden" />
+
+                    <div class="card mb-3">
+
+                        <div class="card-header bg-light">
+                            <strong>@Model.Specifications[i].SpecificationName</strong>
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    Azerbaijani
+                                </label>
+
+                                <input asp-for="Specifications[i].ValueAz"
+                                       class="form-control" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">
+                                    English
+                                </label>
+
+                                <input asp-for="Specifications[i].ValueEn"
+                                       class="form-control" />
+                            </div>
+
+                            <div class="mb-0">
+                                <label class="form-label">
+                                    Russian
+                                </label>
+
+                                <input asp-for="Specifications[i].ValueRu"
+                                       class="form-control" />
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    No specifications found for this product.
+                </div>
+            }
+
             <div class="d-flex justify-content-end gap-2">
 
                 <a asp-action="Index"

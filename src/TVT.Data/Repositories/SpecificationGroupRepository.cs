@@ -18,6 +18,8 @@ public class SpecificationGroupRepository
     {
         return await DbSet
             .AsNoTracking()
+            .Include(x => x.CategorySpecificationGroups)
+            .ThenInclude(x => x.Category)
             .Where(x => !x.IsDeleted)
             .OrderBy(x => x.DisplayOrder)
             .ToListAsync();
@@ -26,6 +28,8 @@ public class SpecificationGroupRepository
     public override async Task<SpecificationGroup?> GetByIdAsync(int id)
     {
         return await DbSet
+            .Include(x => x.CategorySpecificationGroups)
+            .ThenInclude(x => x.Category)
             .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
     }
 }

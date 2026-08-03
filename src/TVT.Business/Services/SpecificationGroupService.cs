@@ -41,10 +41,20 @@ public class SpecificationGroupService : ISpecificationGroupService
         var group = _mapper.Map<SpecificationGroup>(dto);
 
         await _unitOfWork.SpecificationGroups.AddAsync(group);
+
+        foreach (var categoryId in dto.CategoryIds)
+        {
+            group.CategorySpecificationGroups.Add(new CategorySpecificationGroup
+            {
+                CategoryId = categoryId
+            });
+        }
+
         await _unitOfWork.SaveChangesAsync();
 
         return group.Id;
     }
+
 
     public async Task UpdateAsync(UpdateSpecificationGroupDto dto)
     {
@@ -55,10 +65,22 @@ public class SpecificationGroupService : ISpecificationGroupService
 
         _mapper.Map(dto, group);
 
+        group.CategorySpecificationGroups.Clear();
+
+        foreach (var categoryId in dto.CategoryIds)
+        {
+            group.CategorySpecificationGroups.Add(new CategorySpecificationGroup
+            {
+                CategoryId = categoryId,
+                SpecificationGroupId = group.Id
+            });
+        }
+
         group.UpdatedDate = DateTime.UtcNow;
 
         await _unitOfWork.SaveChangesAsync();
     }
+
 
     public async Task DeleteAsync(int id)
     {

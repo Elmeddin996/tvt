@@ -9,7 +9,7 @@ public class SpecificationGroupListDto
     public string NameEn { get; set; } = null!;
 
     public string NameRu { get; set; } = null!;
-
+    public string Categories { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
 
     public bool IsActive { get; set; }

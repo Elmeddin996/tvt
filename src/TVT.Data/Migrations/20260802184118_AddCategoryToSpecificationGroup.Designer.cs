@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TVT.Data.Context;
@@ -11,9 +12,11 @@ using TVT.Data.Context;
 namespace TVT.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260802184118_AddCategoryToSpecificationGroup")]
+    partial class AddCategoryToSpecificationGroup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,21 +250,6 @@ namespace TVT.Data.Migrations
                     b.HasIndex("ParentId");
 
                     b.ToTable("Categories", (string)null);
-                });
-
-            modelBuilder.Entity("TVT.Core.Entities.CategorySpecificationGroup", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SpecificationGroupId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("CategoryId", "SpecificationGroupId");
-
-                    b.HasIndex("SpecificationGroupId");
-
-                    b.ToTable("CategorySpecificationGroups", (string)null);
                 });
 
             modelBuilder.Entity("TVT.Core.Entities.ContactMessage", b =>
@@ -1056,6 +1044,9 @@ namespace TVT.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp with time zone");
 
@@ -1087,6 +1078,8 @@ namespace TVT.Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("DisplayOrder");
 
@@ -1136,25 +1129,6 @@ namespace TVT.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Parent");
-                });
-
-            modelBuilder.Entity("TVT.Core.Entities.CategorySpecificationGroup", b =>
-                {
-                    b.HasOne("TVT.Core.Entities.Category", "Category")
-                        .WithMany("CategorySpecificationGroups")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TVT.Core.Entities.SpecificationGroup", "SpecificationGroup")
-                        .WithMany("CategorySpecificationGroups")
-                        .HasForeignKey("SpecificationGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-
-                    b.Navigation("SpecificationGroup");
                 });
 
             modelBuilder.Entity("TVT.Core.Entities.Product", b =>
@@ -1236,6 +1210,16 @@ namespace TVT.Data.Migrations
                     b.Navigation("SpecificationGroup");
                 });
 
+            modelBuilder.Entity("TVT.Core.Entities.SpecificationGroup", b =>
+                {
+                    b.HasOne("TVT.Core.Entities.Category", "Category")
+                        .WithMany("SpecificationGroups")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("TVT.Core.Entities.Brand", b =>
                 {
                     b.Navigation("Products");
@@ -1243,11 +1227,11 @@ namespace TVT.Data.Migrations
 
             modelBuilder.Entity("TVT.Core.Entities.Category", b =>
                 {
-                    b.Navigation("CategorySpecificationGroups");
-
                     b.Navigation("Children");
 
                     b.Navigation("Products");
+
+                    b.Navigation("SpecificationGroups");
                 });
 
             modelBuilder.Entity("TVT.Core.Entities.Product", b =>
@@ -1264,8 +1248,6 @@ namespace TVT.Data.Migrations
 
             modelBuilder.Entity("TVT.Core.Entities.SpecificationGroup", b =>
                 {
-                    b.Navigation("CategorySpecificationGroups");
-
                     b.Navigation("Specifications");
                 });
 #pragma warning restore 612, 618
