@@ -1,0 +1,590 @@
+@model TVT.Web.Areas.Admin.ViewModels.Settings.UpdateSettingViewModel
+
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<partial name="_PageHeader" />
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">
+            Settings
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="Index"
+              method="post"
+              enctype="multipart/form-data">
+
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+            <input asp-for="Setting.Logo" type="hidden" />
+
+            <!-- ========================= -->
+            <!-- Company -->
+            <!-- ========================= -->
+
+            <div class="card mb-4">
+
+                <div class="card-header">
+                    <strong>Company</strong>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+
+                        <label asp-for="Setting.CompanyName"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="Setting.CompanyName"
+                               class="form-control" />
+
+                        <span asp-validation-for="Setting.CompanyName"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ========================= -->
+            <!-- Logo -->
+            <!-- ========================= -->
+
+            <div class="card mb-4">
+
+                <div class="card-header">
+                    <strong>Logo</strong>
+                </div>
+
+                <div class="card-body">
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Setting.Logo))
+                    {
+                        <div class="mb-3">
+
+                            <img src="@Model.Setting.Logo"
+                                 class="img-thumbnail"
+                                 style="max-height:120px;" />
+
+                        </div>
+                    }
+
+                    <div class="mb-3">
+
+                        <label asp-for="LogoFile"
+                               class="form-label">
+                            Logo
+                        </label>
+
+                        <input asp-for="LogoFile"
+                               class="form-control"
+                               accept="image/*" />
+
+                        <span asp-validation-for="LogoFile"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- Contact -->
+            <!-- ========================= -->
+
+            <div class="card mb-4">
+
+                <div class="card-header">
+                    <strong>Contact</strong>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="Setting.Phone1"
+                                   class="form-label">
+                            </label>
+
+                            <input asp-for="Setting.Phone1"
+                                   class="form-control" />
+
+                            <span asp-validation-for="Setting.Phone1"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="Setting.Phone2"
+                                   class="form-label">
+                            </label>
+
+                            <input asp-for="Setting.Phone2"
+                                   class="form-control" />
+
+                            <span asp-validation-for="Setting.Phone2"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label asp-for="Setting.Email"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="Setting.Email"
+                               class="form-control" />
+
+                        <span asp-validation-for="Setting.Email"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ========================= -->
+            <!-- Address -->
+            <!-- ========================= -->
+
+            <div class="card mb-4">
+
+                <div class="card-header">
+                    <strong>Address</strong>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+
+                        <label asp-for="Setting.AddressAz"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Setting.AddressAz"
+                                  class="form-control"
+                                  rows="2">
+            </textarea>
+
+                        <span asp-validation-for="Setting.AddressAz"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label asp-for="Setting.AddressEn"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Setting.AddressEn"
+                                  class="form-control"
+                                  rows="2">
+            </textarea>
+
+                        <span asp-validation-for="Setting.AddressEn"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label asp-for="Setting.AddressRu"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Setting.AddressRu"
+                                  class="form-control"
+                                  rows="2">
+            </textarea>
+
+                        <span asp-validation-for="Setting.AddressRu"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ========================= -->
+            <!-- Working Hours -->
+            <!-- ========================= -->
+
+            <div class="card mb-4">
+
+                <div class="card-header">
+                    <strong>Working Hours</strong>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+
+                        <label asp-for="Setting.WorkingHoursAz"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Setting.WorkingHoursAz"
+                                  class="form-control"
+                                  rows="2">
+            </textarea>
+
+                        <span asp-validation-for="Setting.WorkingHoursAz"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label asp-for="Setting.WorkingHoursEn"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Setting.WorkingHoursEn"
+                                  class="form-control"
+                                  rows="2">
+            </textarea>
+
+                        <span asp-validation-for="Setting.WorkingHoursEn"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label asp-for="Setting.WorkingHoursRu"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Setting.WorkingHoursRu"
+                                  class="form-control"
+                                  rows="2">
+            </textarea>
+
+                        <span asp-validation-for="Setting.WorkingHoursRu"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ========================= -->
+            <!-- Social Media -->
+            <!-- ========================= -->
+
+            <div class="card mb-4">
+
+                <div class="card-header">
+                    <strong>Social Media</strong>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="Setting.Facebook"
+                                   class="form-label">
+                            </label>
+
+                            <input asp-for="Setting.Facebook"
+                                   class="form-control" />
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="Setting.Instagram"
+                                   class="form-label">
+                            </label>
+
+                            <input asp-for="Setting.Instagram"
+                                   class="form-control" />
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="Setting.Youtube"
+                                   class="form-label">
+                            </label>
+
+                            <input asp-for="Setting.Youtube"
+                                   class="form-control" />
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="Setting.TikTok"
+                                   class="form-label">
+                            </label>
+
+                            <input asp-for="Setting.TikTok"
+                                   class="form-control" />
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="Setting.Telegram"
+                                   class="form-label">
+                            </label>
+
+                            <input asp-for="Setting.Telegram"
+                                   class="form-control" />
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="Setting.WhatsApp"
+                                   class="form-label">
+                            </label>
+
+                            <input asp-for="Setting.WhatsApp"
+                                   class="form-control" />
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ========================= -->
+            <!-- Google Map -->
+            <!-- ========================= -->
+
+            <div class="card mb-4">
+
+                <div class="card-header">
+                    <strong>Google Map</strong>
+                </div>
+
+                <div class="card-body">
+
+                    <label asp-for="Setting.GoogleMap" class="form-label"></label>
+
+                    <textarea asp-for="Setting.GoogleMap"
+                              class="form-control"
+                              rows="6">
+        </textarea>
+
+                    <span asp-validation-for="Setting.GoogleMap"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+            </div>
+
+            <!-- ========================= -->
+            <!-- Footer -->
+            <!-- ========================= -->
+
+            <div class="card mb-4">
+
+                <div class="card-header">
+                    <strong>Footer</strong>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+
+                        <label asp-for="Setting.FooterTextAz"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Setting.FooterTextAz"
+                                  class="form-control"
+                                  rows="2">
+            </textarea>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label asp-for="Setting.FooterTextEn"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Setting.FooterTextEn"
+                                  class="form-control"
+                                  rows="2">
+            </textarea>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label asp-for="Setting.FooterTextRu"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Setting.FooterTextRu"
+                                  class="form-control"
+                                  rows="2">
+            </textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ========================= -->
+            <!-- Default SEO -->
+            <!-- ========================= -->
+
+            <div class="card mb-4">
+
+                <div class="card-header">
+                    <strong>Default SEO</strong>
+                </div>
+
+                <div class="card-body">
+
+                    <h6 class="mb-3">SEO Title</h6>
+
+                    <div class="mb-3">
+                        <input asp-for="Setting.DefaultSeoTitleAz"
+                               class="form-control"
+                               placeholder="SEO Title (AZ)" />
+                    </div>
+
+                    <div class="mb-3">
+                        <input asp-for="Setting.DefaultSeoTitleEn"
+                               class="form-control"
+                               placeholder="SEO Title (EN)" />
+                    </div>
+
+                    <div class="mb-4">
+                        <input asp-for="Setting.DefaultSeoTitleRu"
+                               class="form-control"
+                               placeholder="SEO Title (RU)" />
+                    </div>
+
+                    <hr />
+
+                    <h6 class="mb-3">SEO Description</h6>
+
+                    <div class="mb-3">
+                        <textarea asp-for="Setting.DefaultSeoDescriptionAz"
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="SEO Description (AZ)">
+            </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <textarea asp-for="Setting.DefaultSeoDescriptionEn"
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="SEO Description (EN)">
+            </textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <textarea asp-for="Setting.DefaultSeoDescriptionRu"
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="SEO Description (RU)">
+            </textarea>
+                    </div>
+
+                    <hr />
+
+                    <h6 class="mb-3">SEO Keywords</h6>
+
+                    <div class="mb-3">
+                        <textarea asp-for="Setting.DefaultSeoKeywordsAz"
+                                  class="form-control"
+                                  rows="2"
+                                  placeholder="SEO Keywords (AZ)">
+            </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <textarea asp-for="Setting.DefaultSeoKeywordsEn"
+                                  class="form-control"
+                                  rows="2"
+                                  placeholder="SEO Keywords (EN)">
+            </textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <textarea asp-for="Setting.DefaultSeoKeywordsRu"
+                                  class="form-control"
+                                  rows="2"
+                                  placeholder="SEO Keywords (RU)">
+            </textarea>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="text-end">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    <i class="bi bi-check-lg"></i>
+
+                    Save
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

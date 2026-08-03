@@ -4,4 +4,5 @@ namespace TVT.Core.Abstractions.Repositories;
 
 public interface ISettingRepository : IGenericRepository<Setting>
 {
+    Task<Setting?> GetSettingAsync();
 }

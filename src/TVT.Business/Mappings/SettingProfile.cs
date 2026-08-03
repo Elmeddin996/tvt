@@ -8,7 +8,7 @@ public sealed class SettingProfile : Profile
 {
     public SettingProfile()
     {
-        CreateMap<Setting, SettingDto>();
+        CreateMap<Setting, SettingDetailDto>();
 
         CreateMap<UpdateSettingDto, Setting>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())

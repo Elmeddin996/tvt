@@ -21,6 +21,7 @@ public static class ServiceRegistration
         services.AddScoped<ISpecificationGroupService, SpecificationGroupService>();
         services.AddScoped<ISpecificationService, SpecificationService>();
         services.AddScoped<IProductSpecificationService, ProductSpecificationService>();
+        services.AddScoped<ISettingService, SettingService>();
 
         return services;
     }
