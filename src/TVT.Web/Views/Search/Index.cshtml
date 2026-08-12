@@ -1,0 +1,190 @@
+@model TVT.Web.ViewModels.Search.SearchViewModel
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<div class="container mt-5">
+
+    <div id="product-search" class="container">
+        <nav aria-label="breadcrumb">
+            <ul class="breadcrumb rm-breadcrumb">
+                <li class="breadcrumb-item rm-breadcrumb-item"><a href="https://aem-elektron.az/"><i class="fa fa-home"></i></a></li>
+                <li class="breadcrumb-item rm-breadcrumb-item">Axtarış</li>
+            </ul>
+        </nav>
+
+        <div class="row">
+            <div class="col-12 rm-page-title">
+                <h1>
+                    @if (!string.IsNullOrWhiteSpace(Model.Search))
+                    {
+                        @:Axtarış - @Model.Search
+                    }
+                    else
+                    {
+                        @:Axtarış
+                    }
+                </h1>
+            </div>
+        </div>
+        <div class="content-top-box">
+        </div>
+        <div class="row no-gutters">
+
+            <div id="content" class="col-lg-12 no-col">
+                <div class="rm-content rm-category h-100">
+                    <form asp-controller="Search"
+                          asp-action="Index"
+                          method="get">
+
+                        <div class="rm-search-block">
+
+                            <div class="form-group">
+
+                                <label class="rm-control-label" for="input-search">
+                                    Axtarış kriteriyaları
+                                </label>
+
+                                <div class="rm-search-block-form d-flex flex-column flex-md-row">
+
+                                    <input type="text"
+                                           id="input-search"
+                                           name="q"
+                                           value="@Model.Search"
+                                           placeholder="Axtarış"
+                                           class="form-control" />
+
+                                    <select name="category_id" class="rm-select">
+
+                                        <option value="">
+                                            Bütün kateqoriyalar
+                                        </option>
+
+                                        @foreach (var category in Model.Categories)
+                                        {
+                                            <option value="@category.Id"
+                                                    selected="@(Model.CategoryId == category.Id)">
+
+                                                @category.NameAz
+
+                                            </option>
+                                        }
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+
+                            <button type="submit"
+                                    class="rm-btn dark">
+
+                                Axtar
+
+                            </button>
+
+                        </div>
+
+                    </form>
+                    <!-- OCFilter Start -->
+                    <!-- /OCFilter End -->
+                    <div class="rm-content-title rm-search-content-title">
+
+                        @if (Model.Products.Items.Any())
+                        {
+                            <span>
+                                "@Model.Search" üçün
+                                <strong>@Model.Products.TotalCount</strong>
+                                məhsul tapıldı
+                            </span>
+                        }
+                        else
+                        {
+                            <span>
+                                "@Model.Search" üçün nəticə tapılmadı
+                            </span>
+                        }
+
+                    </div>
+                  
+
+                    <div class="row no-gutters rm-category-products">
+
+                        @if (Model.Products.Items.Any())
+                        {
+                            @foreach (var product in Model.Products.Items)
+                            {
+                                <partial name="_ProductCardGrid" model="product" />
+
+                            }
+                        }
+
+                    </div>
+                    @if (Model.Products.TotalPages > 1)
+                    {
+                        <ul class="pagination">
+
+                            @if (Model.Products.HasPreviousPage)
+                            {
+                                <li>
+                                    <a asp-controller="Search"
+                                       asp-action="Index"
+                                       asp-route-q="@Model.Search"
+                                       asp-route-category_id="@Model.CategoryId"
+                                       asp-route-page="@(Model.Products.CurrentPage - 1)">
+                                        &lt;
+                                    </a>
+                                </li>
+                            }
+
+                            @for (var i = 1; i <= Model.Products.TotalPages; i++)
+                            {
+                                if (i == Model.Products.CurrentPage)
+                                {
+                                    <li class="active">
+                                        <span>@i</span>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a asp-controller="Search"
+                                           asp-action="Index"
+                                           asp-route-q="@Model.Search"
+                                           asp-route-category_id="@Model.CategoryId"
+                                           asp-route-page="@i">
+                                            @i
+                                        </a>
+                                    </li>
+                                }
+                            }
+
+                            @if (Model.Products.HasNextPage)
+                            {
+                                <li>
+                                    <a asp-controller="Search"
+                                       asp-action="Index"
+                                       asp-route-q="@Model.Search"
+                                       asp-route-category_id="@Model.CategoryId"
+                                       asp-route-page="@(Model.Products.CurrentPage + 1)">
+                                        &gt;
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
+                    }
+
+                    <script src="catalog/view/theme/oct_remarket/js/oct-show-more.js"></script>
+                    <script>
+                        octCheckPagination();
+                    </script>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

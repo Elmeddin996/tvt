@@ -1,0 +1,363 @@
+@{
+    ViewData["Title"] = "Səbət";
+}
+
+<style>
+    .tvt-cart-page {
+        padding: 30px 0 60px;
+    }
+
+    .tvt-cart-title {
+        margin-bottom: 25px;
+        font-size: 30px;
+        font-weight: 600;
+    }
+
+    .tvt-cart-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .cart-item {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) auto auto auto;
+        align-items: center;
+        gap: 25px;
+        margin: 0 !important;
+        padding: 18px 20px !important;
+        min-height: 120px;
+        background: #fff;
+        border: 1px solid #e7e7e7 !important;
+        border-radius: 8px;
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+        .cart-item:hover {
+            border-color: #d8d8d8 !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .cart-item > div:first-child {
+            min-width: 0;
+            gap: 20px;
+        }
+
+        .cart-item img {
+            width: 90px !important;
+            height: 90px !important;
+            flex-shrink: 0;
+            object-fit: contain !important;
+            border: 1px solid #eeeeee;
+            border-radius: 6px;
+            background: #fff;
+        }
+
+        .cart-item h5 {
+            margin: 0 0 7px;
+            font-size: 17px;
+            font-weight: 500;
+            color: #222;
+        }
+
+            .cart-item h5:hover {
+                color: #0d6efd;
+            }
+
+        .cart-item .text-muted {
+            font-size: 15px;
+            color: #777 !important;
+        }
+
+        .cart-item .cart-item-quantity {
+            min-width: 35px;
+            text-align: center;
+            font-weight: 500;
+            color: #222;
+        }
+
+        .cart-item .cart-quantity-minus,
+        .cart-item .cart-quantity-plus {
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            border: 1px solid #d8d8d8;
+            border-radius: 5px;
+            background: #fff;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+            .cart-item .cart-quantity-minus:hover,
+            .cart-item .cart-quantity-plus:hover {
+                border-color: #222;
+                background: #f7f7f7;
+            }
+
+        .cart-item .fw-bold {
+            min-width: 110px;
+            text-align: right;
+            font-size: 16px;
+            font-weight: 600 !important;
+            color: #222;
+        }
+
+        .cart-item .cart-remove {
+            margin-left: 0 !important;
+            min-width: 48px;
+            height: 38px;
+            border-radius: 5px;
+        }
+
+    .tvt-cart-summary {
+        width: 100%;
+        max-width: 420px;
+        margin-left: auto;
+        margin-top: 25px;
+        padding: 22px 25px;
+        background: #fff;
+        border: 1px solid #e7e7e7;
+        border-radius: 8px;
+    }
+
+    .tvt-cart-summary-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    .tvt-cart-summary-label {
+        color: #666;
+        font-size: 15px;
+    }
+
+    .tvt-cart-summary-value {
+        font-size: 16px;
+        font-weight: 600;
+        color: #222;
+    }
+
+    .tvt-cart-summary-total {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #eeeeee;
+    }
+
+        .tvt-cart-summary-total .tvt-cart-summary-label {
+            font-size: 17px;
+            font-weight: 500;
+            color: #222;
+        }
+
+        .tvt-cart-summary-total #cart-total-price {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+    #cart-empty {
+        padding: 70px 20px !important;
+        border: 1px solid #eeeeee;
+        border-radius: 8px;
+        background: #fff;
+    }
+
+        #cart-empty h3 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        #cart-empty p {
+            margin-bottom: 25px;
+        }
+
+    @@media (max-width: 767px) {
+
+        .tvt-cart-page {
+            padding: 20px 0 40px;
+        }
+
+        .tvt-cart-title {
+            margin-bottom: 18px;
+            font-size: 24px;
+        }
+
+        .cart-item {
+            grid-template-columns: 1fr auto;
+            gap: 15px;
+            padding: 15px !important;
+        }
+
+            .cart-item > div:first-child {
+                min-width: 0;
+                gap: 10px;
+            }
+
+               
+
+            .cart-item img {
+                width: 75px !important;
+                height: 75px !important;
+            }
+
+            .cart-item h5 {
+                font-size: 15px;
+            }
+
+            .cart-item .cart-item-quantity {
+                margin-left: 8px !important;
+                margin-right: 8px !important;
+            }
+
+            .cart-item .cart-quantity-minus,
+            .cart-item .cart-quantity-plus {
+                width: 34px;
+                height: 34px;
+            }
+
+            .cart-item .fw-bold {
+                min-width: 0;
+                text-align: left;
+            }
+
+            .cart-item .cart-remove {
+                justify-self: end;
+            }
+
+        .tvt-cart-summary {
+            max-width: none;
+            margin-top: 18px;
+        }
+    }
+
+    .tvt-cart-summary-actions {
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 1px solid #eeeeee;
+    }
+
+    .tvt-cart-continue {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 44px;
+        padding: 10px 18px;
+        border-radius: 5px;
+        background: #f5f5f5;
+        color: #222;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+    }
+
+        .tvt-cart-continue:hover {
+            background: #e9e9e9;
+            color: #222;
+            text-decoration: none;
+        }
+
+    .cart-item .cart-quantity-plus:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        background: #f5f5f5;
+        border-color: #e5e5e5;
+    }
+</style>
+
+
+<div class="container tvt-cart-page">
+
+    <div class="tvt-cart-title">
+        Səbət
+    </div>
+
+    <div id="cart-container">
+
+        <!-- Loading -->
+        <div id="cart-loading" class="text-center py-5">
+            <span>Səbət yüklənir...</span>
+        </div>
+
+
+        <!-- Empty Cart -->
+        <div id="cart-empty"
+             class="text-center"
+             style="display: none;">
+
+            <h3>Səbətiniz boşdur</h3>
+
+            <p class="text-muted">
+                Səbətinizdə hələ məhsul yoxdur.
+            </p>
+
+            <a href="/"
+               class="rm-btn dark d-inline-flex align-items-center justify-content-center px-4">
+
+                Məhsullara bax
+
+            </a>
+
+        </div>
+
+
+        <!-- Cart Content -->
+        <div id="cart-content"
+             style="display: none;">
+
+            <div id="cart-items"
+                 class="tvt-cart-list">
+            </div>
+
+
+            <!-- Summary -->
+            <div class="tvt-cart-summary">
+
+                <div class="tvt-cart-summary-row">
+
+                    <span class="tvt-cart-summary-label">
+                        Məhsul sayı
+                    </span>
+
+                    <strong id="cart-total-quantity"
+                            class="tvt-cart-summary-value">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="tvt-cart-summary-row tvt-cart-summary-total">
+
+                    <span class="tvt-cart-summary-label">
+                        Ümumi
+                    </span>
+
+                    <strong id="cart-total-price">
+                        0 ₼
+                    </strong>
+
+                </div>
+
+
+                <div class="tvt-cart-summary-actions">
+
+                    <a href="/"
+                       class="tvt-cart-continue">
+                        Alış-verişə davam et
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="~/js/cart-page.js"
+        asp-append-version="true"></script>

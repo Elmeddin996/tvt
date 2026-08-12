@@ -1,0 +1,511 @@
+@model TVT.Business.DTOs.Products.ProductDetailDto
+
+@{
+    ViewData["Title"] = Model.NameAz;
+
+    var images = Model.Images
+        .OrderBy(x => x.DisplayOrder)
+        .ToList();
+
+    var mainImage = images.FirstOrDefault(x => x.IsMain)
+        ?? images.FirstOrDefault();
+
+    var imageUrl = mainImage?.Image ?? "/images/no-image.png";
+}
+
+<link rel="stylesheet"
+      href="~/css/product-detail.css"
+      asp-append-version="true" />
+
+<div id="product-product" class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb rm-breadcrumb">
+
+            <li class="breadcrumb-item rm-breadcrumb-item">
+                <a asp-controller="Home" asp-action="Index">
+                    <i class="fa fa-home"></i>
+                </a>
+            </li>
+
+            <li class="breadcrumb-item rm-breadcrumb-item">
+                @Model.NameAz
+            </li>
+
+        </ul>
+    </nav>
+
+    
+    <div class="rm-product-mobile-fixed fixed-bottom d-lg-none d-flex align-items-center justify-content-between w-100" style="">
+        <div class="rm-product-mobile-fixed-price d-flex flex-column">
+            <span class="rm-product-mobile-fixed-price-new">
+                @Model.Price.ToString("0.##") ₼
+            </span>
+        </div>
+        <div class="rm-product-mobile-fixed-buttons d-flex align-items-center">
+            <button type="button" class="rm-btn wishlist" onclick="wishlist.add('@Model.Id');" title="Arzu siyahısına əlavə et">
+                <span class="rm-btn-icon"><img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--fixed-product-button-wishlist-icon" alt="Arzu siyahısına əlavə et" width="20" height="17"></span>
+            </button>
+            <button type="button" class="rm-btn compare" onclick="compare.add('@Model.Id');" title="Müqayisə et">
+                <span class="rm-btn-icon"><img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--fixed-product-button-compare-icon" alt="Müqayisə et" width="18" height="18"></span>
+            </button>
+            <button type="button" name="button" class="rm-btn secondary rm-product-one-click-btn d-flex align-items-center" onclick="octPopPurchase('@Model.Id')">
+                <span class="rm-cart-btn-icon"></span>
+                <span class="rm-btn-text">Sifariş et</span>
+            </button>
+        </div>
+    </div>
+    <main>
+
+
+        <div id="content" class="rm-content rm-product">
+
+            <div class="rm-product-top d-flex flex-column flex-md-row align-items-center justify-content-between">
+
+                <div class="rm-product-title order-1 order-md-0">
+                    <h1>@Model.NameAz</h1>
+                </div>
+
+                <div class="d-none d-lg-flex align-items-center flex-column flex-lg-row rm-product-top-buttons order-0 order-md-1">
+
+                    <button type="button"
+                            class="rm-product-top-button rm-product-top-button-wishlist d-flex align-items-center justify-content-center"
+                            title="Arzu siyahısına əlavə et">
+
+                        <span class="rm-product-top-button-icon"></span>
+                        <span class="rm-product-top-button-text d-lg-none">
+                            Arzu siyahısına əlavə et
+                        </span>
+
+                    </button>
+
+                    <button type="button"
+                            class="rm-product-top-button rm-product-top-button-compare d-flex align-items-center justify-content-center"
+                            title="Müqayisə et">
+
+                        <span class="rm-product-top-button-icon"></span>
+                        <span class="rm-product-top-button-text d-lg-none">
+                            Müqayisə et
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="row no-gutters">
+
+                <!-- PRODUCT IMAGES -->
+                <div class="col-lg-12 col-xl-6">
+
+                    <div class="rm-product-images h-100">
+
+                        <div class="rm-product-gallery @(images.Count <= 1 ? "single-image" : "")"
+                             data-images='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(images.Select(x => x.Image).ToList()))'>
+
+                            <div class="rm-product-gallery-main">
+
+                                <button type="button"
+                                        class="rm-product-gallery-arrow rm-product-gallery-prev"
+                                        aria-label="Əvvəlki şəkil">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+
+                                <div class="rm-product-gallery-image">
+                                    <img id="productMainImage"
+                                         src="@imageUrl"
+                                         class="img-fluid"
+                                         alt="@Model.NameAz"
+                                         title="@Model.NameAz"
+                                         width="500"
+                                         height="500">
+                                </div>
+
+                                <button type="button"
+                                        class="rm-product-gallery-arrow rm-product-gallery-next"
+                                        aria-label="Növbəti şəkil">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+
+                            </div>
+
+                            @if (images.Count > 1)
+                            {
+                                <div class="rm-product-gallery-thumbnails">
+
+                                    @foreach (var image in images)
+                                    {
+                                        <button type="button"
+                                                class="rm-product-gallery-thumbnail @(image.IsMain ? "active" : "")"
+                                                data-image="@image.Image"
+                                                aria-label="@Model.NameAz">
+
+                                            <img src="@image.Image"
+                                                 alt="@Model.NameAz"
+                                                 width="80"
+                                                 height="80">
+
+                                        </button>
+                                    }
+
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div id="productGalleryLightbox"
+                     class="rm-product-gallery-lightbox">
+
+                    <button type="button"
+                            id="productGalleryLightboxClose"
+                            class="rm-product-gallery-lightbox-close"
+                            aria-label="Bağla">
+                        <i class="fas fa-times"></i>
+                    </button>
+
+                    <button type="button"
+                            id="productGalleryLightboxPrev"
+                            class="rm-product-gallery-lightbox-prev"
+                            aria-label="Əvvəlki şəkil">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+
+                    <img id="productGalleryLightboxImage"
+                         class="rm-product-gallery-lightbox-image"
+                         src=""
+                         alt="@Model.NameAz">
+
+                    <button type="button"
+                            id="productGalleryLightboxNext"
+                            class="rm-product-gallery-lightbox-next"
+                            aria-label="Növbəti şəkil">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+
+                </div>
+               
+                <!-- PRODUCT CENTER -->
+                <div id="product" class="col-md-6 col-lg-6 col-xl-3">
+
+                    <div class="rm-product-center h-100">
+
+                        <div class="rm-product-center-info">
+
+                            <div class="rm-product-center-info-item">
+
+                                <span class="rm-product-center-info-item-title">
+                                    Brend:
+                                </span>
+
+                                <span>
+                                    @Model.BrandName
+                                </span>
+
+                            </div>
+
+
+                            <div class="rm-product-center-info-item">
+
+                                <span class="rm-product-center-info-item-title">
+                                    Məhsulun kodu:
+                                </span>
+
+                                <span>
+                                    @Model.Code
+                                </span>
+
+                            </div>
+
+
+                            @if (Model.StockQuantity > 0)
+                            {
+                                <div class="rm-module-stock">
+                                    Stokda var
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="rm-module-stock rm-out-of-stock">
+                                    Stokda yoxdur
+                                </div>
+                            }
+
+                        </div>
+
+
+                        <div class="rm-product-center-price">
+
+                            @if (Model.OldPrice.HasValue && Model.OldPrice > Model.Price)
+                            {
+                                <span class="rm-module-price-old">
+                                    @Model.OldPrice.Value.ToString("0.##") ₼
+                                </span>
+                            }
+
+                            <span>
+                                @Model.Price.ToString("0.##") ₼
+                            </span>
+
+                        </div>
+
+
+                        <div class="rm-product-center-buttons">
+
+                            <div class="d-flex align-items-center justify-content-between">
+
+                                <div class="d-flex align-items-center justify-content-between">
+
+                                    <div class="btn-group rm-product-quantity" role="group">
+
+                                        <input type="text"
+                                               class="form-control"
+                                               name="quantity"
+                                               value="1"
+                                               id="input-quantity"
+                                               aria-label="Quantity">
+
+                                        <div class="d-flex flex-column">
+
+                                            <button type="button"
+                                                    aria-label="Plus"
+                                                    class="rm-product-quantity-btn-plus d-flex align-items-center justify-content-center">
+
+                                                <span></span>
+
+                                            </button>
+
+                                            <div class="rm-product-quantity-btn-border"></div>
+
+                                            <button type="button"
+                                                    aria-label="Minus"
+                                                    class="rm-product-quantity-btn-minus d-flex align-items-center justify-content-center">
+
+                                                <span></span>
+
+                                            </button>
+
+                                        </div>
+
+                                        <input type="hidden"
+                                               name="product_id"
+                                               value="@Model.Id">
+
+                                        <input type="hidden"
+                                               id="min-product-quantity"
+                                               value="1"
+                                               name="min_quantity">
+
+                                        <input type="hidden"
+                                               id="max-product-quantity"
+                                               value="@Model.StockQuantity"
+                                               name="max_quantity">
+
+                                    </div>
+
+                                </div>
+
+
+                                <button type="button"
+                                        id="button-cart"
+                                        data-loading-text="Yüklənir..."
+                                        class="rm-btn dark rm-product-btn rm-product-btn-cart d-flex align-items-center justify-content-center w-100">
+
+                                    <span class="rm-cart-btn-icon"></span>
+
+                                    <span class="rm-btn-text">
+                                        Səbətə at
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRODUCT ADVANTAGES -->
+                <div class="col-md-6 col-lg-6 col-xl-3">
+
+                    <div class="rm-product-right">
+
+                        <div class="rm-product-advantages">
+
+                            <a href="#"
+                               class="rm-product-advantages-item d-flex align-items-center agree">
+
+                                <span class="rm-product-advantages-item-image">
+                                    <i class="fas fa-shipping-fast"></i>
+                                </span>
+
+                                <span class="rm-product-advantages-item-info d-flex flex-column">
+
+                                    <span class="rm-product-advantages-item-title">
+                                        Çatdırılma:
+                                    </span>
+
+                                    <span class="rm-product-advantages-item-text">
+                                        Sifarişinizi gün ərzində çatdıracağıq
+                                    </span>
+
+                                </span>
+
+                            </a>
+
+
+                            <a href="#"
+                               class="rm-product-advantages-item d-flex align-items-center agree">
+
+                                <span class="rm-product-advantages-item-image">
+                                    <i class="far fa-money-bill-alt"></i>
+                                </span>
+
+                                <span class="rm-product-advantages-item-info d-flex flex-column">
+
+                                    <span class="rm-product-advantages-item-title">
+                                        Ödəniş:
+                                    </span>
+
+                                    <span class="rm-product-advantages-item-text">
+                                        Online və ya çatdırılma zamanı ödəmə
+                                    </span>
+
+                                </span>
+
+                            </a>
+
+
+                            <a href="#"
+                               class="rm-product-advantages-item d-flex align-items-center agree">
+
+                                <span class="rm-product-advantages-item-image">
+                                    <i class="fas fa-chevron-circle-down"></i>
+                                </span>
+
+                                <span class="rm-product-advantages-item-info d-flex flex-column">
+
+                                    <span class="rm-product-advantages-item-title">
+                                        Zəmanət:
+                                    </span>
+
+                                    <span class="rm-product-advantages-item-text">
+                                        Zəmanət şərtləri
+                                    </span>
+
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="row row-padding-top rm-product-tabs">
+            <div class="col-12">
+                <ul id="oct-tabs" class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center active" data-toggle="tab" href="#product_description"><span class="nav-link-text">Məhsulun təsviri</span></a>
+                    </li>
+
+
+
+
+                   
+                </ul>
+            </div>
+        </div>
+      
+        <div class="tab-content">
+            <div class="tab-pane rm-content rm-product-tabs-description show active"
+                 id="product_description">
+
+                @if (!string.IsNullOrWhiteSpace(Model.DescriptionAz))
+                {
+                    <div class="rm-product-description-content">
+                        @Html.Raw(Model.DescriptionAz)
+                    </div>
+                }
+                else
+                {
+                    <p>Məhsul haqqında açıqlama mövcud deyil.</p>
+                }
+
+            </div>
+
+
+
+
+
+        </div>
+
+        @if (Model.Specifications.Any())
+        {
+            <div class="rm-product-specifications">
+
+                <h3 class="rm-product-specifications-title">
+                    Texniki xüsusiyyətlər
+                </h3>
+
+                @foreach (var group in Model.Specifications
+               .GroupBy(x => new
+               {
+                   x.GroupName,
+                   x.GroupDisplayOrder
+               })
+               .OrderBy(x => x.Key.GroupDisplayOrder))
+                {
+                    <div class="rm-product-specification-group">
+
+                        <h4 class="rm-product-specification-group-title">
+                            @group.Key.GroupName
+                        </h4>
+
+                        <div class="rm-product-specification-list">
+
+                            @foreach (var specification in group
+                           .OrderBy(x => x.DisplayOrder))
+                            {
+                                <div class="rm-product-specification-row">
+
+                                    <div class="rm-product-specification-name">
+                                        @specification.SpecificationName
+                                    </div>
+
+                                    <div class="rm-product-specification-value">
+                                        @specification.ValueAz
+                                    </div>
+
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+        }
+    </main>
+   
+
+</div>
+
+<script src="~/js/product-detail.js"
+        asp-append-version="true"></script>

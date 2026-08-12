@@ -1,3 +1,6 @@
+using TVT.Business.DTOs.ProductImages;
+using TVT.Business.DTOs.ProductSpecifications;
+
 namespace TVT.Business.DTOs.Products;
 
 public class ProductDetailDto
@@ -6,6 +9,7 @@ public class ProductDetailDto
 
     public int CategoryId { get; set; }
     public int BrandId { get; set; }
+    public string BrandName { get; set; } = null!;
 
     public string Code { get; set; } = null!;
     public string? Model { get; set; }
@@ -41,4 +45,8 @@ public class ProductDetailDto
     public string? SeoKeywordsAz { get; set; }
     public string? SeoKeywordsEn { get; set; }
     public string? SeoKeywordsRu { get; set; }
+
+    public List<ProductImageDto> Images { get; set; } = new();
+
+    public List<ProductSpecificationDto> Specifications { get; set; } = new();
 }

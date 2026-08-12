@@ -1,4 +1,6 @@
 using AutoMapper;
+using TVT.Business.DTOs.ProductImages;
+using TVT.Business.DTOs.ProductSpecifications;
 using TVT.Business.DTOs.Products;
 using TVT.Core.Entities;
 
@@ -23,8 +25,36 @@ public sealed class ProductProfile : Profile
                         .Select(x => x.Image)
                         .FirstOrDefault()));
 
+        // ProductImage -> ProductImageDto
+        CreateMap<ProductImage, ProductImageDto>();
+
+        // ProductSpecification -> ProductSpecificationDto
+        CreateMap<ProductSpecification, ProductSpecificationDto>()
+            .ForMember(dest => dest.SpecificationId,
+                opt => opt.MapFrom(src => src.SpecificationId))
+            .ForMember(dest => dest.GroupName,
+                opt => opt.MapFrom(src => src.Specification.SpecificationGroup.NameAz))
+            .ForMember(dest => dest.SpecificationName,
+                opt => opt.MapFrom(src => src.Specification.NameAz))
+            .ForMember(dest => dest.ValueAz,
+                opt => opt.MapFrom(src => src.ValueAz))
+            .ForMember(dest => dest.ValueEn,
+                opt => opt.MapFrom(src => src.ValueEn))
+            .ForMember(dest => dest.ValueRu,
+                opt => opt.MapFrom(src => src.ValueRu))
+            .ForMember(dest => dest.DisplayOrder,
+                opt => opt.MapFrom(src => src.Specification.DisplayOrder))
+            .ForMember(dest => dest.GroupDisplayOrder,
+                opt => opt.MapFrom(src => src.Specification.SpecificationGroup.DisplayOrder));
+
         // Entity -> Detail DTO
-        CreateMap<Product, ProductDetailDto>();
+        CreateMap<Product, ProductDetailDto>()
+            .ForMember(dest => dest.Images,
+                opt => opt.MapFrom(src => src.ProductImages))
+            .ForMember(dest => dest.Specifications,
+                opt => opt.MapFrom(src => src.ProductSpecifications))
+        .ForMember(dest => dest.BrandName,
+        opt => opt.MapFrom(src => src.Brand.NameAz));
 
         // Create DTO -> Entity
         CreateMap<CreateProductDto, Product>()

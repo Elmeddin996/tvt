@@ -1,0 +1,115 @@
+@model TVT.Business.DTOs.Products.ProductListDto
+
+@{
+    var image = string.IsNullOrWhiteSpace(Model.MainImage)
+        ? "/images/no-image.png"
+        : Model.MainImage;
+}
+
+<div class="product-layout product-grid rm-module-col col-6 col-md-4">
+
+    <div class="rm-module-item d-flex flex-md-column h-100">
+        <div class="rm-module-img d-flex flex-column d-md-block">
+            @if (Model.IsNew)
+            {
+                <div class="rm-module-stickers">
+                    <span class="rm-module-stickers-sticker rm-module-stickers-sticker-stickers_new">
+                        Yeni
+                    </span>
+                </div>
+            }
+
+            <div class="rm-module-buttons list-unstyled d-flex justify-content-center flex-md-column order-1">
+                <button aria-label="Quick view" type="button" class="rm-module-buttons-item popup-view d-flex align-items-center justify-content-center" title="Sürətli baxış" onclick="octPopUpView('8457')">
+                    <span></span>
+                </button>
+                <button aria-label="Wishlist" type="button" onclick="wishlist.add('8457');" title="Arzu siyahısına əlavə et" class="rm-module-buttons-item wishlist d-flex align-items-center justify-content-center">
+                    <span></span>
+                </button>
+                <button aria-label="Compare" type="button" title="Müqayisə et" onclick="compare.add('8457');" class="rm-module-buttons-item compare d-flex align-items-center justify-content-center">
+                    <span></span>
+                </button>
+            </div>
+           
+
+            <div class="scale">
+                <a class="order-0"
+                   asp-controller="Product"
+                   asp-action="Index"
+                   asp-route-slug="@Model.SlugAz">
+
+                    <img src="@image"
+                         data-srcset="@image"
+                         srcset="@image"
+                         sizes="100vw"
+                         class="img-fluid oct-lazy"
+                         alt="@Model.NameAz"
+                         title="@Model.NameAz"
+                         width="228"
+                         height="228" />
+
+                </a>
+            </div>
+
+        </div>
+        <div class="rm-module-caption d-flex flex-column flex-grow-1">
+            <div class="rm-module-title">
+                <a asp-controller="Product"
+                   asp-action="Index"
+                   asp-route-slug="@Model.SlugAz">
+
+                    @Model.NameAz
+
+                </a>
+            </div>
+            @if (Model.StockQuantity > 0)
+            {
+                <div class="rm-module-stock">
+                    Stokda var
+                </div>
+            }
+            else
+            {
+                <div class="rm-module-stock rm-out-of-stock">
+                    Stokda yoxdur
+                </div>
+            }
+            <div class="rm-category-product-model">
+                <span>Məhsulun kodu: </span>@Model.Code
+            </div>
+
+
+
+            <div class="rm-module-price-box d-flex flex-column mt-auto">
+
+                @if (Model.OldPrice.HasValue && Model.OldPrice > Model.Price)
+                {
+                    <span class="rm-module-price-old">
+                        @Model.OldPrice.Value.ToString("0.##") ₼
+                    </span>
+                }
+
+                <div class="rm-module-price-bottom d-flex align-items-md-end justify-content-between flex-column flex-md-row mt-md-auto flex-grow-1">
+
+                    <span class="rm-module-price">
+                        @Model.Price.ToString("0.##") ₼
+                    </span>
+
+                    <button type="button"
+                            aria-label="To cart"
+                            class="rm-btn secondary rm-cart-btn d-flex align-items-center justify-content-center justify-content-md-start"
+                            onclick="tvtCart.add(@Model.Id, 1)">
+
+                        <span class="rm-cart-btn-icon"></span>
+                        <span class="rm-btn-text">Səbətə at</span>
+
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

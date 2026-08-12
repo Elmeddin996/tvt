@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TVT.Core.Abstractions.Repositories;
+using TVT.Core.Common.Pagination;
 using TVT.Core.Entities;
 using TVT.Data.Context;
 
@@ -80,5 +81,47 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
                 .ThenInclude(x => x.Specification)
                     .ThenInclude(x => x.SpecificationGroup)
             .FirstOrDefaultAsync(x => x.Id == id && !x.IsDeleted);
+    }
+
+    public async Task<PagedResult<Product>> SearchAsync(
+    string search,
+    int? categoryId,
+    PagedRequest request)
+    {
+        search = search.Trim().ToLower();
+
+        var query = DbSet
+            .AsNoTracking()
+            .Include(x => x.ProductImages)
+            .Include(x => x.Category)
+            .Include(x => x.Brand)
+            .Where(x =>
+                x.IsActive &&
+                (
+                    x.NameAz.ToLower().Contains(search) ||
+                    x.Code.ToLower().Contains(search) ||
+                    x.Model.ToLower().Contains(search)
+                ));
+
+        if (categoryId.HasValue)
+        {
+            query = query.Where(x => x.CategoryId == categoryId.Value);
+        }
+
+        var totalCount = await query.CountAsync();
+
+        var products = await query
+            .OrderBy(x => x.NameAz)
+            .Skip((request.Page - 1) * request.PageSize)
+            .Take(request.PageSize)
+            .ToListAsync();
+
+        return new PagedResult<Product>
+        {
+            Items = products,
+            CurrentPage = request.Page,
+            PageSize = request.PageSize,
+            TotalCount = totalCount
+        };
     }
 }

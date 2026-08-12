@@ -1,0 +1,148 @@
+@model TVT.Web.ViewModels.Layout.LayoutViewModel
+
+@{
+    var categories = Model.Categories;
+
+    var parents = categories
+        .Where(x => x.ParentId == null)
+        .ToList();
+}
+
+<style>
+    .rm-menu-list-item-name {
+        display: inline-block;
+        font-family: Montserrat, sans-serif;
+        font-size: 15px;
+        font-weight: 400;
+        line-height: 1.1rem;
+        color: #272323;
+    }
+
+</style>
+
+  <div id="rm-menu" class="rm-menu d-flex">
+                <nav>
+        <ul class="rm-menu-list list-unstyled">
+
+            @foreach (var parent in parents)
+            {
+                var children = categories
+                .Where(x => x.ParentId == parent.Id)
+                .ToList();
+
+                <li class="rm-menu-list-item">
+
+                    <div class="d-flex align-items-center justify-content-between">
+
+                        <a asp-controller="Category"
+                           asp-action="Index"
+                           asp-route-slug="@parent.SlugAz"
+                           class="rm-menu-list-item-link d-flex align-items-center">
+
+                            @if (!string.IsNullOrWhiteSpace(parent.Image))
+                            {
+                                <img class="rm-menu-list-item-icon"
+                                     src="@parent.Image"
+                                     alt="@parent.NameAz"
+                                     width="50"
+                                     height="50" />
+                            }
+
+                            <span class="rm-menu-list-item-name">
+                                @parent.NameAz
+                            </span>
+
+                        </a>
+
+                        @if (children.Any())
+                        {
+                            <span class="rm-menu-list-item-chevron"></span>
+                        }
+
+                    </div>
+
+                    @if (children.Any())
+                    {
+                        <div class="rm-menu-list-item-child">
+
+                            <ul class="rm-menu-list list-unstyled">
+
+
+                                @foreach (var child in children)
+                                {
+                                    var thirdLevel = categories
+                                    .Where(x => x.ParentId == child.Id)
+                                    .ToList();
+
+                                    <li class="rm-menu-list-item">
+
+                                        <div class="d-flex align-items-center justify-content-between">
+
+                                            <a asp-controller="Category"
+                                               asp-action="Index"
+                                               asp-route-slug="@child.SlugAz"
+                                               class="rm-menu-list-item-link d-flex align-items-center">
+
+                                                <span class="rm-menu-list-item-name">
+                                                    @child.NameAz
+                                                </span>
+
+                                            </a>
+
+                                            @if (thirdLevel.Any())
+                                            {
+                                                <span class="rm-menu-list-item-chevron"></span>
+                                            }
+
+                                        </div>
+
+                                        @if (thirdLevel.Any())
+                                        {
+                                            <div class="rm-menu-list-item-child rm-menu-list-item-child-2">
+
+                                                <ul class="rm-menu-list list-unstyled">
+
+                                                    @foreach (var subChild in thirdLevel)
+                                                    {
+                                                        <li class="rm-menu-list-item">
+
+                                                            <div class="d-flex align-items-center justify-content-between">
+
+                                                                <a asp-controller="Category"
+                                                                   asp-action="Index"
+                                                                   asp-route-slug="@subChild.SlugAz"
+                                                                   class="rm-menu-list-item-link d-flex align-items-center">
+
+                                                                    <span class="rm-menu-list-item-name">
+                                                                        @subChild.NameAz
+                                                                    </span>
+
+                                                                </a>
+
+                                                            </div>
+
+                                                        </li>
+                                                    }
+
+                                                </ul>
+
+                                            </div>
+                                        }
+
+                                    </li>
+                                }
+
+                            </ul>
+
+                        </div>
+                    }
+
+                </li>
+            }
+
+        </ul>
+                </nav>
+            </div>
+
+
+

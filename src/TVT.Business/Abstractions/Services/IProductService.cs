@@ -1,4 +1,5 @@
 using TVT.Business.DTOs.Products;
+using TVT.Core.Common.Pagination;
 
 namespace TVT.Business.Abstractions.Services;
 
@@ -17,4 +18,8 @@ public interface IProductService
     Task DeleteAsync(int id);
 
     Task<bool> ExistsAsync(int id);
+    Task<PagedResult<ProductListDto>> SearchAsync(
+     string search,
+     int? categoryId,
+     PagedRequest request);
 }

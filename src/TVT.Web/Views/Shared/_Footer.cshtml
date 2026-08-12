@@ -1,4 +1,295 @@
-﻿@page
-@model TVT.Web.Views.Shared._FooterModel
-@{
-}
+@model TVT.Web.ViewModels.Layout.LayoutViewModel
+
+<footer>
+    <div class="rm-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4 text-center text-lg-left rm-footer-first">
+                    <div class="rm-footer-mobile-inner">
+                        <div class="rm-footer-title">Xəbərlərə və yeniliklərə abunə olun:</div>
+                        <form action="javascript:;" id="footer-subscribe" class="rm-footer-subscribe">
+                            <div class="input-group">
+                                <input type="email" id="InputSubscribeEmail" class="form-control rm-input-with-btn" name="email" placeholder="E-poçtunuzu daxil edin">
+                                <button type="submit" id="footer-make-subscribe" class="rm-btn dark">Abunə ol</button>
+                            </div>
+                            <div class="form-checkbox-group">
+                                <label>
+                                    <input type="checkbox" class="rm-form-checkbox-input" name="agree" id="oct-scales-static">
+                                    <span class="check-box"></span>
+                                    <a href="tehlukesizlik-siyaseti.html" target="_blank">Məxfilik siyasəti</a> ilə tanış oldum və heç bir iradım yoxdur.
+                                </label>
+                            </div>
+                        </form>
+                        <script>
+                            $("#InputSubscribeEmail, #oct-scales-static").on("change paste keyup", function () {
+                                $(this).removeClass('error_style');
+                            });
+                            $('#footer-make-subscribe').on('click', function () {
+                                $.ajax({
+                                    type: 'post',
+                                    url: 'index.php?route=octemplates/module/oct_subscribe/makeSubscribe',
+                                    dataType: 'json',
+                                    cache: false,
+                                    data: $('#footer-subscribe').serialize(),
+                                    success: function (json) {
+                                        if (json['error']) {
+                                            $('#us-subscribe-modal .text-danger').remove();
+                                            let errorOption = '';
+
+                                            $.each(json['error'], function (i, val) {
+                                                $('#footer-subscribe [name="' + i + '"]').addClass('error_style');
+                                                errorOption += '<div class="alert-text-item">' + val + '</div>';
+                                            });
+
+                                            rmNotify('danger', errorOption);
+                                        } else {
+                                            if (json['output']) {
+                                                $('#footer-subscribe [name="email"]').val('');
+                                                rmNotify('success', '<div class="alert-text-item">' + json['output'] + '</div>');
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
+
+                        <div class="rm-footer-title">Ünvan:</div>
+                        <div class="rm-footer-text rm-footer-address">28 May metrosu, Süleyman Rüstəm küç. 15F</div>
+                        <div class="rm-footer-title">Bizə zəng edin:</div>
+                        <ul class="list-unstyled rm-footer-phones">
+                            <li class="d-flex align-items-center justify-content-center justify-content-lg-start">
+                                <img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--phone-icon" alt="" width="14" height="16" />
+                                <a href="tel:+994513937089
+">
+                                    +994 (51) 393 70 89
+                                </a>
+                            </li>
+                            <li class="d-flex align-items-center justify-content-center justify-content-lg-start">
+                                <img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--phone-icon" alt="" width="14" height="16" />
+                                <a href="tel:+994553919785">+994 (55) 391 97 85</a>
+                            </li>
+                        </ul>
+                        <div class="rm-footer-contacts-btn d-md-none">
+                            <a href="contact-us/index.html" class="rm-btn secondary"><span class="rm-btn-text">Filiallarımız</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3 text-center text-lg-left rm-footer-second">
+                    <div class="rm-footer-mobile-inner">
+                        <div class="rm-footer-title">İş günləri</div>
+                        <ul class="rm-footer-text rm-footer-shedule-list list-unstyled">
+                            <li class="rm-footer-shedule-list-item">
+                                Bayram günləri istisna:
+                            </li>
+                            <li class="rm-footer-shedule-list-item">
+                                Be-Ş: 09:00 - 19:00
+                            </li>
+                            <li class="rm-footer-shedule-list-item">B: qeyri-iş günü</li>
+                        </ul>
+                        <div class="rm-footer-title">Bizi izləyin:</div>
+                        <ul class="rm-social list-unstyled d-flex flex-wrap justify-content-center justify-content-lg-start">
+                            <li class="rm-social-item"><a rel="noopener noreferrer" href="https://www.facebook.com/aemelektron/" class="rm-social-fa-facebook-f d-flex align-items-center justify-content-center" target="_blank"><i class="fab fa-facebook-f"></i>https://www.facebook.com/aemelektron/</a></li>
+                            <li class="rm-social-item"><a rel="noopener noreferrer" href="https://www.instagram.com/aem.elektron/" class="rm-social-fa-instagram d-flex align-items-center justify-content-center" target="_blank"><i class="fab fa-instagram"></i>https://www.instagram.com/aem.elektron/</a></li>
+                            <li class="rm-social-item"><a rel="noopener noreferrer" href="https://www.youtube.com/channel/UCvDHjw6tWG4PJbKYezoIeOQ?view_as=subscriber" class="rm-social-fa-youtube d-flex align-items-center justify-content-center" target="_blank"><i class="fab fa-youtube"></i>https://www.youtube.com/channel/UCvDHjw6tWG4PJbKYezoIeOQ?view_as=subscriber</a></li>
+                            <li class="rm-social-item"><a rel="noopener noreferrer" href="https://t.me/aemelektron" class="rm-social-fa-telegram-plane d-flex align-items-center justify-content-center" target="_blank"><i class="fab fa-telegram-plane"></i>https://t.me/aemelektron</a></li>
+                        </ul>
+                        <ul class="rm-footer-payments-list list-unstyled d-flex align-items-center justify-content-center justify-content-lg-start">
+                            <li class="rm-footer-payments-item visa"></li>
+                            <li class="rm-footer-payments-item mastercard"></li>
+                            <li class="rm-footer-payments-item maestro"></li>
+                            <li class="rm-footer-payments-item custom-payment"><img src="image/cache/catalog/paymetod/birkart-52x32.png" alt=""></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3 text-md-center text-lg-left rm-footer-third">
+                    <div class="rm-footer-mobile-inner white">
+                        <div class="rm-footer-title rm-footer-title-toggle d-flex align-items-center justify-content-md-center justify-content-lg-start">
+                            <span class="rm-footer-title-toggle-icon d-md-none">
+                                <img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--footer-categories-icon" alt="" width="14" height="14" />
+                            </span>
+                            <span class="rm-footer-title-toggle-text">Populyar kateqoriyalar</span>
+                            <span class="rm-footer-title-toggle-btn d-md-none">
+                                <img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--footer-toggle-icon" alt="" width="18" height="12" />
+                            </span>
+                        </div>
+                        <ul class="rm-footer-links-list list-unstyled">
+                            <li><a href="dahua-technologu/index.html" title="Dahua müşahidə sistemləri‎">Dahua müşahidə sistemləri‎</a></li>
+                            <li><a href="chantalar-pul-kiseleri-ve-chexollar/bags-canta/index.html" title="Noutbuk çantaları">Noutbuk çantaları</a></li>
+                            <li><a href="surveillance-system/wifi-daye-kamera/index.html" title="WiFi Dayə Kameraları">WiFi Dayə Kameraları</a></li>
+                            <li><a href="sebeke-avadanliqi/router/index.html" title="Router">Router</a></li>
+                            <li><a href="audio-avadanliq/qulaqciq-ve-qarnituralar/bluetooth-qulaqciq/index.html" title="Bluetooth qulaqcıqlar">Bluetooth qulaqcıqlar</a></li>
+                            <li><a href="batteries-energy/powerbank/index.html" title="Power Bank">Power Bank</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-2 text-md-center text-lg-left rm-footer-fourth">
+                    <div class="rm-footer-mobile-inner white">
+                        <div class="rm-footer-title rm-footer-title-toggle d-flex align-items-center justify-content-md-center justify-content-lg-start">
+                            <span class="rm-footer-title-toggle-icon d-md-none"><img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--footer-information-icon" alt="" width="16" height="16" /></span>
+                            <span class="rm-footer-title-toggle-text">Məlumat</span>
+                            <span class="rm-footer-title-toggle-btn d-md-none">
+                                <img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--footer-toggle-icon" alt="" width="18" height="12" />
+                            </span>
+                        </div>
+                        <ul class="rm-footer-links-list list-unstyled">
+                            <li><a href="about.html" title="Haqqımızda">Haqqımızda</a></li>
+                            <li><a href="sertifikatlarimiz.html" title="Sertifikatlarımız">Sertifikatlarımız</a></li>
+                            <li><a href="zemanet.html" title="Zəmanətin şərtləri">Zəmanətin şərtləri</a></li>
+                            <li><a href="tehlukesizlik-siyaseti.html" title="Məxfilik siyasəti">Məxfilik siyasəti</a></li>
+                            <li><a href="terms.html" title="Razılaşmanın şərtləri">Razılaşmanın şərtləri</a></li>
+                            <li><a href="ustalar-klubu.html" title="Ustalar klubu">Ustalar klubu</a></li>
+                            <li><a href="contact-us/index.html" title="Əlaqə">Əlaqə</a></li>
+                            <li><a href="brands/index.html" title="Brendlər">Brendlər</a></li>
+                            <li><a href="aksiyalar/index.html" title="Xüsusi təkliflər">Xüsusi təkliflər</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-md-none">
+                <div class="col-12">
+                    <button type="button" class="rm-btn primary rm-footer-catalog-btn w-100" onclick="rmSidebar('Menyu', 'menu', 1);">
+                        <span class="rm-btn-icon">
+                            <img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--footer-catalog-icon" alt="" width="14" height="14">
+                        </span>
+                        <span class="rm-btn-text">Məhsul kataloqu</span>
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="rm-footer-credits text-center">Bütün hüquqlar qorunur<br>TVT</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--microdatapro <?php echo $version; ?> search start [json-ld] -->
+    <script type="application/ld+json">
+        {
+        "@@context": "https://schema.org",
+        "@@type": "WebSite",
+        "url": "https://tvt.az/",
+        "potentialAction": {
+        "@@type": "SearchAction",
+        "target": {
+        "@@type": "EntryPoint",
+        "urlTemplate": "https://tvt.az/index.php?route=product/search&search={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+        }
+        }
+    </script>
+    <!--microdatapro <?php echo $version; ?> search end [json-ld] -->
+    <!--microdatapro 7.8 company start [json-ld] -->
+    <script type="application/ld+json">
+        {
+        "@@context": "https://schema.org",
+        "@@type": "ElectronicsStore",
+        "name": "«TVT»",
+        "url": "https://tvt.az/",
+        "image": "https://tvt.az",
+        "logo": "https://tvt.az",
+        "telephone" : "+(994) ",
+        "email": "sales@tvt.az",
+        "priceRange": "AZN",
+        "address": {
+        "@@type": "PostalAddress",
+        "addressLocality": "Baku, Azerbaijan",
+        "postalCode": "AZ1014",
+        "streetAddress": "sederek tm"
+        },
+        "location": {
+        "@@type": "Place",
+        "address": {
+        "@@type": "PostalAddress",
+        "addressLocality": "Baku, Azerbaijan",
+        "postalCode": "AZ1014",
+        "streetAddress": "Sederek tm"
+        },
+        "geo": {
+        "@@type": "GeoCoordinates",
+        "latitude": "40.3804253",
+        "longitude": "49.8461362"
+        }
+        },
+        "potentialAction": {
+        "@@type": "SearchAction",
+        "target": "https://tvt.az/index.php?route=product/search&search={search_term_string}",
+        "query-input": "required name=search_term_string"
+        },
+        "contactPoint" : [
+         {
+        "@@type" : "ContactPoint",
+        "telephone" : "+(994) ",
+        "contactType" : "customer service"
+        },{
+        "@@type" : "ContactPoint",
+        "telephone" : "+(994) ",
+        "contactType" : "customer service"
+        },{
+        "@@type" : "ContactPoint",
+        "telephone" : "+(994) ",
+        "contactType" : "customer service"
+        },{
+        "@@type" : "ContactPoint",
+        "telephone" : "+(994)",
+        "contactType" : "customer service"
+        }],
+        "sameAs" : [
+        "https://www.tvt.az","https://www.tvt.az"],
+        "openingHoursSpecification":[
+         {
+        "@@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Monday",
+        "opens": "09:00",
+        "closes": "19:00"
+        },{
+        "@@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Tuesday",
+        "opens": "09:00",
+        "closes": "19:00"
+        },{
+        "@@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Wednesday",
+        "opens": "09:00",
+        "closes": "19:00"
+        },{
+        "@@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Thursday",
+        "opens": "09:00",
+        "closes": "19:00"
+        },{
+        "@@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Friday",
+        "opens": "09:00",
+        "closes": "19:00"
+        },{
+        "@@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Saturday",
+        "opens": "09:00",
+        "closes": "19:00"
+        }]
+        }
+    </script>
+    <!--microdatapro 7.8 company end [json-ld] -->
+    <!--microdatapro 7.8 company start [hCard] -->
+    <span class="vcard">
+        <span class="fn org"><span class="value-title" title="«TVT»"></span></span>
+        <span class="org"><span class="value-title" title="«TVT»"></span></span>
+        <span class="url"><span class="value-title" title="https://tvt.az/"></span></span>
+        <span class="adr">
+            <span class="locality"><span class="value-title" title="Baku, Azerbaijan"></span></span>
+            <span class="street-address"><span class="value-title" title="Sederek TM"></span></span>
+            <span class="postal-code"><span class="value-title" title="AZ1014"></span></span>
+        </span>
+        <span class="geo">
+            <span class="latitude"><span class="value-title" title="40.3804253"></span></span>
+            <span class="longitude"><span class="value-title" title="49.8461362"></span></span>
+        </span>
+        <span class="tel"><span class="value-title" title="+(994) "></span></span>
+        <span class="tel"><span class="value-title" title="+(994) "></span></span>
+        <span class="tel"><span class="value-title" title="+(994) "></span></span>
+        <span class="tel"><span class="value-title" title="+(994) "></span></span>
+        <span class="photo"><span class="value-title" title="https://tvt.az"></span></span>
+    </span>
+    <!--microdatapro 7.8 company end [hCard ] -->
+</footer>

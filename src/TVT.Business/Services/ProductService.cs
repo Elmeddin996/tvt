@@ -3,6 +3,7 @@ using TVT.Business.Abstractions.Services;
 using TVT.Business.DTOs.Products;
 using TVT.Business.Helpers;
 using TVT.Core.Abstractions.UnitOfWork;
+using TVT.Core.Common.Pagination;
 using TVT.Core.Entities;
 
 namespace TVT.Business.Services;
@@ -101,5 +102,33 @@ public class ProductService : IProductService
     public async Task<bool> ExistsAsync(int id)
     {
         return await _unitOfWork.Products.ExistsAsync(id);
+    }
+
+    public async Task<PagedResult<ProductListDto>> SearchAsync(
+      string search,
+      int? categoryId,
+      PagedRequest request)
+    {
+        if (string.IsNullOrWhiteSpace(search))
+        {
+            return new PagedResult<ProductListDto>
+            {
+                CurrentPage = request.Page,
+                PageSize = request.PageSize
+            };
+        }
+
+        var result = await _unitOfWork.Products.SearchAsync(
+            search,
+            categoryId,
+            request);
+
+        return new PagedResult<ProductListDto>
+        {
+            Items = _mapper.Map<List<ProductListDto>>(result.Items),
+            CurrentPage = result.CurrentPage,
+            PageSize = result.PageSize,
+            TotalCount = result.TotalCount
+        };
     }
 }
