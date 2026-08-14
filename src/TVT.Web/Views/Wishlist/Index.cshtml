@@ -1,0 +1,400 @@
+@{
+    ViewData["Title"] = "Arzu siyahısı";
+}
+
+<style>
+    .tvt-wishlist-page {
+        padding: 30px 0 60px;
+    }
+
+    .tvt-wishlist-title {
+        margin-bottom: 25px;
+        font-size: 30px;
+        font-weight: 600;
+    }
+
+    .tvt-wishlist-list {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+    }
+
+
+    /* =========================
+       Wishlist Item
+       ========================= */
+
+    .wishlist-item {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        align-items: center;
+        gap: 30px;
+        margin: 0 !important;
+        padding: 18px 20px !important;
+        min-height: 120px;
+        background: #fff;
+        border: 1px solid #e7e7e7 !important;
+        border-radius: 8px;
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+        .wishlist-item:hover {
+            border-color: #d8d8d8 !important;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+
+
+    /* =========================
+       Product Info
+       ========================= */
+
+    .wishlist-item-info {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+        gap: 30px;
+    }
+
+    .wishlist-item-image-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 90px;
+        height: 90px;
+        flex-shrink: 0;
+        border: 1px solid #eeeeee;
+        border-radius: 6px;
+        background: #fff;
+    }
+
+    .wishlist-item-image {
+        display: block;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+    }
+
+    .wishlist-item-details {
+        min-width: 0;
+    }
+
+    .wishlist-item-title {
+        display: block;
+        margin-bottom: 7px;
+        font-size: 17px;
+        font-weight: 500;
+        color: #222;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+        .wishlist-item-title:hover {
+            color: #fb9130;
+            text-decoration: none;
+        }
+
+    .wishlist-item-code {
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #777;
+    }
+
+    .wishlist-item-stock {
+        font-size: 14px;
+        color: #4b8f29;
+    }
+
+        .wishlist-item-stock.out-of-stock {
+            color: #c62828;
+        }
+
+
+    /* =========================
+       Price
+       ========================= */
+
+    .wishlist-item-price {
+        min-width: 130px;
+        text-align: right;
+    }
+
+    .wishlist-item-price-old {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 14px;
+        color: #999;
+        text-decoration: line-through;
+    }
+
+    .wishlist-item-price-current {
+        font-size: 18px;
+        font-weight: 600;
+        color: #222;
+        white-space: nowrap;
+    }
+
+
+    /* =========================
+       Actions
+       ========================= */
+
+    .wishlist-item-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+
+    /* Quantity */
+
+    .wishlist-item-quantity {
+        display: flex;
+        align-items: center;
+        gap: 0;
+    }
+
+    .wishlist-quantity-minus,
+    .wishlist-quantity-plus {
+        width: 36px;
+        height: 40px;
+        padding: 0;
+        border: 1px solid #d8d8d8;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        line-height: 1;
+        cursor: pointer;
+        transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .wishlist-quantity-minus {
+        border-radius: 5px 0 0 5px;
+    }
+
+    .wishlist-quantity-plus {
+        border-radius: 0 5px 5px 0;
+    }
+
+        .wishlist-quantity-minus:hover,
+        .wishlist-quantity-plus:hover {
+            background: #f7f7f7;
+            border-color: #222;
+        }
+
+    .wishlist-quantity {
+        width: 42px;
+        height: 40px;
+        border-top: 1px solid #d8d8d8;
+        border-bottom: 1px solid #d8d8d8;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+    }
+
+    .wishlist-quantity-plus:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+        background: #f5f5f5;
+    }
+
+
+    /* Cart button */
+
+    .wishlist-item-cart {
+        min-width: 145px;
+        min-height: 40px;
+        padding: 8px 14px !important;
+        gap: 8px;
+        white-space: nowrap;
+    }
+
+        .wishlist-item-cart .rm-cart-btn-icon {
+            flex-shrink: 0;
+        }
+
+        .wishlist-item-cart .rm-btn-text {
+            white-space: nowrap;
+        }
+
+
+    /* Remove */
+
+    .wishlist-item-remove {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        border: 1px solid #e1e1e1;
+        border-radius: 5px;
+        background: #fff;
+        color: #666;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+        .wishlist-item-remove:hover {
+            background: #f7f7f7;
+            border-color: #d5d5d5;
+            color: #c62828;
+        }
+
+
+    /* =========================
+       Empty
+       ========================= */
+
+    #wishlist-empty {
+        padding: 70px 20px !important;
+        border: 1px solid #eeeeee;
+        border-radius: 8px;
+        background: #fff;
+    }
+
+        #wishlist-empty h3 {
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+
+        #wishlist-empty p {
+            margin-bottom: 25px;
+        }
+
+
+    /* =========================
+       Mobile
+       ========================= */
+
+    @@media (max-width: 767px) {
+
+        .tvt-wishlist-page {
+            padding: 20px 0 40px;
+        }
+
+        .tvt-wishlist-title {
+            margin-bottom: 18px;
+            font-size: 24px;
+        }
+
+        .wishlist-item {
+            grid-template-columns: 1fr;
+            gap: 15px;
+            padding: 15px !important;
+        }
+
+        .wishlist-item-info {
+            gap: 20px;
+        }
+
+        .wishlist-item-image-link {
+            width: 75px;
+            height: 75px;
+        }
+
+        .wishlist-item-title {
+            font-size: 15px;
+        }
+
+        .wishlist-item-code,
+        .wishlist-item-stock {
+            font-size: 13px;
+        }
+
+        .wishlist-item-price {
+            min-width: 0;
+            text-align: left;
+        }
+
+        .wishlist-item-price-current {
+            font-size: 17px;
+        }
+
+        .wishlist-item-actions {
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .wishlist-item-cart {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .wishlist-item-quantity {
+            flex-shrink: 0;
+        }
+
+        .wishlist-item-remove {
+            flex-shrink: 0;
+        }
+    }
+</style>
+
+
+<div class="container tvt-wishlist-page">
+
+    <div class="tvt-wishlist-title">
+        Arzu siyahısı
+    </div>
+
+
+    <div id="wishlist-container">
+
+
+        <!-- Loading -->
+
+        <div id="wishlist-loading"
+             class="text-center py-5">
+
+            <span>
+                Arzu siyahısı yüklənir...
+            </span>
+
+        </div>
+
+
+        <!-- Empty Wishlist -->
+
+        <div id="wishlist-empty"
+             class="text-center"
+             style="display: none;">
+
+            <h3>
+                Arzu siyahınız boşdur
+            </h3>
+
+            <p class="text-muted">
+                Bəyəndiyiniz məhsulları arzu siyahısına əlavə edə bilərsiniz.
+            </p>
+
+            <a href="/"
+               class="rm-btn dark d-inline-flex align-items-center justify-content-center px-4">
+
+                Məhsullara bax
+
+            </a>
+
+        </div>
+
+
+        <!-- Wishlist Content -->
+
+        <div id="wishlist-content"
+             style="display: none;">
+
+            <div id="wishlist-items"
+                 class="tvt-wishlist-list">
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="~/js/wishlist-page.js"
+        asp-append-version="true"></script>

@@ -180,3 +180,122 @@ a.knopka:active {
         background: rgb(0, 103, 173);
     }
 
+
+
+/* =========================================
+   Wishlist Active State
+   ========================================= */
+
+/* Product Card */
+.rm-module-buttons-item.wishlist.active {
+    background: #fb9130;
+    border-color: #fb9130;
+}
+
+    .rm-module-buttons-item.wishlist.active span {
+        filter: brightness(0) invert(1);
+    }
+
+
+/* Product Detail - Desktop */
+.rm-product-top-button-wishlist.active {
+    color: #fb9130;
+}
+
+    .rm-product-top-button-wishlist.active .rm-product-top-button-icon {
+        filter: brightness(0) saturate(100%) invert(60%) sepia(92%) saturate(1400%) hue-rotate(350deg) brightness(101%) contrast(98%);
+    }
+
+
+/* Product Detail - Mobile */
+.rm-product-mobile-fixed .rm-btn.wishlist.active {
+    background: #fb9130;
+    border-color: #fb9130;
+}
+
+    .rm-product-mobile-fixed .rm-btn.wishlist.active .rm-btn-icon img {
+        filter: brightness(0) invert(1);
+    }
+
+
+/* Smooth transition */
+.rm-module-buttons-item.wishlist,
+.rm-product-top-button-wishlist,
+.rm-product-mobile-fixed .rm-btn.wishlist {
+    transition: all 0.2s ease;
+}
+
+
+
+/* =========================================
+   TVT Toast Notification
+   ========================================= */
+
+.tvt-notification {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 320px;
+    max-width: 420px;
+    padding: 14px 18px;
+    background: #fff;
+    border: 1px solid #e7e7e7;
+    border-radius: 8px;
+    color: #222;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(30px);
+    transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
+}
+
+    .tvt-notification.show {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+    }
+
+
+    /* Icon */
+
+    .tvt-notification::before {
+        content: "✓";
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: #fb9130;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+
+/* Mobile */
+
+@media (max-width: 767px) {
+
+    .tvt-notification {
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        min-width: 0;
+        max-width: none;
+        padding: 13px 15px;
+        font-size: 13px;
+        transform: translateY(-15px);
+    }
+
+        .tvt-notification.show {
+            transform: translateY(0);
+        }
+}

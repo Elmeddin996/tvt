@@ -23,10 +23,12 @@
                 <button aria-label="Quick view" type="button" class="rm-module-buttons-item popup-view d-flex align-items-center justify-content-center" title="Sürətli baxış" onclick="octPopUpView('8457')">
                     <span></span>
                 </button>
-                <button aria-label="Wishlist" type="button" onclick="wishlist.add('8457');" title="Arzu siyahısına əlavə et" class="rm-module-buttons-item wishlist d-flex align-items-center justify-content-center">
-                    <span></span>
-                </button>
-                <button aria-label="Compare" type="button" title="Müqayisə et" onclick="compare.add('8457');" class="rm-module-buttons-item compare d-flex align-items-center justify-content-center">
+                <button aria-label="Wishlist"
+                        type="button"
+                        onclick="tvtWishlist.toggle(@Model.Id);"
+                        title="Arzu siyahısına əlavə et"
+                        data-wishlist-product-id="@Model.Id"
+                        class="rm-module-buttons-item wishlist d-flex align-items-center justify-content-center">
                     <span></span>
                 </button>
             </div>

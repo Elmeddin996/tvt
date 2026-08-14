@@ -42,12 +42,21 @@
             </span>
         </div>
         <div class="rm-product-mobile-fixed-buttons d-flex align-items-center">
-            <button type="button" class="rm-btn wishlist" onclick="wishlist.add('@Model.Id');" title="Arzu siyahısına əlavə et">
-                <span class="rm-btn-icon"><img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--fixed-product-button-wishlist-icon" alt="Arzu siyahısına əlavə et" width="20" height="17"></span>
+            <button type="button"
+                    class="rm-btn wishlist"
+                    onclick="tvtWishlist.toggle(@Model.Id);"
+                    title="Arzu siyahısına əlavə et"
+                    data-wishlist-product-id="@Model.Id">
+
+                <span class="rm-btn-icon">
+                    <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--fixed-product-button-wishlist-icon"
+                         alt="Arzu siyahısına əlavə et"
+                         width="20"
+                         height="17">
+                </span>
+
             </button>
-            <button type="button" class="rm-btn compare" onclick="compare.add('@Model.Id');" title="Müqayisə et">
-                <span class="rm-btn-icon"><img src="catalog/view/theme/oct_remarket/img/sprite.svg#include--fixed-product-button-compare-icon" alt="Müqayisə et" width="18" height="18"></span>
-            </button>
+         
             <button type="button" name="button" class="rm-btn secondary rm-product-one-click-btn d-flex align-items-center" onclick="octPopPurchase('@Model.Id')">
                 <span class="rm-cart-btn-icon"></span>
                 <span class="rm-btn-text">Sifariş et</span>
@@ -69,23 +78,17 @@
 
                     <button type="button"
                             class="rm-product-top-button rm-product-top-button-wishlist d-flex align-items-center justify-content-center"
-                            title="Arzu siyahısına əlavə et">
+                            title="Arzu siyahısına əlavə et"
+                            onclick="tvtWishlist.toggle(@Model.Id);"
+                            data-wishlist-product-id="@Model.Id">
 
                         <span class="rm-product-top-button-icon"></span>
+
                         <span class="rm-product-top-button-text d-lg-none">
                             Arzu siyahısına əlavə et
                         </span>
 
                     </button>
-
-                    <button type="button"
-                            class="rm-product-top-button rm-product-top-button-compare d-flex align-items-center justify-content-center"
-                            title="Müqayisə et">
-
-                        <span class="rm-product-top-button-icon"></span>
-                        <span class="rm-product-top-button-text d-lg-none">
-                            Müqayisə et
-                        </span>
 
                     </button>
 
