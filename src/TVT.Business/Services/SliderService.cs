@@ -34,6 +34,13 @@ public class SliderService : ISliderService
         };
     }
 
+    public async Task<IReadOnlyList<SliderDetailDto>> GetActiveSlidersAsync()
+    {
+        var sliders = await _unitOfWork.Sliders.GetActiveSlidersAsync();
+
+        return _mapper.Map<IReadOnlyList<SliderDetailDto>>(sliders);
+    }
+
     public async Task<SliderDetailDto?> GetByIdAsync(int id)
     {
         var slider = await _unitOfWork.Sliders.GetByIdAsync(id);

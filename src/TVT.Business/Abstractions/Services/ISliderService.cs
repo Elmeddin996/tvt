@@ -16,4 +16,5 @@ public interface ISliderService
     Task DeleteAsync(int id);
 
     Task<bool> ExistsAsync(int id);
+    Task<IReadOnlyList<SliderDetailDto>> GetActiveSlidersAsync();
 }

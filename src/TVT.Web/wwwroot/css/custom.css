@@ -1388,3 +1388,40 @@ a.knopka:active {
         }
 }
 
+
+.tvt-mobile-menu-wishlist-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 58px;
+    padding: 10px 14px;
+    border-bottom: 1px solid #eeeeee;
+    color: #272323;
+    background: #fff;
+    text-decoration: none;
+}
+
+    .tvt-mobile-menu-wishlist-link:hover,
+    .tvt-mobile-menu-wishlist-link:focus {
+        color: #272323;
+        background: #fff;
+        text-decoration: none;
+    }
+
+.tvt-mobile-menu-wishlist-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+    color: #272323;
+    font-size: 18px;
+}
+
+.tvt-mobile-menu-wishlist-text {
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.3;
+}
