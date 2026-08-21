@@ -17,11 +17,15 @@
         line-height: 1.1rem;
         color: #272323;
     }
-
 </style>
 
-  <div id="rm-menu" class="rm-menu d-flex">
-                <nav>
+
+<!-- ========================================================= -->
+<!-- DESKTOP CATEGORY MENU -->
+<!-- ========================================================= -->
+
+<div id="rm-menu" class="rm-menu d-flex">
+    <nav>
         <ul class="rm-menu-list list-unstyled">
 
             @foreach (var parent in parents)
@@ -39,16 +43,16 @@
                            asp-route-slug="@parent.SlugAz"
                            class="rm-menu-list-item-link d-flex align-items-center">
 
-                            @if (!string.IsNullOrWhiteSpace(parent.Image))
+                            @if (!string.IsNullOrWhiteSpace(parent.Icon))
                             {
-                                <img class="rm-menu-list-item-icon"
-                                     src="@parent.Image"
+                                <img class="tvt-mobile-menu-icon"
+                                     src="@parent.Icon"
                                      alt="@parent.NameAz"
-                                     width="50"
-                                     height="50" />
+                                     width="38"
+                                     height="38"/>
                             }
 
-                            <span class="rm-menu-list-item-name">
+                            <span class="rm-menu-list-item-name" style="margin-left: 15px;">
                                 @parent.NameAz
                             </span>
 
@@ -61,12 +65,12 @@
 
                     </div>
 
+
                     @if (children.Any())
                     {
                         <div class="rm-menu-list-item-child">
 
                             <ul class="rm-menu-list list-unstyled">
-
 
                                 @foreach (var child in children)
                                 {
@@ -95,6 +99,7 @@
                                             }
 
                                         </div>
+
 
                                         @if (thirdLevel.Any())
                                         {
@@ -141,8 +146,251 @@
             }
 
         </ul>
-                </nav>
+    </nav>
+</div>
+
+
+<!-- ========================================================= -->
+<!-- MOBILE CATEGORY MENU -->
+<!-- ========================================================= -->
+
+<div id="tvt-mobile-menu" class="tvt-mobile-menu">
+
+    <div class="tvt-mobile-menu-header">
+
+        <button type="button"
+                class="tvt-mobile-menu-back"
+                id="tvt-mobile-menu-back"
+                aria-label="Geri">
+            <span class="tvt-mobile-menu-back-icon"></span>
+            <span id="tvt-mobile-menu-back-text"></span>
+        </button>
+
+        <button type="button"
+                class="tvt-mobile-menu-close"
+                id="tvt-mobile-menu-close"
+                aria-label="Bağla">
+            <span></span>
+            <span></span>
+        </button>
+
+    </div>
+
+
+    <div class="tvt-mobile-menu-content">
+
+        <!-- LEVEL 0 - MAIN MOBILE MENU -->
+
+        <div class="tvt-mobile-menu-level active"
+             id="tvt-mobile-menu-main"
+             data-level="0"
+             data-title="Menyu">
+
+            <div class="tvt-mobile-menu-title">
+                Menyu
             </div>
 
+            <div class="tvt-mobile-menu-list">
+
+                <div class="tvt-mobile-menu-item">
+
+                    <button type="button"
+                            class="tvt-mobile-menu-link tvt-mobile-menu-catalog-link"
+                            data-target="tvt-mobile-menu-catalog">
+
+                        <span class="tvt-mobile-menu-catalog-icon">
+                            <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--mobile-menu-icon"
+                                 alt=""
+                                 width="18"
+                                 height="18" />
+                        </span>
+
+                        <span class="tvt-mobile-menu-catalog-text">
+                            Məhsul kataloqu
+                        </span>
+
+                    </button>
+
+                    <button type="button"
+                            class="tvt-mobile-menu-next"
+                            data-target="tvt-mobile-menu-catalog"
+                            aria-label="Məhsul kataloqu">
+
+                        <span></span>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- LEVEL 1 - PRODUCT CATALOG -->
+
+        <div class="tvt-mobile-menu-level"
+             id="tvt-mobile-menu-catalog"
+             data-level="1"
+             data-title="Məhsul kataloqu"
+             data-parent="tvt-mobile-menu-main">
+
+            
+
+            <div class="tvt-mobile-menu-list">
+
+                @foreach (var parent in parents)
+                {
+                    var children = categories
+                    .Where(x => x.ParentId == parent.Id)
+                    .ToList();
+
+                    <div class="tvt-mobile-menu-item">
+
+                        <a asp-controller="Category"
+                           asp-action="Index"
+                           asp-route-slug="@parent.SlugAz"
+                           class="tvt-mobile-menu-link">
+
+                            @if (!string.IsNullOrWhiteSpace(parent.Icon))
+                            {
+                                <img class="tvt-mobile-menu-icon"
+                                     src="@parent.Icon"
+                                     alt="@parent.NameAz"
+                                     width="33"
+                                     height="33" />
+                            }
+
+                            <span>
+                                @parent.NameAz
+                            </span>
+
+                        </a>
+
+                        @if (children.Any())
+                        {
+                            <button type="button"
+                                    class="tvt-mobile-menu-next"
+                                    data-target="tvt-mobile-parent-@parent.Id"
+                                    aria-label="Alt kateqoriyalar">
+
+                                <span></span>
+
+                            </button>
+                        }
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+      
+
+        <!-- LEVEL 2 - CATEGORY CHILDREN -->
+        @foreach (var parent in parents)
+        {
+            var children = categories
+            .Where(x => x.ParentId == parent.Id)
+            .ToList();
+
+            if (!children.Any())
+                continue;
+
+            <div class="tvt-mobile-menu-level"
+                 id="tvt-mobile-parent-@parent.Id"
+                 data-level="2"
+                 data-title="@parent.NameAz"
+                 data-parent="tvt-mobile-menu-catalog">
+
+               
+
+                <div class="tvt-mobile-menu-list">
+
+                    @foreach (var child in children)
+                    {
+                        var thirdLevel = categories
+                        .Where(x => x.ParentId == child.Id)
+                        .ToList();
+
+                        <div class="tvt-mobile-menu-item">
+
+                            <a asp-controller="Category"
+                               asp-action="Index"
+                               asp-route-slug="@child.SlugAz"
+                               class="tvt-mobile-menu-link">
+
+                                <span>
+                                    @child.NameAz
+                                </span>
+
+                            </a>
+
+                            @if (thirdLevel.Any())
+                            {
+                                <button type="button"
+                                        class="tvt-mobile-menu-next"
+                                        data-target="tvt-mobile-child-@child.Id"
+                                        aria-label="Alt kateqoriyalar">
+
+                                    <span></span>
+
+                                </button>
+                            }
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        }
 
 
+        <!-- LEVEL 2 / THIRD LEVEL -->
+        @foreach (var child in categories.Where(x => x.ParentId != null))
+        {
+            var thirdLevel = categories
+            .Where(x => x.ParentId == child.Id)
+            .ToList();
+
+            if (!thirdLevel.Any())
+                continue;
+
+            <div class="tvt-mobile-menu-level"
+                 id="tvt-mobile-child-@child.Id"
+                 data-level="3"
+                 data-title="@child.NameAz"
+                 data-parent="tvt-mobile-parent-@child.ParentId">
+
+
+
+                <div class="tvt-mobile-menu-list">
+
+                    @foreach (var subChild in thirdLevel)
+                    {
+                        <div class="tvt-mobile-menu-item">
+
+                            <a asp-controller="Category"
+                               asp-action="Index"
+                               asp-route-slug="@subChild.SlugAz"
+                               class="tvt-mobile-menu-link">
+
+                                <span>
+                                    @subChild.NameAz
+                                </span>
+
+                            </a>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        }
+
+
+    </div>
+
+</div>

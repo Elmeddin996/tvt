@@ -20,5 +20,6 @@ public class CategoryDetailDto
 
     public string? Image { get; set; }
 
+    public string? Icon { get; set; }
     public bool IsActive { get; set; }
 }

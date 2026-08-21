@@ -3,6 +3,7 @@ using TVT.Business.Abstractions.Services;
 using TVT.Business.DTOs.Products;
 using TVT.Business.Helpers;
 using TVT.Core.Abstractions.UnitOfWork;
+using TVT.Core.Common.Filters;
 using TVT.Core.Common.Pagination;
 using TVT.Core.Entities;
 
@@ -129,6 +130,49 @@ public class ProductService : IProductService
             CurrentPage = result.CurrentPage,
             PageSize = result.PageSize,
             TotalCount = result.TotalCount
+        };
+    }
+
+    public async Task<PagedResult<ProductListDto>> GetByCategoryIdsAsync(
+    IReadOnlyCollection<int> categoryIds,
+    ProductFilterRequest filter,
+    PagedRequest request)
+    {
+        var result = await _unitOfWork.Products.GetByCategoryIdsAsync(
+            categoryIds,
+            filter,
+            request);
+
+        return new PagedResult<ProductListDto>
+        {
+            Items = _mapper.Map<List<ProductListDto>>(result.Items),
+            CurrentPage = result.CurrentPage,
+            PageSize = result.PageSize,
+            TotalCount = result.TotalCount
+        };
+    }
+
+    public async Task<ProductFilterOptionsDto> GetFilterOptionsAsync(
+    IReadOnlyCollection<int> categoryIds)
+    {
+        var result = await _unitOfWork.Products.GetFilterOptionsAsync(
+            categoryIds);
+
+        return new ProductFilterOptionsDto
+        {
+            MinPrice = result.MinPrice,
+            MaxPrice = result.MaxPrice,
+            InStockCount = result.InStockCount,
+            OutOfStockCount = result.OutOfStockCount,
+
+            Brands = result.Brands
+                .Select(x => new ProductFilterBrandDto
+                {
+                    BrandId = x.BrandId,
+                    Name = x.Name,
+                    ProductCount = x.ProductCount
+                })
+                .ToList()
         };
     }
 }

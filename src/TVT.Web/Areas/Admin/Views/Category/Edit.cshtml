@@ -28,6 +28,7 @@
 
             <input asp-for="Category.Id" type="hidden" />
             <input asp-for="Category.Image" type="hidden" />
+            <input asp-for="Category.Icon" type="hidden" />
 
             <div class="mb-3">
                 <label asp-for="Category.NameAz" class="form-label"></label>
@@ -113,6 +114,19 @@
                 </div>
             }
 
+            @if (!string.IsNullOrWhiteSpace(Model.Category.Icon))
+            {
+                <div class="mb-3">
+                    <label class="form-label">Current Icon</label>
+
+                    <div>
+                        <img src="@Model.Category.Icon"
+                             class="img-thumbnail"
+                             style="max-width:100px; max-height:100px;" />
+                    </div>
+                </div>
+            }
+
             <div class="mb-3">
                 <label asp-for="ImageFile" class="form-label">New Image</label>
 
@@ -122,6 +136,18 @@
                        accept=".jpg,.jpeg,.png,.webp" />
 
                 <span asp-validation-for="ImageFile"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="IconFile" class="form-label">New Icon</label>
+
+                <input asp-for="IconFile"
+                       type="file"
+                       class="form-control"
+                       accept=".svg,.png,.webp,.jpg,.jpeg" />
+
+                <span asp-validation-for="IconFile"
                       class="text-danger"></span>
             </div>
 

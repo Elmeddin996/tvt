@@ -1,4 +1,5 @@
 using TVT.Business.DTOs.Products;
+using TVT.Core.Common.Filters;
 using TVT.Core.Common.Pagination;
 
 namespace TVT.Business.Abstractions.Services;
@@ -22,4 +23,13 @@ public interface IProductService
      string search,
      int? categoryId,
      PagedRequest request);
+
+    Task<PagedResult<ProductListDto>> GetByCategoryIdsAsync(
+        IReadOnlyCollection<int> categoryIds,
+        ProductFilterRequest filter,
+        PagedRequest request);
+
+
+    Task<ProductFilterOptionsDto> GetFilterOptionsAsync(
+       IReadOnlyCollection<int> categoryIds);
 }

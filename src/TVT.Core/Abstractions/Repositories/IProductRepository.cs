@@ -1,3 +1,4 @@
+using TVT.Core.Common.Filters;
 using TVT.Core.Common.Pagination;
 using TVT.Core.Entities;
 
@@ -14,4 +15,13 @@ public interface IProductRepository : IGenericRepository<Product>
      string search,
      int? categoryId,
      PagedRequest request);
+
+    Task<PagedResult<Product>> GetByCategoryIdsAsync(
+    IReadOnlyCollection<int> categoryIds,
+    ProductFilterRequest filter,
+    PagedRequest request);
+
+
+    Task<ProductFilterOptions> GetFilterOptionsAsync(
+        IReadOnlyCollection<int> categoryIds);
 }

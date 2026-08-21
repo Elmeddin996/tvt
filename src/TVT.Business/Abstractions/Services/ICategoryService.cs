@@ -15,4 +15,7 @@ public interface ICategoryService
 
     Task<List<CategoryListDto>> GetParentCategoriesAsync(int? excludeCategoryId = null);
     Task<PagedResult<CategoryListDto>> GetPagedAsync(PagedRequest request);
+
+    Task<List<int>> GetDescendantCategoryIdsAsync(int categoryId);
+    Task<List<CategoryListDto>> GetSubCategoriesAsync(int parentId);
 }

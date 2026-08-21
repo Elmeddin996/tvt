@@ -151,4 +151,47 @@ public class CategoryService : ICategoryService
 
         return false;
     }
+
+    public async Task<List<int>> GetDescendantCategoryIdsAsync(int categoryId)
+    {
+        var categories = await _unitOfWork.Categories.GetAllActiveAsync();
+
+        var categoryIds = new List<int> { categoryId };
+
+        AddChildCategoryIds(
+            categories,
+            categoryId,
+            categoryIds);
+
+        return categoryIds;
+    }
+
+    private static void AddChildCategoryIds(
+        List<Category> categories,
+        int parentId,
+        List<int> categoryIds)
+    {
+        var children = categories
+            .Where(x => x.ParentId == parentId)
+            .ToList();
+
+        foreach (var child in children)
+        {
+            categoryIds.Add(child.Id);
+
+            AddChildCategoryIds(
+                categories,
+                child.Id,
+                categoryIds);
+        }
+    }
+
+    public async Task<List<CategoryListDto>> GetSubCategoriesAsync(
+    int parentId)
+    {
+        var categories =
+            await _unitOfWork.Categories.GetSubCategoriesAsync(parentId);
+
+        return _mapper.Map<List<CategoryListDto>>(categories);
+    }
 }

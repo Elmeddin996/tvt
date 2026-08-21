@@ -10,5 +10,6 @@ public class EditCategoryViewModel
 
     public IFormFile? ImageFile { get; set; }
 
+    public IFormFile? IconFile { get; set; }
     public List<SelectListItem> ParentCategories { get; set; } = [];
 }

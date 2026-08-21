@@ -58,7 +58,9 @@ public class CategoryController : Controller
     {
         if (!ModelState.IsValid)
         {
-            model.ParentCategories = await GetParentCategorySelectListAsync(model.Category.ParentId);
+            model.ParentCategories =
+                await GetParentCategorySelectListAsync(model.Category.ParentId);
+
             return View(model);
         }
 
@@ -74,12 +76,34 @@ public class CategoryController : Controller
                     nameof(model.ImageFile),
                     uploadResult.ErrorMessage!);
 
-                model.ParentCategories = await GetParentCategorySelectListAsync(model.Category.ParentId);
+                model.ParentCategories =
+                    await GetParentCategorySelectListAsync(model.Category.ParentId);
 
                 return View(model);
             }
 
             model.Category.Image = uploadResult.FilePath;
+        }
+
+        if (model.IconFile != null)
+        {
+            var uploadResult = await _fileService.UploadAsync(
+                model.IconFile,
+                "categories/icons");
+
+            if (!uploadResult.Success)
+            {
+                ModelState.AddModelError(
+                    nameof(model.IconFile),
+                    uploadResult.ErrorMessage!);
+
+                model.ParentCategories =
+                    await GetParentCategorySelectListAsync(model.Category.ParentId);
+
+                return View(model);
+            }
+
+            model.Category.Icon = uploadResult.FilePath;
         }
 
         await _categoryService.CreateAsync(model.Category);
@@ -89,8 +113,6 @@ public class CategoryController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-
-  
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
@@ -119,6 +141,7 @@ public class CategoryController : Controller
                 DescriptionRu = category.DescriptionRu,
 
                 Image = category.Image,
+                Icon = category.Icon,
 
                 IsActive = category.IsActive
             },
@@ -132,21 +155,27 @@ public class CategoryController : Controller
 
         return View(model);
     }
+
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(EditCategoryViewModel model)
     {
         if (!ModelState.IsValid)
         {
-            model.ParentCategories = await GetParentCategorySelectListAsync(
-                selectedValue: model.Category.ParentId,
-                excludeCategoryId: model.Category.Id);
+            model.ParentCategories =
+                await GetParentCategorySelectListAsync(
+                    selectedValue: model.Category.ParentId,
+                    excludeCategoryId: model.Category.Id);
 
             return View(model);
         }
 
         string? oldImage = model.Category.Image;
+        string? oldIcon = model.Category.Icon;
+
         bool uploadedNewImage = false;
+        bool uploadedNewIcon = false;
 
         if (model.ImageFile != null)
         {
@@ -160,9 +189,10 @@ public class CategoryController : Controller
                     nameof(model.ImageFile),
                     uploadResult.ErrorMessage!);
 
-                model.ParentCategories = await GetParentCategorySelectListAsync(
-                    selectedValue: model.Category.ParentId,
-                    excludeCategoryId: model.Category.Id);
+                model.ParentCategories =
+                    await GetParentCategorySelectListAsync(
+                        selectedValue: model.Category.ParentId,
+                        excludeCategoryId: model.Category.Id);
 
                 return View(model);
             }
@@ -171,13 +201,50 @@ public class CategoryController : Controller
             uploadedNewImage = true;
         }
 
+        if (model.IconFile != null)
+        {
+            var uploadResult = await _fileService.UploadAsync(
+                model.IconFile,
+                "categories/icons");
+
+            if (!uploadResult.Success)
+            {
+                if (uploadedNewImage)
+                {
+                    await _fileService.DeleteAsync(model.Category.Image);
+                    model.Category.Image = oldImage;
+                }
+
+                ModelState.AddModelError(
+                    nameof(model.IconFile),
+                    uploadResult.ErrorMessage!);
+
+                model.ParentCategories =
+                    await GetParentCategorySelectListAsync(
+                        selectedValue: model.Category.ParentId,
+                        excludeCategoryId: model.Category.Id);
+
+                return View(model);
+            }
+
+            model.Category.Icon = uploadResult.FilePath;
+            uploadedNewIcon = true;
+        }
+
         try
         {
             await _categoryService.UpdateAsync(model.Category);
 
-            if (uploadedNewImage)
+            if (uploadedNewImage &&
+                !string.IsNullOrWhiteSpace(oldImage))
             {
                 await _fileService.DeleteAsync(oldImage);
+            }
+
+            if (uploadedNewIcon &&
+                !string.IsNullOrWhiteSpace(oldIcon))
+            {
+                await _fileService.DeleteAsync(oldIcon);
             }
 
             TempData["Success"] = "Category updated successfully.";
@@ -192,16 +259,22 @@ public class CategoryController : Controller
                 model.Category.Image = oldImage;
             }
 
+            if (uploadedNewIcon)
+            {
+                await _fileService.DeleteAsync(model.Category.Icon);
+                model.Category.Icon = oldIcon;
+            }
+
             ModelState.AddModelError(string.Empty, ex.Message);
 
-            model.ParentCategories = await GetParentCategorySelectListAsync(
-                selectedValue: model.Category.ParentId,
-                excludeCategoryId: model.Category.Id);
+            model.ParentCategories =
+                await GetParentCategorySelectListAsync(
+                    selectedValue: model.Category.ParentId,
+                    excludeCategoryId: model.Category.Id);
 
             return View(model);
         }
     }
-
 
     [HttpPost]
     [ValidateAntiForgeryToken]
@@ -219,6 +292,11 @@ public class CategoryController : Controller
             if (!string.IsNullOrWhiteSpace(category.Image))
             {
                 await _fileService.DeleteAsync(category.Image);
+            }
+
+            if (!string.IsNullOrWhiteSpace(category.Icon))
+            {
+                await _fileService.DeleteAsync(category.Icon);
             }
 
             TempData["Success"] = "Category deleted successfully.";

@@ -109,6 +109,18 @@
                       class="text-danger"></span>
             </div>
 
+            <div class="mb-3">
+                <label asp-for="IconFile" class="form-label">Icon</label>
+
+                <input asp-for="IconFile"
+                       type="file"
+                       class="form-control"
+                       accept=".svg,.png,.webp,.jpg,.jpeg" />
+
+                <span asp-validation-for="IconFile"
+                      class="text-danger"></span>
+            </div>
+
             <div class="form-check mb-4">
                 <input asp-for="Category.IsActive" class="form-check-input" />
                 <label asp-for="Category.IsActive" class="form-check-label"></label>

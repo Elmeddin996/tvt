@@ -53,10 +53,6 @@
           href="~/images/favicon.png"
           asp-append-version="true" />
 
-    <link rel="stylesheet"
-          href="~/css/custom.css"
-          asp-append-version="true" />
-
     <!-- Canonical -->
     <link rel="canonical"
           href="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}")" />
@@ -128,21 +124,6 @@
             </span>
 
         </div>
-        <a asp-controller="Compare"
-           asp-action="Index"
-           class="oct-fixed-bar-item oct-fixed-bar-item-compare"
-           title="Müqayisə">
-
-            <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--fixed-bar-compare"
-                 alt="Müqayisə"
-                 width="24"
-                 height="24">
-
-            <span class="oct-fixed-bar-quantity oct-fixed-bar-compare-quantity">
-                0
-            </span>
-
-        </a>
 
         <a asp-controller="Wishlist"
            asp-action="Index"
@@ -167,7 +148,6 @@
         <button type="button"
                 id="rm_mobile_menu_button"
                 class="rm-btn primary rm_mobile_sidebar_toggle"
-                onclick="rmSidebar('Menyu', 'menu');"
                 aria-label="Menu">
 
             <span class="rm-btn-icon">

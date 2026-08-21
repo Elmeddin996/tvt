@@ -1,0 +1,499 @@
+@model TVT.Web.ViewModels.Category.CategoryPageViewModel
+
+@{
+    ViewData["Title"] = Model.Category.NameAz;
+}
+
+
+<div id="product-category" class="container">
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb rm-breadcrumb">
+
+            <li class="breadcrumb-item rm-breadcrumb-item">
+                <a asp-controller="Home" asp-action="Index">
+                    <i class="fa fa-home"></i>
+                </a>
+            </li>
+
+            <li class="breadcrumb-item rm-breadcrumb-item">
+                @Model.Category.NameAz
+            </li>
+
+        </ul>
+    </nav>
+
+
+    <div class="content-top-box">
+    </div>
+    <main>
+        <div class="row">
+            <div class="col-12 rm-page-title">
+                <h1>@Model.Category.NameAz</h1>
+            </div>
+        </div>
+        <div class="row no-gutters">
+            
+            <aside id="column-left" class="col-lg-3">
+                <div class="rm-column-box h-100">
+                    <div class="ocf-container ocf-category-173 ocf-theme-light-block ocf-mobile-1 ocf-mobile-left ocf-vertical ocf-left" id="ocf-module-1">
+
+                        <div class="ocf-content">
+                            <div class="ocf-header">
+                                <div class="tvt-filter-header-title">
+                                    <span class="tvt-filter-icon" aria-hidden="true">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </span>
+
+                                    <span>Filtr</span>
+                                </div>
+
+                                <button type="button"
+                                        id="tvt-filter-close"
+                                        class="tvt-filter-close"
+                                        aria-label="Filtri bağla">
+                                    <span></span>
+                                    <span></span>
+                                </button>
+                            </div>
+
+                            <form method="get" asp-controller="Category" asp-action="Index" class="tvt-filter-form">
+
+                                <input type="hidden" name="slug" value="@Context.Request.Query["slug"]" />
+                                <div class="ocf-body">
+
+                                    <div class="ocf-filter-list ocf-clearfix">
+
+
+
+
+
+
+
+
+
+                                        <div class="tvt-filter">
+                                            <div class="tvt-filter-header">
+                                                <span class="tvt-filter-title">İstehsalçı</span>
+                                            </div>
+
+                                            <div class="tvt-filter-content">
+
+                                                @{
+                                                    var brands = Model.FilterOptions.Brands;
+                                                    var visibleBrandCount = 5;
+                                                }
+
+                                                @if (brands.Any())
+                                                {
+                                                    <div class="tvt-brand-list">
+
+                                                        @for (var i = 0; i < brands.Count; i++)
+                                                        {
+                                                            var brand = brands[i];
+
+                                                            var isSelected = Context.Request.Query["brandIds"]
+                                                            .Contains(brand.BrandId.ToString());
+
+                                                            <label class="tvt-filter-option @(i >= visibleBrandCount ? "tvt-brand-hidden" : "")">
+
+                                                                <input type="checkbox"
+                                                                       name="brandIds"
+                                                                       value="@brand.BrandId"
+                                                                @(isSelected ? "checked" : null) />
+
+                                                                <span class="tvt-checkbox"></span>
+
+                                                                <span class="tvt-filter-name">
+                                                                    @brand.Name
+                                                                </span>
+
+                                                                <span class="tvt-filter-count">
+                                                                    @brand.ProductCount
+                                                                </span>
+
+                                                            </label>
+                                                        }
+
+                                                    </div>
+
+                                                    @if (brands.Count > visibleBrandCount)
+                                                    {
+                                                        <button type="button"
+                                                                id="tvt-show-brands"
+                                                                class="tvt-show-more">
+
+                                                            <span class="tvt-show-more-text">
+                                                                Daha @(brands.Count - visibleBrandCount) göstər
+                                                            </span>
+
+                                                            <span class="tvt-show-more-arrow"></span>
+
+                                                        </button>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <div class="tvt-filter-empty">
+                                                        İstehsalçı tapılmadı
+                                                    </div>
+                                                }
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="tvt-filter tvt-price-filter">
+
+                                            <div class="tvt-filter-header">
+                                                <span class="tvt-filter-title">Qiymət</span>
+                                            </div>
+
+                                            <div class="tvt-filter-content">
+
+                                                <div class="tvt-price-inputs">
+
+                                                    <div class="tvt-price-input-wrapper">
+                                                        <input type="number"
+                                                               id="tvt-min-price"
+                                                               name="minPrice"
+                                                               class="tvt-price-input"
+                                                               min="@Model.FilterOptions.MinPrice"
+                                                               max="@Model.FilterOptions.MaxPrice"
+                                                               step="0.01"
+                                                               value="@Context.Request.Query["minPrice"]"
+                                                               placeholder="@Model.FilterOptions.MinPrice.ToString("0.##")" />
+
+                                                        <span class="tvt-price-currency">₼</span>
+                                                    </div>
+
+                                                    <span class="tvt-price-separator">-</span>
+
+                                                    <div class="tvt-price-input-wrapper">
+                                                        <input type="number"
+                                                               id="tvt-max-price"
+                                                               name="maxPrice"
+                                                               class="tvt-price-input"
+                                                               min="@Model.FilterOptions.MinPrice"
+                                                               max="@Model.FilterOptions.MaxPrice"
+                                                               step="0.01"
+                                                               value="@Context.Request.Query["maxPrice"]"
+                                                               placeholder="@Model.FilterOptions.MaxPrice.ToString("0.##")" />
+
+                                                        <span class="tvt-price-currency">₼</span>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="tvt-price-range">
+
+                                                    <div id="tvt-range-progress"
+                                                         class="tvt-range-progress"></div>
+
+                                                    <input type="range"
+                                                           id="tvt-min-range"
+                                                           class="tvt-range"
+                                                           min="@Model.FilterOptions.MinPrice"
+                                                           max="@Model.FilterOptions.MaxPrice"
+                                                           step="0.01"
+                                                           value="@(Context.Request.Query["minPrice"].FirstOrDefault() ?? Model.FilterOptions.MinPrice.ToString(System.Globalization.CultureInfo.InvariantCulture))" />
+
+                                                    <input type="range"
+                                                           id="tvt-max-range"
+                                                           class="tvt-range"
+                                                           min="@Model.FilterOptions.MinPrice"
+                                                           max="@Model.FilterOptions.MaxPrice"
+                                                           step="0.01"
+                                                           value="@(Context.Request.Query["maxPrice"].FirstOrDefault() ?? Model.FilterOptions.MaxPrice.ToString(System.Globalization.CultureInfo.InvariantCulture))" />
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
+
+
+                                        <div class="tvt-filter tvt-stock-filter">
+
+                                            <div class="tvt-filter-header">
+                                                <span class="tvt-filter-title">Stok</span>
+                                            </div>
+
+                                            <div class="tvt-filter-content">
+
+                                                <label class="tvt-filter-option">
+                                                    <input type="radio"
+                                                           name="inStock"
+                                                           value="true"
+                                                    @(Context.Request.Query["inStock"] == "true" ? "checked" : null) />
+
+                                                    <span class="tvt-radio"></span>
+
+                                                    <span class="tvt-filter-name">
+                                                        Stokda var
+                                                    </span>
+
+                                                    <span class="tvt-filter-count">
+                                                        @Model.FilterOptions.InStockCount
+                                                    </span>
+                                                </label>
+
+                                                <label class="tvt-filter-option">
+                                                    <input type="radio"
+                                                           name="inStock"
+                                                           value="false"
+                                                    @(Context.Request.Query["inStock"] == "false" ? "checked" : null) />
+
+                                                    <span class="tvt-radio"></span>
+
+                                                    <span class="tvt-filter-name">
+                                                        Stokda yoxdur
+                                                    </span>
+
+                                                    <span class="tvt-filter-count">
+                                                        @Model.FilterOptions.OutOfStockCount
+                                                    </span>
+                                                </label>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="tvt-filter-footer">
+
+                                    <button type="button"
+                                            id="tvt-reset-filters"
+                                            class="tvt-filter-reset">
+                                        Sıfırla
+                                    </button>
+
+                                    <button type="submit"
+                                            class="tvt-filter-submit">
+                                        Filtrləri tətbiq et
+                                    </button>
+
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="ocf-is-mobile"></div>
+
+
+
+                        
+
+                    </div>
+                </div>
+            </aside>
+
+            <div id="content" class="col-lg-9">
+                <div class="rm-content rm-category h-100">
+                    <!-- Mobile Category / Filter Buttons -->
+                    <div class="rm-category-buttons d-flex d-lg-none justify-content-between sticky-top">
+
+                        <div class="static_button_ocfilter order-1">
+
+                            <div class="ocfilter-mobile-handle">
+
+                                <button type="button"
+                                        id="tvt-filter-open"
+                                        class="rm-btn dark tvt-mobile-filter-button">
+
+                                    <span class="tvt-mobile-filter-icon" aria-hidden="true">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </span>
+
+                                    <span class="rm-btn-text">
+                                        Filtr
+                                    </span>
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <button type="button"
+                                style="border: 1px solid #e9e9e9"
+                                id="tvt-category-catalog-button"
+                                class="rm-btn tvt-mobile-filter-button ">
+
+                            <span class="rm-btn-icon">
+                                <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--category-catalog-icon"
+                                     alt="Kataloq"
+                                     width="15"
+                                     height="14">
+                            </span>
+
+                            <span class="rm-btn-text">
+                                Kataloq
+                            </span>
+
+                        </button>
+
+                    </div>
+
+
+
+                    <!-- Child Categories -->
+                    @if (Model.ChildCategories.Any())
+                    {
+                        <div class="rm-subcategory">
+
+                            <div class="row no-gutters rm-subcategory-row">
+
+                                @foreach (var category in Model.ChildCategories)
+                                {
+                                    <div class="col-6 col-sm-4 col-lg-3 col-xl-2 rm-category-wall-item">
+
+                                        <a asp-controller="Category"
+                                           asp-action="Index"
+                                           asp-route-slug="@category.SlugAz"
+                                           class="d-flex flex-column justify-content-between align-items-center text-center">
+
+                                            @if (!string.IsNullOrWhiteSpace(category.Image))
+                                            {
+                                                <span class="rm-category-wall-item-image">
+
+                                                    <img src="@category.Image"
+                                                         alt="@category.NameAz"
+                                                         title="@category.NameAz"
+                                                         width="95"
+                                                         height="95">
+
+                                                </span>
+                                            }
+
+                                            <span>
+                                                @category.NameAz
+                                            </span>
+
+                                        </a>
+
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+                    }
+                    <div class="row no-gutters rm-category-products">
+
+                        @if (Model.Products.Items.Any())
+                        {
+                            @foreach (var product in Model.Products.Items)
+                            {
+                                <partial name="_ProductCardGrid" model="product" />
+                            }
+                        }
+                        else
+                        {
+                            <div class="col-12 py-5 text-center">
+                                <h4>Məhsul tapılmadı</h4>
+                                <p class="text-muted">
+                                    Bu kateqoriyada hazırda məhsul yoxdur.
+                                </p>
+                            </div>
+                        }
+
+                    </div>
+
+
+                    @{
+                        string BuildPaginationUrl(int page)
+                        {
+                            var queryParams =
+                            new List<KeyValuePair<string, string?>>();
+
+                            foreach (var query in Context.Request.Query)
+                            {
+                                if (query.Key.Equals("page", StringComparison.OrdinalIgnoreCase) ||
+                                query.Key.Equals("pageSize", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    continue;
+                                }
+
+                                foreach (var value in query.Value)
+                                {
+                                    queryParams.Add(
+                                    new KeyValuePair<string, string?>(
+                                    query.Key,
+                                    value));
+                                }
+                            }
+
+                            queryParams.Add(
+                            new KeyValuePair<string, string?>(
+                            "page",
+                            page.ToString()));
+
+                            queryParams.Add(
+                            new KeyValuePair<string, string?>(
+                            "pageSize",
+                            Model.Products.PageSize.ToString()));
+
+                            return Microsoft.AspNetCore.WebUtilities.QueryHelpers
+                            .AddQueryString(
+                            Context.Request.Path.Value ?? "/Category",
+                            queryParams);
+                        }
+                    }
+
+                    @if (Model.Products.TotalPages > 1)
+                    {
+                        <ul class="pagination">
+
+                            @if (Model.Products.HasPreviousPage)
+                            {
+                                <li>
+                                    <a href="@BuildPaginationUrl(Model.Products.CurrentPage - 1)">
+                                        &lt;
+                                    </a>
+                                </li>
+                            }
+
+                            @for (var i = 1; i <= Model.Products.TotalPages; i++)
+                            {
+                                if (i == Model.Products.CurrentPage)
+                                {
+                                    <li class="active">
+                                        <span>@i</span>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="@BuildPaginationUrl(i)">
+                                            @i
+                                        </a>
+                                    </li>
+                                }
+                            }
+
+                            @if (Model.Products.HasNextPage)
+                            {
+                                <li>
+                                    <a href="@BuildPaginationUrl(Model.Products.CurrentPage + 1)">
+                                        &gt;
+                                    </a>
+                                </li>
+                            }
+
+                        </ul>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+
+</div>

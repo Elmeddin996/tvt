@@ -299,3 +299,1092 @@ a.knopka:active {
             transform: translateY(0);
         }
 }
+
+
+.tvt-filter {
+    width: 100%;
+    padding: 0;
+}
+
+.tvt-filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.tvt-filter-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+}
+
+.tvt-filter-content {
+    padding: 10px 0;
+}
+
+.tvt-filter-option {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 34px;
+    padding: 5px 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+    .tvt-filter-option input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+.tvt-checkbox {
+    position: relative;
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    border: 1px solid #cfcfcf;
+    border-radius: 3px;
+    background: #fff;
+    transition: 0.2s ease;
+}
+
+.tvt-filter-option:hover .tvt-checkbox {
+    border-color: #222;
+}
+
+.tvt-filter-option input:checked + .tvt-checkbox {
+    background: #222;
+    border-color: #222;
+}
+
+    .tvt-filter-option input:checked + .tvt-checkbox::after {
+        position: absolute;
+        content: "";
+        width: 5px;
+        height: 9px;
+        left: 5px;
+        top: 2px;
+        border: solid #fff;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+
+.tvt-filter-name {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #333;
+}
+
+.tvt-filter-count {
+    margin-left: 10px;
+    font-size: 12px;
+    color: #999;
+}
+
+.tvt-filter-empty {
+    padding: 10px 0;
+    font-size: 13px;
+    color: #999;
+}
+
+/* =========================================
+   TVT PRICE FILTER
+   ========================================= */
+
+.tvt-price-filter {
+    width: 100%;
+}
+
+.tvt-price-inputs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.tvt-price-input-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.tvt-price-input {
+    width: 100%;
+    height: 40px;
+    padding: 0 30px 0 12px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    background: #fff;
+    font-size: 13px;
+    color: #333;
+    outline: none;
+    box-sizing: border-box;
+}
+
+    .tvt-price-input:focus {
+        border-color: #222;
+    }
+
+.tvt-price-currency {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #888;
+}
+
+.tvt-price-separator {
+    flex: 0 0 auto;
+    font-size: 14px;
+    color: #999;
+}
+
+/* =========================================
+   TVT PRICE RANGE
+   ========================================= */
+
+.tvt-price-range {
+    position: relative;
+    width: 100%;
+    height: 28px;
+    margin-top: 18px;
+}
+
+    /* Arxadakı ümumi xətt */
+    .tvt-price-range::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: #e6e6e6;
+        border-radius: 10px;
+        transform: translateY(-50%);
+    }
+
+/* İki range üst-üstə */
+.tvt-range {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    margin: 0;
+    padding: 0;
+    transform: translateY(-50%);
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    pointer-events: none;
+    outline: none;
+}
+
+    /* Chrome / Edge / Safari track */
+    .tvt-range::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 4px;
+        background: transparent;
+        border: none;
+    }
+
+    /* Chrome / Edge / Safari thumb */
+    .tvt-range::-webkit-slider-thumb {
+        width: 18px;
+        height: 18px;
+        margin-top: -7px;
+        appearance: none;
+        -webkit-appearance: none;
+        background: #fff;
+        border: 2px solid #222;
+        border-radius: 50%;
+        cursor: pointer;
+        pointer-events: auto;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+        .tvt-range::-webkit-slider-thumb:hover {
+            transform: scale(1.12);
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.07);
+        }
+
+    /* Firefox */
+    .tvt-range::-moz-range-track {
+        width: 100%;
+        height: 4px;
+        background: transparent;
+        border: none;
+    }
+
+    .tvt-range::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        background: #fff;
+        border: 2px solid #222;
+        border-radius: 50%;
+        cursor: pointer;
+        pointer-events: auto;
+    }
+
+.tvt-range-progress {
+    position: absolute;
+    top: 50%;
+    height: 4px;
+    background: #222;
+    border-radius: 10px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+
+/* =========================================
+   TVT STOCK FILTER
+   ========================================= */
+
+.tvt-radio {
+    position: relative;
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    border: 1px solid #cfcfcf;
+    border-radius: 50%;
+    background: #fff;
+    box-sizing: border-box;
+    transition: 0.2s ease;
+}
+
+.tvt-filter-option:hover .tvt-radio {
+    border-color: #222;
+}
+
+.tvt-filter-option input:checked + .tvt-radio {
+    border-color: #222;
+}
+
+    .tvt-filter-option input:checked + .tvt-radio::after {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #222;
+        content: "";
+    }
+
+/* =========================================
+   TVT FILTER FOOTER
+   ========================================= */
+
+.tvt-filter-footer {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid #e8e8e8;
+}
+
+.tvt-filter-submit,
+.tvt-filter-reset {
+    min-height: 44px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Tətbiq et */
+.tvt-filter-submit {
+    flex: 1;
+    padding: 0 18px;
+    border: 1px solid #222;
+    background: #222;
+    color: #fff;
+}
+
+    .tvt-filter-submit:hover {
+        background: #000;
+        border-color: #000;
+    }
+
+/* Sıfırla */
+.tvt-filter-reset {
+    flex: 0 0 auto;
+    padding: 0 16px;
+    border: 1px solid #d8d8d8;
+    background: #fff;
+    color: #555;
+}
+
+    .tvt-filter-reset:hover {
+        border-color: #222;
+        color: #222;
+        background: #fafafa;
+    }
+
+    /* Klik zamanı */
+    .tvt-filter-submit:active,
+    .tvt-filter-reset:active {
+        transform: translateY(1px);
+    }
+
+    /* Focus */
+    .tvt-filter-submit:focus,
+    .tvt-filter-reset:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.08);
+    }
+
+
+/* =========================================
+   TVT FILTER HEADER
+   ========================================= */
+
+.tvt-filter-header-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #222;
+}
+
+.tvt-filter-icon {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 16px;
+    height: 14px;
+}
+
+    .tvt-filter-icon span {
+        position: relative;
+        display: block;
+        width: 16px;
+        height: 1px;
+        background: #777;
+    }
+
+        .tvt-filter-icon span::after {
+            position: absolute;
+            top: 50%;
+            width: 4px;
+            height: 4px;
+            border: 1px solid #777;
+            border-radius: 50%;
+            background: #fff;
+            content: "";
+            transform: translateY(-50%);
+        }
+
+        .tvt-filter-icon span:nth-child(1)::after {
+            left: 4px;
+        }
+
+        .tvt-filter-icon span:nth-child(2)::after {
+            right: 3px;
+        }
+
+        .tvt-filter-icon span:nth-child(3)::after {
+            left: 7px;
+        }
+
+
+
+/* =========================================
+   TVT BRAND SHOW MORE
+   ========================================= */
+
+.tvt-brand-list {
+    width: 100%;
+}
+
+.tvt-brand-hidden {
+    display: none;
+}
+
+.tvt-show-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    padding: 3px 0;
+    border: 0;
+    background: transparent;
+    color: #333;
+    font-size: 13px;
+    line-height: 1.4;
+    cursor: pointer;
+}
+
+    .tvt-show-more:hover {
+        color: #000;
+        text-decoration: underline;
+    }
+
+.tvt-show-more-arrow {
+    position: relative;
+    width: 7px;
+    height: 7px;
+    margin-top: -3px;
+    border-right: 1px solid #777;
+    border-bottom: 1px solid #777;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
+}
+
+.tvt-show-more.is-open .tvt-show-more-arrow {
+    margin-top: 3px;
+    transform: rotate(225deg);
+}
+
+
+/* =========================================
+   TVT MOBILE FILTER
+   ========================================= */
+
+.tvt-filter-open {
+    display: none;
+}
+
+/* Desktop */
+.tvt-filter-close {
+    display: none;
+}
+
+/* Mobile */
+@media (max-width: 991.98px) {
+
+    .tvt-filter-open {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        min-height: 44px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background: #fff;
+        color: #222;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    .tvt-filter-open-icon {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 16px;
+        height: 14px;
+    }
+
+        .tvt-filter-open-icon span {
+            display: block;
+            width: 16px;
+            height: 1px;
+            background: #333;
+        }
+
+    /* Filter panel */
+    #column-left {
+        display: none;
+    }
+
+        #column-left.tvt-filter-mobile-open {
+            display: block;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background: #fff;
+        }
+
+            #column-left.tvt-filter-mobile-open .rm-column-box {
+                width: 100%;
+                height: 100%;
+                overflow-y: auto;
+            }
+
+            #column-left.tvt-filter-mobile-open .ocf-container {
+                width: 100%;
+                height: 100%;
+            }
+
+            #column-left.tvt-filter-mobile-open .ocf-content {
+                width: 100%;
+                min-height: 100%;
+            }
+
+            #column-left.tvt-filter-mobile-open .ocf-header {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                min-height: 56px;
+                padding: 0 16px;
+                background: #fff;
+                border-bottom: 1px solid #e5e5e5;
+            }
+
+    .tvt-filter-close {
+        position: relative;
+        display: block;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+    }
+
+        .tvt-filter-close span {
+            position: absolute;
+            top: 15px;
+            left: 7px;
+            width: 18px;
+            height: 1px;
+            background: #222;
+        }
+
+            .tvt-filter-close span:first-child {
+                transform: rotate(45deg);
+            }
+
+            .tvt-filter-close span:last-child {
+                transform: rotate(-45deg);
+            }
+
+    #column-left.tvt-filter-mobile-open .ocf-body {
+        height: auto;
+        padding-bottom: 30px;
+    }
+
+    #column-left.tvt-filter-mobile-open .ocf-footer {
+        display: none;
+    }
+
+    body.tvt-filter-lock {
+        overflow: hidden;
+    }
+}
+
+.tvt-mobile-filter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.tvt-mobile-filter-icon {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 16px;
+    height: 14px;
+}
+
+    .tvt-mobile-filter-icon span {
+        display: block;
+        width: 16px;
+        height: 1px;
+        background: currentColor;
+    }
+
+
+
+/* =========================================
+   TVT MOBILE CATALOG
+   AEM STYLE
+   ========================================= */
+
+.tvt-mobile-menu {
+    display: none;
+}
+
+@media (max-width: 991.98px) {
+
+    /* ================================
+       SIDEBAR
+       ================================ */
+
+    .tvt-mobile-menu {
+        position: fixed;
+        inset: 0;
+        z-index: 10001;
+        display: block;
+        width: 100%;
+        height: 100dvh;
+        background: rgba(230, 245, 248, 0.75);
+        visibility: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+
+        .tvt-mobile-menu.active {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+
+    /* ================================
+       HEADER
+       ================================ */
+
+    .tvt-mobile-menu-header {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: min(100%, 395px);
+        height: 56px;
+        padding: 0 16px;
+        background: #fff;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+
+    /* ================================
+       BACK BUTTON
+       ================================ */
+
+    .tvt-mobile-menu-back {
+        display: flex;
+        align-items: center;
+        min-width: 0;
+        height: 100%;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: #272323;
+        font-family: Montserrat, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1;
+        cursor: pointer;
+        visibility: hidden;
+    }
+
+    .tvt-mobile-menu-back-icon {
+        position: relative;
+        display: block;
+        width: 9px;
+        height: 9px;
+        margin-right: 11px;
+        border-left: 1px solid #272323;
+        border-bottom: 1px solid #272323;
+        transform: rotate(45deg);
+    }
+
+    #tvt-mobile-menu-back-text {
+        display: block;
+        max-width: calc(100vw - 90px);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+
+    /* ================================
+       CLOSE
+       ================================ */
+
+    .tvt-mobile-menu-close {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 32px;
+        width: 32px;
+        height: 32px;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+    }
+
+        .tvt-mobile-menu-close span {
+            position: absolute;
+            width: 19px;
+            height: 1px;
+            background: #272323;
+        }
+
+            .tvt-mobile-menu-close span:first-child {
+                transform: rotate(45deg);
+            }
+
+            .tvt-mobile-menu-close span:last-child {
+                transform: rotate(-45deg);
+            }
+
+
+    /* ================================
+       CONTENT
+       ================================ */
+
+    .tvt-mobile-menu-content {
+        position: relative;
+        width: min(100%, 395px);
+        height: calc(100dvh - 56px);
+        overflow: hidden;
+        background: #fff;
+    }
+
+
+    /* ================================
+       LEVELS
+       ================================ */
+
+    .tvt-mobile-menu-level {
+        position: absolute;
+        inset: 0;
+        display: none;
+        width: 100%;
+        height: 100%;
+        background: #fff;
+    }
+
+        .tvt-mobile-menu-level.active {
+            display: block;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+
+    /* ================================
+       LEVEL TITLE
+       ================================ */
+
+    .tvt-mobile-menu-title {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 12px 14px;
+        color: #272323;
+        font-family: Montserrat, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.2;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+
+    /* ================================
+       LIST
+       ================================ */
+
+    .tvt-mobile-menu-list {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    /* ================================
+       CATEGORY ROW
+       ================================ */
+
+    .tvt-mobile-menu-item {
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        min-height: 58px;
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid #eeeeee;
+        background: #fff;
+    }
+
+
+    /* ================================
+       CATEGORY LINK
+       ================================ */
+
+    .tvt-mobile-menu-link {
+        display: flex;
+        align-items: center;
+        flex: 1 1 auto;
+        min-width: 0;
+        min-height: 58px;
+        padding: 8px 12px 8px 16px;
+        margin: 0;
+        border: 0;
+        outline: 0;
+        background: #fff;
+        color: #272323;
+        font-family: Montserrat, sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.35;
+        text-align: left;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+        .tvt-mobile-menu-link:hover,
+        .tvt-mobile-menu-link:focus,
+        .tvt-mobile-menu-link:active {
+            color: #272323;
+            background: #fff;
+            text-decoration: none;
+            outline: none;
+        }
+
+
+    /* ================================
+       ICON PLACEHOLDER
+       
+       Backend icon will be added later.
+       Keep the space now.
+       ================================ */
+
+    .tvt-mobile-menu-icon {
+        display: block;
+        flex: 0 0 42px;
+        width: 42px;
+        height: 42px;
+        margin-right: 13px;
+        object-fit: contain;
+    }
+
+
+    /* ================================
+       CATEGORY TEXT
+       ================================ */
+
+    .tvt-mobile-menu-link > span {
+        display: block;
+        min-width: 0;
+        overflow: hidden;
+        color: #272323;
+        font-family: Montserrat, sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.35;
+        white-space: normal;
+        text-overflow: ellipsis;
+    }
+
+
+    /* ================================
+       NEXT ARROW AREA
+       ================================ */
+
+    .tvt-mobile-menu-next {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 48px;
+        width: 48px;
+        min-height: 58px;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-left: 1px solid #eeeeee;
+        background: #fff;
+        cursor: pointer;
+    }
+
+        .tvt-mobile-menu-next:hover,
+        .tvt-mobile-menu-next:focus,
+        .tvt-mobile-menu-next:active {
+            background: #fff;
+            outline: none;
+        }
+
+        .tvt-mobile-menu-next span {
+            display: block;
+            width: 8px;
+            height: 8px;
+            border-top: 1px solid #555;
+            border-right: 1px solid #555;
+            transform: rotate(45deg);
+        }
+
+
+    /* ================================
+       MAIN MENU
+       ================================ */
+
+    #tvt-mobile-menu-main
+    .tvt-mobile-menu-item {
+        min-height: 58px;
+    }
+
+    #tvt-mobile-menu-main
+    .tvt-mobile-menu-catalog-link {
+        padding-left: 16px;
+    }
+
+
+    /* ================================
+       CATALOG LEVEL
+       ================================ */
+
+    #tvt-mobile-menu-catalog
+    .tvt-mobile-menu-title {
+        min-height: 48px;
+    }
+
+
+    /* ================================
+       SCROLLBAR
+       ================================ */
+
+    .tvt-mobile-menu-level::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .tvt-mobile-menu-level::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .tvt-mobile-menu-level::-webkit-scrollbar-thumb {
+        background: #d5d5d5;
+        border-radius: 10px;
+    }
+
+
+    /* ================================
+       BODY LOCK
+       ================================ */
+
+    body.tvt-mobile-menu-lock {
+        overflow: hidden;
+    }
+}
+
+.tvt-mobile-menu-catalog-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 24px !important;
+    height: 24px !important;
+    flex: 0 0 24px !important;
+    margin-right: 12px !important;
+    background: rgb(0, 103, 173) !important;
+    border-radius: 4px;
+}
+
+    .tvt-mobile-menu-catalog-icon img {
+        display: block !important;
+        width: 18px !important;
+        height: 18px !important;
+        max-width: 18px !important;
+        max-height: 18px !important;
+        object-fit: contain !important;
+        /* ikon ağ qalsın */
+        filter: none !important;
+    }
+
+
+/* Category page mobile catalog button */
+#tvt-category-catalog-button {
+    color: #272323 !important;
+    background: #fff !important;
+    text-decoration: none !important;
+}
+
+    #tvt-category-catalog-button .rm-btn-text {
+        color: #272323 !important;
+    }
+
+    #tvt-category-catalog-button .rm-btn-icon {
+        color: #272323 !important;
+    }
+
+
+
+
+/* =========================================
+   CATEGORY MOBILE BUTTONS
+   ========================================= */
+
+@media (max-width: 991.98px) {
+
+    .rm-category-buttons {
+        gap: 4px;
+    }
+
+        .rm-category-buttons > div,
+        .rm-category-buttons > button {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+
+        .rm-category-buttons .tvt-mobile-filter-button,
+        .rm-category-buttons #tvt-category-catalog-button {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            height: 44px;
+            min-height: 44px;
+            gap: 8px;
+        }
+
+
+        /* Filter ikonu */
+        .rm-category-buttons .tvt-mobile-filter-icon {
+            flex: 0 0 16px;
+            width: 16px;
+            height: 14px;
+            margin: 0;
+        }
+
+
+        /* Kataloq ikonunun konteyneri */
+        .rm-category-buttons #tvt-category-catalog-button .rm-btn-icon {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex: 0 0 18px;
+            width: 18px;
+            height: 18px;
+            margin: 0;
+        }
+
+
+            /* Kataloq ikonunun özü */
+            .rm-category-buttons #tvt-category-catalog-button .rm-btn-icon img {
+                display: block !important;
+                width: 18px !important;
+                height: 18px !important;
+                max-width: 18px !important;
+                max-height: 18px !important;
+                object-fit: contain;
+                transform: scale(1.18);
+                transform-origin: center;
+            }
+
+
+        /* Mətn */
+        .rm-category-buttons .rm-btn-text {
+            line-height: 1;
+            white-space: nowrap;
+        }
+}
+
