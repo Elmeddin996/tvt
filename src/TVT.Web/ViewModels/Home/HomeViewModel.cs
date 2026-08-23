@@ -1,3 +1,4 @@
+using TVT.Business.DTOs.MiniSliders;
 using TVT.Business.DTOs.Sliders;
 
 namespace TVT.Web.ViewModels.Home;
@@ -5,4 +6,5 @@ namespace TVT.Web.ViewModels.Home;
 public class HomeViewModel
 {
     public IReadOnlyList<SliderDetailDto> Sliders { get; set; } = [];
+    public IReadOnlyList<MiniSliderListDto> MiniSliders { get; set; } = [];
 }

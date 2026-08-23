@@ -89,45 +89,29 @@
                                     <div class="splide__track">
                                         <div class="splide__list">
 
-                                            <div class="splide__slide item-slide slider-82-1-1-1">
-                                                <img src="~/images/banner/home/hikvision-brand-banner-az-480x740.jpg"
-                                                     title="Hikvision"
-                                                     alt="Hikvision"
-                                                     class="img-responsive" />
+                                            @foreach (var miniSlider in Model.MiniSliders)
+                                            {
+                                                <div class="splide__slide item-slide">
 
-                                                <div class="block-desc">
-                                                    <div class="slide-desc">
-                                                        <div class="slide-desc0">
-                                                            <a asp-controller="Brand"
-                                                               asp-action="Detail"
-                                                               asp-route-slug="hikvision"
-                                                               class="button button2">
-                                                                Kataloqa keç
-                                                            </a>
-                                                        </div>
-                                                    </div>
+                                                    @if (!string.IsNullOrWhiteSpace(miniSlider.Link))
+                                                    {
+                                                        <a href="@miniSlider.Link">
+                                                            <img src="@miniSlider.Image"
+                                                                 title=""
+                                                                 alt=""
+                                                                 class="img-responsive" />
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="@miniSlider.Image"
+                                                             title=""
+                                                             alt=""
+                                                             class="img-responsive" />
+                                                    }
+
                                                 </div>
-                                            </div>
-
-                                            <div class="splide__slide item-slide slider-82-1-1-2">
-                                                <img src="~/images/banner/home/dahua-brand-banner-480x740.jpg"
-                                                     title="Dahua"
-                                                     alt="Dahua"
-                                                     class="img-responsive" />
-
-                                                <div class="block-desc">
-                                                    <div class="slide-desc">
-                                                        <div class="slide-desc0">
-                                                            <a asp-controller="Brand"
-                                                               asp-action="Detail"
-                                                               asp-route-slug="dahua"
-                                                               class="button button2">
-                                                                Kataloqa keç
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            }
 
                                         </div>
                                     </div>

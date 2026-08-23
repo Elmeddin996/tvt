@@ -1,0 +1,127 @@
+@model TVT.Web.Areas.Admin.ViewModels.MiniSliders.CreateMiniSliderViewModel
+
+@{
+    ViewData["Title"] = "Create Mini Slider";
+}
+
+<partial name="_PageHeader" />
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">Create Mini Slider</h5>
+
+        <a asp-area="Admin"
+           asp-controller="MiniSlider"
+           asp-action="Index"
+           class="btn btn-secondary">
+
+            <i class="bi bi-arrow-left"></i>
+            Back to List
+
+        </a>
+
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="Create"
+              method="post"
+              enctype="multipart/form-data">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger"></div>
+
+            <div class="mb-3">
+
+                <label asp-for="ImageFile"
+                       class="form-label">
+                    Image
+                </label>
+
+                <input asp-for="ImageFile"
+                       type="file"
+                       class="form-control"
+                       accept=".jpg,.jpeg,.png,.webp" />
+
+                <span asp-validation-for="ImageFile"
+                      class="text-danger"></span>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="MiniSlider.Link"
+                       class="form-label">
+                    Link
+                </label>
+
+                <input asp-for="MiniSlider.Link"
+                       class="form-control"
+                       placeholder="https://example.com" />
+
+                <span asp-validation-for="MiniSlider.Link"
+                      class="text-danger"></span>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="MiniSlider.SortOrder"
+                       class="form-label">
+                    Order
+                </label>
+
+                <input asp-for="MiniSlider.SortOrder"
+                       type="number"
+                       min="0"
+                       class="form-control" />
+
+                <span asp-validation-for="MiniSlider.SortOrder"
+                      class="text-danger"></span>
+
+            </div>
+
+            <div class="form-check mb-4">
+
+                <input asp-for="MiniSlider.IsActive"
+                       class="form-check-input" />
+
+                <label asp-for="MiniSlider.IsActive"
+                       class="form-check-label">
+                </label>
+
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+
+                <a asp-area="Admin"
+                   asp-controller="MiniSlider"
+                   asp-action="Index"
+                   class="btn btn-outline-secondary">
+
+                    Cancel
+
+                </a>
+
+                <button type="submit"
+                        class="btn btn-success">
+
+                    <i class="bi bi-check-lg"></i>
+                    Save
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

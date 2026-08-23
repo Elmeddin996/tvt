@@ -1,0 +1,197 @@
+@using TVT.Core.Common.Pagination
+@model PagedResult<TVT.Business.DTOs.MiniSliders.MiniSliderListDto>
+
+@{
+    ViewData["Title"] = "Mini Sliders";
+}
+
+<partial name="_PageHeader" />
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Mini Slider List</h5>
+
+        <a asp-area="Admin"
+           asp-controller="MiniSlider"
+           asp-action="Create"
+           class="btn btn-success">
+            <i class="bi bi-plus-lg"></i>
+            Add Mini Slider
+        </a>
+    </div>
+
+    <div class="card-body p-0">
+
+        @if (!Model.Items.Any())
+        {
+            <div class="alert alert-info m-3">
+                No mini sliders found.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width:70px;">Id</th>
+                            <th style="width:100px;">Image</th>
+                            <th>Link</th>
+                            <th style="width:100px;">Order</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th class="text-center" style="width:160px;">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var miniSlider in Model.Items)
+                        {
+                            <tr>
+
+                                <td>
+                                    @miniSlider.Id
+                                </td>
+
+                                <td>
+                                    @if (!string.IsNullOrWhiteSpace(miniSlider.Image))
+                                    {
+                                        <img src="@miniSlider.Image"
+                                             class="img-thumbnail"
+                                             style="width:70px;height:50px;object-fit:cover;" />
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">-</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (!string.IsNullOrWhiteSpace(miniSlider.Link))
+                                    {
+                                        <span>@miniSlider.Link</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">-</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @miniSlider.SortOrder
+                                </td>
+
+                                <td>
+                                    @if (miniSlider.IsActive)
+                                    {
+                                        <span class="badge bg-success">
+                                            Active
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+                                            Passive
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @miniSlider.CreatedDate.ToString("dd.MM.yyyy")
+                                </td>
+
+                                <td class="text-center">
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@miniSlider.Id"
+                                       class="btn btn-sm btn-primary">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+
+                                    <form asp-action="Delete"
+                                          asp-route-id="@miniSlider.Id"
+                                          method="post"
+                                          class="d-inline">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <button type="submit"
+                                                class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Are you sure you want to delete this mini slider?')">
+
+                                            <i class="bi bi-trash"></i>
+
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            @if (Model.TotalPages > 1)
+            {
+                <div class="d-flex justify-content-center py-3">
+
+                    <nav>
+
+                        <ul class="pagination mb-0">
+
+                            <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-page="@(Model.CurrentPage - 1)">
+                                    Previous
+                                </a>
+
+                            </li>
+
+                            @for (int i = 1; i <= Model.TotalPages; i++)
+                            {
+                                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+
+                                    <a class="page-link"
+                                       asp-action="Index"
+                                       asp-route-page="@i">
+
+                                        @i
+
+                                    </a>
+
+                                </li>
+                            }
+
+                            <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-page="@(Model.CurrentPage + 1)">
+                                    Next
+                                </a>
+
+                            </li>
+
+                        </ul>
+
+                    </nav>
+
+                </div>
+            }
+
+        }
+
+    </div>
+
+</div>

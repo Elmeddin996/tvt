@@ -27,6 +27,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Setting> Settings { get; set; }
 
     public DbSet<Slider> Sliders { get; set; }
+    public DbSet<MiniSlider> MiniSliders { get; set; }
 
     public DbSet<ContactMessage> ContactMessages { get; set; }
 

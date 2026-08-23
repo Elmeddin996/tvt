@@ -10,6 +10,7 @@ public interface IUnitOfWork
     INewsRepository News { get; }
     IPageRepository Pages { get; }
     ISliderRepository Sliders { get; }
+    IMiniSliderRepository MiniSliders { get; }
     ISettingRepository Settings { get; }
     ISubscriberRepository Subscribers { get; }
     IContactMessageRepository ContactMessages { get; }
