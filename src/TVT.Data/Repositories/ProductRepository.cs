@@ -243,4 +243,20 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
             OutOfStockCount = outOfStockCount
         };
     }
+
+    public async Task<List<Product>> GetNewProductsAsync(int count)
+    {
+        return await DbSet
+            .AsNoTracking()
+            .Include(x => x.Category)
+            .Include(x => x.Brand)
+            .Include(x => x.ProductImages)
+            .Where(x =>
+                x.IsNew &&
+                x.IsActive &&
+                !x.IsDeleted)
+            .OrderByDescending(x => x.CreatedDate)
+            .Take(count)
+            .ToListAsync();
+    }
 }

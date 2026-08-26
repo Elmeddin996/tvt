@@ -1,0 +1,291 @@
+@model TVT.Business.DTOs.Settings.SettingDetailDto
+
+@{
+    ViewData["Title"] = "Əlaqə";
+}
+
+<div class="container">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-controller="Home" asp-action="Index">
+                    Ana səhifə
+                </a>
+            </li>
+
+            <li class="breadcrumb-item active" aria-current="page">
+                Əlaqə
+            </li>
+        </ol>
+    </nav>
+
+
+    <!-- Page Title -->
+    <div class="mb-4">
+        <h1 class="mb-0">
+            Əlaqə
+        </h1>
+    </div>
+
+
+    <!-- Google Map -->
+    @if (!string.IsNullOrWhiteSpace(Model.GoogleMap))
+    {
+        <div class="contact-map mb-4">
+
+            <iframe src="@Model.GoogleMap"
+                    width="100%"
+                    height="500"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+
+        </div>
+    }
+
+
+    <!-- Contact Information -->
+    <div class="row g-4 mb-5">
+
+        <!-- Company / Address -->
+        <div class="col-lg-6">
+
+            <div class="contact-card h-100">
+
+                <h3 class="contact-card-title">
+                    @Model.CompanyName
+                </h3>
+
+                @if (!string.IsNullOrWhiteSpace(Model.AddressAz))
+                {
+                    <div class="contact-info-item">
+
+                        <div class="contact-info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+
+                        <div>
+                            <div class="contact-info-label">
+                                Ünvan
+                            </div>
+
+                            <div class="contact-info-value">
+                                @Model.AddressAz
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+
+                @if (!string.IsNullOrWhiteSpace(Model.WorkingHoursAz))
+                {
+                    <div class="contact-info-item">
+
+                        <div class="contact-info-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+
+                        <div>
+                            <div class="contact-info-label">
+                                İş vaxtı
+                            </div>
+
+                            <div class="contact-info-value">
+                                @Html.Raw(Model.WorkingHoursAz)
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+
+        <!-- Contact -->
+        <div class="col-lg-6">
+
+            <div class="contact-card h-100">
+
+                <h3 class="contact-card-title">
+                    Əlaqə məlumatları
+                </h3>
+
+
+                @if (!string.IsNullOrWhiteSpace(Model.Phone1))
+                {
+                    <div class="contact-info-item">
+
+                        <div class="contact-info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+
+                        <div>
+                            <div class="contact-info-label">
+                                Telefon
+                            </div>
+
+                            <a href="@($"tel:{Model.Phone1}")"
+                               class="contact-info-link">
+                                @Model.Phone1
+                            </a>
+                        </div>
+
+                    </div>
+                }
+
+
+                @if (!string.IsNullOrWhiteSpace(Model.Phone2))
+                {
+                    <div class="contact-info-item">
+
+                        <div class="contact-info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+
+                        <div>
+                            <div class="contact-info-label">
+                                Telefon
+                            </div>
+
+                            <a href="@($"tel:{Model.Phone2}")"
+                               class="contact-info-link">
+                                @Model.Phone2
+                            </a>
+                        </div>
+
+                    </div>
+                }
+
+
+                @if (!string.IsNullOrWhiteSpace(Model.Email))
+                {
+                    <div class="contact-info-item">
+
+                        <div class="contact-info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+
+                        <div>
+                            <div class="contact-info-label">
+                                E-mail
+                            </div>
+
+                            <a href="mailto:@Model.Email"
+                               class="contact-info-link">
+                                @Model.Email
+                            </a>
+                        </div>
+
+                    </div>
+                }
+
+
+                @if (!string.IsNullOrWhiteSpace(Model.WhatsApp))
+                {
+                    <div class="contact-info-item">
+
+                        <div class="contact-info-icon contact-whatsapp-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+
+                        <div>
+                            <div class="contact-info-label">
+                                WhatsApp
+                            </div>
+
+                            <a href="@Model.WhatsApp"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="contact-info-link">
+                                WhatsApp ilə əlaqə
+                            </a>
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Social Networks -->
+    @if (!string.IsNullOrWhiteSpace(Model.Facebook) ||
+    !string.IsNullOrWhiteSpace(Model.Instagram) ||
+    !string.IsNullOrWhiteSpace(Model.Youtube) ||
+    !string.IsNullOrWhiteSpace(Model.Telegram) ||
+    !string.IsNullOrWhiteSpace(Model.TikTok))
+    {
+        <div class="contact-social text-center mb-5">
+
+            <h3 class="contact-card-title">
+                Sosial şəbəkələr
+            </h3>
+
+            <div class="contact-social-links">
+
+                @if (!string.IsNullOrWhiteSpace(Model.Facebook))
+                {
+                    <a href="@Model.Facebook"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.Instagram))
+                {
+                    <a href="@Model.Instagram"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.Youtube))
+                {
+                    <a href="@Model.Youtube"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.Telegram))
+                {
+                    <a href="@Model.Telegram"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Telegram">
+                        <i class="fab fa-telegram-plane"></i>
+                    </a>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.TikTok))
+                {
+                    <a href="@Model.TikTok"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                }
+
+            </div>
+
+        </div>
+    }
+
+</div>

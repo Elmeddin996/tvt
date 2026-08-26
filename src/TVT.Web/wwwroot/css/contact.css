@@ -1,0 +1,200 @@
+/* =========================================================
+   TVT Contact Page
+   ========================================================= */
+
+.contact-map {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #f5f5f5;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+    .contact-map iframe {
+        display: block;
+        width: 100%;
+        height: 520px;
+        border: 0;
+    }
+
+
+/* Contact Cards */
+
+.contact-card {
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.contact-card-title {
+    margin: 0 0 25px;
+    color: #222;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+
+/* Contact Information */
+
+.contact-info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 16px 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+    .contact-info-item:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+    }
+
+.contact-info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    border-radius: 50%;
+    background: #f3f7fa;
+    color: #087abb;
+    font-size: 18px;
+}
+
+.contact-info-label {
+    margin-bottom: 4px;
+    color: #777;
+    font-size: 13px;
+}
+
+.contact-info-value {
+    color: #333;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.contact-info-link {
+    color: #087abb;
+    font-size: 15px;
+    text-decoration: none;
+}
+
+    .contact-info-link:hover {
+        text-decoration: underline;
+    }
+
+
+/* Social Networks */
+
+.contact-social {
+    padding: 30px;
+    background: #fff;
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.contact-social-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+    .contact-social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: #f3f7fa;
+        color: #555;
+        font-size: 18px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+        .contact-social-links a:hover {
+            background: #087abb;
+            color: #fff;
+        }
+
+
+/* Tablet */
+
+@media (max-width: 991px) {
+
+    .contact-map iframe {
+        height: 450px;
+    }
+
+    .contact-card {
+        padding: 25px;
+    }
+}
+
+
+/* Mobile */
+
+@media (max-width: 767px) {
+
+    .contact-map {
+        border-radius: 8px;
+    }
+
+        .contact-map iframe {
+            height: 350px;
+        }
+
+    .contact-card {
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    .contact-card-title {
+        font-size: 19px;
+        margin-bottom: 18px;
+    }
+
+    .contact-info-item {
+        gap: 12px;
+        padding: 14px 0;
+    }
+
+    .contact-info-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        flex: 0 0 44px;
+        border-radius: 50%;
+        background: #f3f7fa;
+        color: #087abb;
+        font-size: 17px;
+    }
+
+        .contact-info-icon i {
+            display: block;
+            line-height: 1;
+        }
+
+    .contact-info-value,
+    .contact-info-link {
+        font-size: 14px;
+    }
+
+    .contact-social {
+        padding: 20px;
+        border-radius: 8px;
+    }
+}
+
+
+.contact-whatsapp-icon {
+    color: #25d366;
+}

@@ -1,0 +1,357 @@
+/* =========================================================
+   TVT Footer
+   ========================================================= */
+
+.tvt-footer {
+    margin-top: 60px;
+    background: #1f2933;
+    color: #cbd2d9;
+}
+
+
+/* Main Footer */
+
+.tvt-footer-main {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 50px;
+    padding: 55px 0 45px;
+}
+
+
+/* Columns */
+
+.tvt-footer-column {
+    min-width: 0;
+}
+
+.tvt-footer-company {
+    padding-right: 30px;
+}
+
+
+/* Logo */
+
+.tvt-footer-logo {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+    .tvt-footer-logo img {
+        display: block;
+        max-width: 180px;
+        max-height: 60px;
+        width: auto;
+        height: auto;
+    }
+
+
+/* Company Name */
+
+.tvt-footer-company-name {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #fff;
+    font-size: 26px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+
+/* Description */
+
+.tvt-footer-description {
+    max-width: 360px;
+    margin-bottom: 25px;
+    color: #aeb7c2;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+
+/* Titles */
+
+.tvt-footer-title {
+    position: relative;
+    margin: 0 0 22px;
+    padding-bottom: 12px;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+    .tvt-footer-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 35px;
+        height: 2px;
+        background: #087abb;
+    }
+
+
+/* Contact List */
+
+.tvt-footer-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    .tvt-footer-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 16px;
+        color: #aeb7c2;
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+        .tvt-footer-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .tvt-footer-list li > i {
+            width: 18px;
+            flex: 0 0 18px;
+            margin-top: 4px;
+            color: #087abb;
+            text-align: center;
+        }
+
+    .tvt-footer-list a {
+        color: #aeb7c2;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+        .tvt-footer-list a:hover {
+            color: #fff;
+        }
+
+
+/* Working Hours */
+
+.tvt-footer-working-hours {
+    color: #aeb7c2;
+    font-size: 14px;
+    line-height: 1.9;
+}
+
+    .tvt-footer-working-hours p {
+        margin-bottom: 5px;
+    }
+
+    .tvt-footer-working-hours ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+
+/* Contact Button */
+
+.tvt-footer-contact-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    margin-top: 20px;
+    padding: 0 20px;
+    border: 1px solid #087abb;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 13px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+    .tvt-footer-contact-button:hover {
+        background: #087abb;
+        border-color: #087abb;
+        color: #fff;
+    }
+
+
+/* Information Links */
+
+.tvt-footer-links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    .tvt-footer-links li {
+        margin-bottom: 13px;
+    }
+
+        .tvt-footer-links li:last-child {
+            margin-bottom: 0;
+        }
+
+    .tvt-footer-links a {
+        position: relative;
+        color: #aeb7c2;
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+        .tvt-footer-links a::before {
+            content: "›";
+            margin-right: 8px;
+            color: #087abb;
+            transition: margin-right 0.2s ease;
+        }
+
+        .tvt-footer-links a:hover {
+            color: #fff;
+        }
+
+            .tvt-footer-links a:hover::before {
+                margin-right: 11px;
+            }
+
+
+/* Social */
+
+.tvt-footer-social {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+    .tvt-footer-social a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: #293541;
+        color: #cbd2d9;
+        font-size: 15px;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+        .tvt-footer-social a:hover {
+            background: #087abb;
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+
+/* Bottom */
+
+.tvt-footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 65px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: #8995a1;
+    font-size: 13px;
+}
+
+    .tvt-footer-bottom > div:last-child {
+        color: #fff;
+        font-weight: 600;
+    }
+
+
+/* =========================================================
+   Tablet
+   ========================================================= */
+
+@media (max-width: 991px) {
+
+    .tvt-footer-main {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px 30px;
+        padding: 45px 0 35px;
+    }
+
+    .tvt-footer-company {
+        padding-right: 0;
+    }
+}
+
+
+/* =========================================================
+   Mobile
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+    .tvt-footer {
+        margin-top: 40px;
+    }
+
+    .tvt-footer-main {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        padding: 40px 20px 30px;
+    }
+
+    .tvt-footer-company {
+        padding-right: 0;
+    }
+
+    .tvt-footer-description {
+        max-width: none;
+    }
+
+    .tvt-footer-title {
+        margin-bottom: 18px;
+    }
+
+    .tvt-footer-bottom {
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        padding: 18px 20px;
+        text-align: center;
+    }
+}
+
+
+/* =========================================================
+   Small Mobile
+   ========================================================= */
+
+@media (max-width: 480px) {
+
+    .tvt-footer-main {
+        padding: 35px 15px 25px;
+    }
+
+    .tvt-footer-social a {
+        width: 36px;
+        height: 36px;
+    }
+
+    .tvt-footer-contact-button {
+        width: 100%;
+    }
+}
+
+
+.tvt-footer-developer {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+    opacity: 0.35;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+    .tvt-footer-developer:hover {
+        color: #fff;
+        opacity: 0.65;
+    }

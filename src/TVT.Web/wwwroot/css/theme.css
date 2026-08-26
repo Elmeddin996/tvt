@@ -803,3 +803,224 @@ solid #ddd;margin-bottom:2%}#tab-video  .video-thumbnails.visible-type .video-ad
 a{position:relative;margin-bottom:0;padding:5px
 5px 0 5px;display:block;border:none}#tab-video .video-thumbnails.visible-type .video-additional .video-title{background-color:#fff;color:#323232;position:unset;padding:6px;opacity:1}@media (max-width: 500px){#tab-video .video-thumbnails .video-additional{float:none;margin-right:0;width:100%}}a.thumbnails.mfp-iframe{text-align:center;display:block;padding-top:50%}.mfp-iframe-scaler
 iframe{box-shadow:none !important}.mfp-iframe-holder .mfp-arrow-right, .mfp-iframe-holder .mfp-arrow-left{opacity:1 !important}#rm-product-video{border-bottom:1px solid #f7f7f7;padding:30px;width:100%}.product-grid .video-sticker~.rm-module-buttons{top:40px}.rm-item .video-sticker~.rm-module-buttons{top:29px;right:13px}.rm-module .rm-module-item .video-sticker{top:20px;right:6px}.rm-module-item .video-sticker ~ .rm-module-img .rm-module-buttons{top:60px;right:11px}.rm-module .rm-module-item .video-tooltip{top:30px;right:43px}.rm-module-item:hover .rm-module-overlay{right:-10px;left:-10px}@media only screen and (min-width: 1200px){.rm-module-img .video-sticker{right:10px}}@media only screen and (max-width: 767px){.rm-module-img .video-sticker{right:10px}.rm-module .rm-module-item .video-sticker{top:6px;right:6px}.rm-module .rm-module-item .video-tooltip{top:16px;right:43px}.rm-module-item .video-sticker ~ .rm-module-img .rm-module-buttons{top:44px;right:11px}.rm-module-item .video-sticker~.rm-module-buttons{top:40px}}
+
+
+
+
+
+
+/* =========================================================
+   TVT - Mobile Sidebar Custom Styles
+   ========================================================= */
+
+.rm-sidebar-contacts {
+    background: #f9f9fc;
+    overflow: hidden;
+}
+
+    /* Sidebar content area */
+    .rm-sidebar-contacts .rm-header-location-inner {
+        padding: 20px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    /* Contact cards */
+    .rm-sidebar-contacts .rm_mobile_menu_first-item {
+        width: 100%;
+        padding: 20px;
+        margin-bottom: 12px;
+        background: #fff;
+        border-radius: 6px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.04);
+    }
+
+        /* Last card */
+        .rm-sidebar-contacts .rm_mobile_menu_first-item:last-child {
+            margin-bottom: 0;
+        }
+
+    /* Section title */
+    .rm-sidebar-contacts .rm-content-title {
+        margin-bottom: 15px;
+        color: #272323;
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 500;
+    }
+
+    /* Phone links */
+    .rm-sidebar-contacts .rm_mobile_menu_phones-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+        color: #0a78bf;
+        font-size: 16px;
+        line-height: 22px;
+        text-decoration: underline;
+    }
+
+        .rm-sidebar-contacts .rm_mobile_menu_phones-item:last-child {
+            margin-bottom: 0;
+        }
+
+       
+    /* Working hours */
+    .rm-sidebar-contacts .rm_mobile_menu_shedule {
+        padding-bottom: 15px;
+    }
+
+        .rm-sidebar-contacts .rm_mobile_menu_shedule > div:last-child {
+            color: #656c7d;
+            font-size: 15px;
+            line-height: 24px;
+        }
+
+    /* Messengers */
+    .rm-sidebar-contacts .rm_mobile_menu_messengers {
+        width: 100%;
+        margin: 0 0 12px;
+        background: transparent;
+    }
+
+        .rm-sidebar-contacts .rm_mobile_menu_messengers .col-6 {
+            padding: 0 6px;
+        }
+
+            .rm-sidebar-contacts .rm_mobile_menu_messengers .col-6:first-child {
+                padding-left: 0;
+            }
+
+            .rm-sidebar-contacts .rm_mobile_menu_messengers .col-6:last-child {
+                padding-right: 0;
+            }
+
+    .rm-sidebar-contacts .rm-fixed-contact-item {
+        min-height: 50px;
+        padding: 12px 14px;
+        margin-bottom: 0;
+        background: #fff;
+        border-radius: 6px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.04);
+        color: #272323;
+        text-decoration: none;
+    }
+
+    /* Messenger icons */
+    .rm-sidebar-contacts .rm-fixed-contact-item-icon {
+        width: 30px;
+        height: 30px;
+        margin-right: 8px;
+        flex: 0 0 30px;
+    }
+
+    /* Social networks */
+    .rm-sidebar-contacts .rm-social {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .rm-sidebar-contacts .rm-social-item {
+        margin: 0;
+        list-style: none;
+    }
+
+        .rm-sidebar-contacts .rm-social-item a {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            color: #656c7d;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+            .rm-sidebar-contacts .rm-social-item a:hover {
+                background: #e9eaed;
+                color: #0a78bf;
+            }
+
+    /* Bottom button */
+    .rm-sidebar-contacts .rm-header-location-contacts-btn {
+        flex-shrink: 0;
+        padding: 20px;
+        margin-top: auto;
+        background: #fff;
+        border-top: 1px solid #f9f9f9;
+        box-shadow: 0 -4px 30px -10px rgba(40, 75, 101, 0.15);
+        border-radius: 20px 20px 0 0;
+    }
+
+        .rm-sidebar-contacts .rm-header-location-contacts-btn .rm-btn {
+            min-height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+/* Sidebar close button */
+.rm-sidebar-title-close.modal-close {
+    position: relative;
+    display: block;
+    flex: 0 0 68px;
+}
+
+    .rm-sidebar-title-close.modal-close .modal-close-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 22px;
+        height: 1px;
+        border: 0;
+        background: #777;
+    }
+
+    .rm-sidebar-title-close.modal-close .modal-close-left {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .rm-sidebar-title-close.modal-close .modal-close-right {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+/* Mobile */
+@media (max-width: 767px) {
+
+    .rm-sidebar-contacts .rm-header-location-inner {
+        padding: 20px 16px;
+    }
+
+    .rm-sidebar-contacts .rm_mobile_menu_first-item {
+        padding: 20px;
+    }
+
+    .rm-sidebar-contacts .rm-content-title {
+        font-size: 16px;
+    }
+
+    .rm-sidebar-contacts .rm-header-location-contacts-btn {
+        padding: 16px;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 360px) {
+
+    .rm-sidebar-contacts .rm-header-location-inner {
+        padding: 15px 12px;
+    }
+
+    .rm-sidebar-contacts .rm_mobile_menu_first-item {
+        padding: 16px;
+    }
+
+    .rm-sidebar-contacts .rm_mobile_menu_messengers .col-6 {
+        padding: 0 4px;
+    }
+}

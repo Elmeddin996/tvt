@@ -9,17 +9,24 @@ namespace TVT.Web.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+
     private readonly ISliderService _sliderService;
     private readonly IMiniSliderService _miniSliderService;
+    private readonly ICategoryService _categoryService;
+    private readonly IProductService _productService;
 
     public HomeController(
     ILogger<HomeController> logger,
     ISliderService sliderService,
-    IMiniSliderService miniSliderService)
+    IMiniSliderService miniSliderService,
+    ICategoryService categoryService,
+    IProductService productService)
     {
         _logger = logger;
         _sliderService = sliderService;
         _miniSliderService = miniSliderService;
+        _categoryService = categoryService;
+        _productService = productService;
     }
 
     public async Task<IActionResult> Index()
@@ -28,15 +35,20 @@ public class HomeController : Controller
 
         var miniSliders = await _miniSliderService.GetActiveAsync();
 
+        var categories = await _categoryService.GetAllAsync();
+
+        var newProducts = await _productService.GetNewProductsAsync(9);
+
         var model = new HomeViewModel
         {
             Sliders = sliders,
-            MiniSliders = miniSliders
+            MiniSliders = miniSliders,
+            Categories = categories,
+            NewProducts = newProducts.Take(9).ToList()
         };
 
         return View(model);
     }
-
 
     public IActionResult Privacy()
     {

@@ -175,4 +175,11 @@ public class ProductService : IProductService
                 .ToList()
         };
     }
+
+    public async Task<List<ProductListDto>> GetNewProductsAsync(int count)
+    {
+        var products = await _unitOfWork.Products.GetNewProductsAsync(count);
+
+        return _mapper.Map<List<ProductListDto>>(products);
+    }
 }

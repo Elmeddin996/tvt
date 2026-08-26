@@ -32,4 +32,7 @@ public interface IProductService
 
     Task<ProductFilterOptionsDto> GetFilterOptionsAsync(
        IReadOnlyCollection<int> categoryIds);
+
+    Task<List<ProductListDto>> GetNewProductsAsync(int count);
+
 }

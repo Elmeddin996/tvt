@@ -24,4 +24,6 @@ public interface IProductRepository : IGenericRepository<Product>
 
     Task<ProductFilterOptions> GetFilterOptionsAsync(
         IReadOnlyCollection<int> categoryIds);
+
+    Task<List<Product>> GetNewProductsAsync(int count);
 }

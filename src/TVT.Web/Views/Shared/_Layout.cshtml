@@ -64,6 +64,13 @@
 
     <!-- CSS -->
 
+    <link rel="stylesheet"
+          href="~/css/contact.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/footer.css"
+          asp-append-version="true" />
 
           <link rel="stylesheet" href="~/css/theme.css">
 
@@ -199,12 +206,232 @@
                 </span>
             </div>
 
+            @{
+                var setting = model.Setting;
+            }
+
             <div id="rm_sidebar_content"></div>
+
+            <div id="rm_sidebar_contacts-template" class="d-none">
+
+                <div class="rm-sidebar-contacts d-flex flex-column">
+
+                    <div class="rm-header-location-inner">
+
+                        @* Contact Phones *@
+                        @if (!string.IsNullOrWhiteSpace(setting?.Phone1) ||
+                        !string.IsNullOrWhiteSpace(setting?.Phone2))
+                        {
+                            <div class="rm_mobile_menu_first-item rm_mobile_menu_phones">
+
+                                <div class="rm-content-title">
+                                    Əlaqə nömrələrimiz:
+                                </div>
+
+                                @if (!string.IsNullOrWhiteSpace(setting?.Phone1))
+                                {
+                                    <a href="@($"tel:{setting.Phone1}")"
+                                       class="rm_mobile_menu_phones-item d-flex align-items-center">
+
+                                        <span>@setting.Phone1</span>
+
+                                    </a>
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(setting?.Phone2))
+                                {
+                                    <a href="@($"tel:{setting.Phone2}")"
+                                       class="rm_mobile_menu_phones-item d-flex align-items-center">
+
+                                        <span>@setting.Phone2</span>
+
+                                    </a>
+                                }
+
+                            </div>
+                        }
+
+
+                        @* Working Hours *@
+                        @if (!string.IsNullOrWhiteSpace(setting?.WorkingHoursAz))
+                        {
+                            <div class="rm_mobile_menu_first-item rm_mobile_menu_shedule">
+
+                                <div class="rm-content-title">
+                                    İş vaxtı
+                                </div>
+
+                                <div>
+                                    @Html.Raw(setting.WorkingHoursAz)
+                                </div>
+
+                            </div>
+                        }
+
+
+                        @* Messengers *@
+                        @if (!string.IsNullOrWhiteSpace(setting?.Telegram) ||
+                        !string.IsNullOrWhiteSpace(setting?.WhatsApp))
+                        {
+                            <div class="rm_mobile_menu_messengers row no-gutters">
+
+                                @if (!string.IsNullOrWhiteSpace(setting?.Telegram))
+                                {
+                                    <div class="col-6">
+
+                                        <a href="@setting.Telegram"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           class="rm_mobile_menu_first-item rm-fixed-contact-item d-flex align-items-center">
+
+                                            <span class="rm-fixed-contact-item-icon rm-fixed-contact-telegram d-flex align-items-center justify-content-center">
+                                                <i class="fab fa-telegram"></i>
+                                            </span>
+
+                                            <span>Telegram</span>
+
+                                        </a>
+
+                                    </div>
+                                }
+
+
+                                @if (!string.IsNullOrWhiteSpace(setting?.WhatsApp))
+                                {
+                                    <div class="col-6">
+
+                                        <a href="@setting.WhatsApp"
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           class="rm_mobile_menu_first-item rm-fixed-contact-item d-flex align-items-center">
+
+                                            <span class="rm-fixed-contact-item-icon rm-fixed-contact-whatsapp d-flex align-items-center justify-content-center">
+                                                <i class="fab fa-whatsapp"></i>
+                                            </span>
+
+                                            <span>WhatsApp</span>
+
+                                        </a>
+
+                                    </div>
+                                }
+
+                            </div>
+                        }
+
+
+                        @* Social Networks *@
+                        @if (!string.IsNullOrWhiteSpace(setting?.Facebook) ||
+                        !string.IsNullOrWhiteSpace(setting?.Instagram) ||
+                        !string.IsNullOrWhiteSpace(setting?.Youtube) ||
+                        !string.IsNullOrWhiteSpace(setting?.Telegram))
+                        {
+                            <div class="rm_mobile_menu_first-item rm_mobile_menu_shedule">
+
+                                <div class="rm-content-title">
+                                    Sosial şəbəkələr
+                                </div>
+
+                                <ul class="rm-social list-unstyled d-flex flex-wrap">
+
+                                    @if (!string.IsNullOrWhiteSpace(setting?.Facebook))
+                                    {
+                                        <li class="rm-social-item">
+
+                                            <a href="@setting.Facebook"
+                                               target="_blank"
+                                               rel="noopener noreferrer"
+                                               class="rm-social--fa-facebook-f d-flex align-items-center justify-content-center">
+
+                                                <i class="fab fa-facebook-f"></i>
+
+                                            </a>
+
+                                        </li>
+                                    }
+
+
+                                    @if (!string.IsNullOrWhiteSpace(setting?.Instagram))
+                                    {
+                                        <li class="rm-social-item">
+
+                                            <a href="@setting.Instagram"
+                                               target="_blank"
+                                               rel="noopener noreferrer"
+                                               class="rm-social--fa-instagram d-flex align-items-center justify-content-center">
+
+                                                <i class="fab fa-instagram"></i>
+
+                                            </a>
+
+                                        </li>
+                                    }
+
+
+                                    @if (!string.IsNullOrWhiteSpace(setting?.Youtube))
+                                    {
+                                        <li class="rm-social-item">
+
+                                            <a href="@setting.Youtube"
+                                               target="_blank"
+                                               rel="noopener noreferrer"
+                                               class="rm-social--fa-youtube d-flex align-items-center justify-content-center">
+
+                                                <i class="fab fa-youtube"></i>
+
+                                            </a>
+
+                                        </li>
+                                    }
+
+
+                                    @if (!string.IsNullOrWhiteSpace(setting?.Telegram))
+                                    {
+                                        <li class="rm-social-item">
+
+                                            <a href="@setting.Telegram"
+                                               target="_blank"
+                                               rel="noopener noreferrer"
+                                               class="rm-social--fa-telegram-plane d-flex align-items-center justify-content-center">
+
+                                                <i class="fab fa-telegram-plane"></i>
+
+                                            </a>
+
+                                        </li>
+                                    }
+
+                                </ul>
+
+                            </div>
+                        }
+
+                    </div>
+
+
+                    @* Branches *@
+                    <div class="d-flex justify-content-center rm-header-location-contacts-btn">
+
+                        <a asp-controller="Contact"
+                           asp-action="Index"
+                           class="rm-btn dark w-100 text-center">
+
+                            <span class="rm-btn-text">
+                                Ünvanımız
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
     </div>
 
-    <nav id="top" class="top-nav d-none d-lg-block">
+  @*   <nav id="top" class="top-nav d-none d-lg-block">
 
         <div class="container d-flex justify-content-between">
 
@@ -328,7 +555,7 @@
 
         </div>
 
-    </nav>
+    </nav> *@
 
 
     <partial name="_Header" model="model" />
@@ -391,6 +618,9 @@
 
 
     <script>
+
+
+
         if (jQuery.magnificPopup == undefined) {
             $('head').append('<link rel="stylesheet" href="catalog/view/javascript/jquery/magnific/magnific-popup.css" type="text/css" />');
             $('<script />', { type: 'text/javascript', src: 'catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js' }).appendTo('head');
