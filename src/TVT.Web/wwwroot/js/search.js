@@ -9,7 +9,6 @@ function clearLiveSearch() {
         .empty();
 
     $('#input_search')
-        .val('')
         .removeClass('active');
 }
 

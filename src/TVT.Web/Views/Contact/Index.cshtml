@@ -1,7 +1,27 @@
 @model TVT.Business.DTOs.Settings.SettingDetailDto
 
+@using System.Globalization
+@using TVT.Web.Services
+@inject LocService localizer
+
 @{
-    ViewData["Title"] = "Əlaqə";
+    var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+    var address = currentCulture switch
+    {
+        "en" => Model.AddressEn,
+        "ru" => Model.AddressRu,
+        _ => Model.AddressAz
+    };
+
+    var workingHours = currentCulture switch
+    {
+        "en" => Model.WorkingHoursEn,
+        "ru" => Model.WorkingHoursRu,
+        _ => Model.WorkingHoursAz
+    };
+
+    ViewData["Title"] = localizer.GetLocalizedHtmlString("Contact");
 }
 
 <div class="container">
@@ -11,12 +31,12 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a asp-controller="Home" asp-action="Index">
-                    Ana səhifə
+                    @localizer.GetLocalizedHtmlString("Home")
                 </a>
             </li>
 
             <li class="breadcrumb-item active" aria-current="page">
-                Əlaqə
+                @localizer.GetLocalizedHtmlString("Contact")
             </li>
         </ol>
     </nav>
@@ -25,7 +45,7 @@
     <!-- Page Title -->
     <div class="mb-4">
         <h1 class="mb-0">
-            Əlaqə
+            @localizer.GetLocalizedHtmlString("Contact")
         </h1>
     </div>
 
@@ -60,7 +80,7 @@
                     @Model.CompanyName
                 </h3>
 
-                @if (!string.IsNullOrWhiteSpace(Model.AddressAz))
+                @if (!string.IsNullOrWhiteSpace(address))
                 {
                     <div class="contact-info-item">
 
@@ -70,11 +90,11 @@
 
                         <div>
                             <div class="contact-info-label">
-                                Ünvan
+                                @localizer.GetLocalizedHtmlString("Address")
                             </div>
 
                             <div class="contact-info-value">
-                                @Model.AddressAz
+                                @address
                             </div>
                         </div>
 
@@ -82,7 +102,7 @@
                 }
 
 
-                @if (!string.IsNullOrWhiteSpace(Model.WorkingHoursAz))
+                @if (!string.IsNullOrWhiteSpace(workingHours))
                 {
                     <div class="contact-info-item">
 
@@ -92,11 +112,11 @@
 
                         <div>
                             <div class="contact-info-label">
-                                İş vaxtı
+                                @localizer.GetLocalizedHtmlString("WorkingHours")
                             </div>
 
                             <div class="contact-info-value">
-                                @Html.Raw(Model.WorkingHoursAz)
+                                @Html.Raw(workingHours)
                             </div>
                         </div>
 
@@ -114,7 +134,7 @@
             <div class="contact-card h-100">
 
                 <h3 class="contact-card-title">
-                    Əlaqə məlumatları
+                    @localizer.GetLocalizedHtmlString("ContactInformation")
                 </h3>
 
 
@@ -128,7 +148,7 @@
 
                         <div>
                             <div class="contact-info-label">
-                                Telefon
+                                @localizer.GetLocalizedHtmlString("Phone")
                             </div>
 
                             <a href="@($"tel:{Model.Phone1}")"
@@ -151,7 +171,7 @@
 
                         <div>
                             <div class="contact-info-label">
-                                Telefon
+                                @localizer.GetLocalizedHtmlString("Phone")
                             </div>
 
                             <a href="@($"tel:{Model.Phone2}")"
@@ -174,7 +194,7 @@
 
                         <div>
                             <div class="contact-info-label">
-                                E-mail
+                                @localizer.GetLocalizedHtmlString("Email")
                             </div>
 
                             <a href="mailto:@Model.Email"
@@ -204,7 +224,7 @@
                                target="_blank"
                                rel="noopener noreferrer"
                                class="contact-info-link">
-                                WhatsApp ilə əlaqə
+                                @localizer.GetLocalizedHtmlString("ContactViaWhatsApp")
                             </a>
                         </div>
 
@@ -228,7 +248,7 @@
         <div class="contact-social text-center mb-5">
 
             <h3 class="contact-card-title">
-                Sosial şəbəkələr
+                @localizer.GetLocalizedHtmlString("SocialNetworks")
             </h3>
 
             <div class="contact-social-links">

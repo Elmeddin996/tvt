@@ -14,10 +14,22 @@ public sealed class ProductProfile : Profile
         CreateMap<Product, ProductListDto>()
             .ForMember(dest => dest.NameAz,
                 opt => opt.MapFrom(src => src.NameAz))
-            .ForMember(dest => dest.CategoryName,
-                opt => opt.MapFrom(src => src.Category.NameAz))
-            .ForMember(dest => dest.BrandName,
-                opt => opt.MapFrom(src => src.Brand.NameAz))
+            .ForMember(dest => dest.CategoryNameAz,
+    opt => opt.MapFrom(src => src.Category.NameAz))
+.ForMember(dest => dest.CategoryNameEn,
+    opt => opt.MapFrom(src => src.Category.NameEn))
+.ForMember(dest => dest.CategoryNameRu,
+    opt => opt.MapFrom(src => src.Category.NameRu))
+.ForMember(dest => dest.BrandNameAz,
+    opt => opt.MapFrom(src => src.Brand.NameAz))
+.ForMember(dest => dest.BrandNameEn,
+    opt => opt.MapFrom(src => src.Brand.NameEn))
+.ForMember(dest => dest.BrandNameRu,
+    opt => opt.MapFrom(src => src.Brand.NameRu))
+.ForMember(dest => dest.CategoryName,
+    opt => opt.MapFrom(src => src.Category.NameAz))
+.ForMember(dest => dest.BrandName,
+    opt => opt.MapFrom(src => src.Brand.NameAz))
             .ForMember(dest => dest.MainImage,
                 opt => opt.MapFrom(src =>
                     src.ProductImages
@@ -53,8 +65,12 @@ public sealed class ProductProfile : Profile
                 opt => opt.MapFrom(src => src.ProductImages))
             .ForMember(dest => dest.Specifications,
                 opt => opt.MapFrom(src => src.ProductSpecifications))
-        .ForMember(dest => dest.BrandName,
-        opt => opt.MapFrom(src => src.Brand.NameAz));
+        .ForMember(dest => dest.BrandNameAz,
+    opt => opt.MapFrom(src => src.Brand.NameAz))
+.ForMember(dest => dest.BrandNameEn,
+    opt => opt.MapFrom(src => src.Brand.NameEn))
+.ForMember(dest => dest.BrandNameRu,
+    opt => opt.MapFrom(src => src.Brand.NameRu));
 
         // Create DTO -> Entity
         CreateMap<CreateProductDto, Product>()

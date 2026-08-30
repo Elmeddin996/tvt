@@ -1,4 +1,5 @@
 using AutoMapper;
+using System.Globalization;
 using TVT.Business.Abstractions.Services;
 using TVT.Business.DTOs.ProductSpecifications;
 using TVT.Core.Abstractions.UnitOfWork;
@@ -24,16 +25,28 @@ public class ProductSpecificationService : IProductSpecificationService
         var specifications =
             await _unitOfWork.Specifications.GetForProductAsync(productId);
 
+        var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
         return specifications
             .Select(specification => new ProductSpecificationDto
             {
                 SpecificationId = specification.Id,
 
-                GroupName = specification.SpecificationGroup.NameAz,
+                GroupName = currentCulture switch
+                {
+                    "en" => specification.SpecificationGroup.NameEn,
+                    "ru" => specification.SpecificationGroup.NameRu,
+                    _ => specification.SpecificationGroup.NameAz
+                },
 
                 GroupDisplayOrder = specification.SpecificationGroup.DisplayOrder,
 
-                SpecificationName = specification.NameAz,
+                SpecificationName = currentCulture switch
+                {
+                    "en" => specification.NameEn,
+                    "ru" => specification.NameRu,
+                    _ => specification.NameAz
+                },
 
                 DisplayOrder = specification.DisplayOrder,
 

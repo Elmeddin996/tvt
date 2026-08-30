@@ -352,7 +352,7 @@ document.addEventListener("DOMContentLoaded", function () {
     /*
      * Main mobile hamburger
      *
-     * AEM behavior:
+     
      *
      * Hamburger
      *      ↓

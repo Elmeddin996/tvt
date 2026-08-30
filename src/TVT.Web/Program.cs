@@ -1,9 +1,18 @@
+using Microsoft.AspNetCore.Localization;
 using TVT.Business;
 using TVT.Data;
 using TVT.Web.Services;
 using TVT.Web.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddLocalization(options =>
+{
+    options.ResourcesPath = "Resources";
+});
+
+builder.Services.AddSingleton<LocService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -15,6 +24,24 @@ builder.Services.Configure<FileSettings>(
 
 
 var app = builder.Build();
+
+var supportedCultures = new[]
+{
+    "az-AZ",
+    "en-US",
+    "ru-RU"
+};
+
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture("az-AZ")
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+localizationOptions.RequestCultureProviders.Insert(
+    0,
+    new CookieRequestCultureProvider());
+
+app.UseRequestLocalization(localizationOptions);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -1,5 +1,8 @@
+@using TVT.Web.Services
+@inject LocService localizer
+
 @{
-    ViewData["Title"] = "Arzu siyahısı";
+    ViewData["Title"] = localizer.GetLocalizedHtmlString("Wishlist");
 }
 
 <style>
@@ -337,7 +340,7 @@
 <div class="container tvt-wishlist-page">
 
     <div class="tvt-wishlist-title">
-        Arzu siyahısı
+        @localizer.GetLocalizedHtmlString("Wishlist")
     </div>
 
 
@@ -350,7 +353,7 @@
              class="text-center py-5">
 
             <span>
-                Arzu siyahısı yüklənir...
+                @localizer.GetLocalizedHtmlString("WishlistLoading")
             </span>
 
         </div>
@@ -363,17 +366,17 @@
              style="display: none;">
 
             <h3>
-                Arzu siyahınız boşdur
+                @localizer.GetLocalizedHtmlString("WishlistEmpty")
             </h3>
 
             <p class="text-muted">
-                Bəyəndiyiniz məhsulları arzu siyahısına əlavə edə bilərsiniz.
+                @localizer.GetLocalizedHtmlString("WishlistEmptyMessage")
             </p>
 
             <a href="/"
                class="rm-btn dark d-inline-flex align-items-center justify-content-center px-4">
 
-                Məhsullara bax
+                @localizer.GetLocalizedHtmlString("ViewProducts")
 
             </a>
 
@@ -395,6 +398,16 @@
 
 </div>
 
+
+<script>
+    window.tvtWishlistLocalization = {
+        productCode: '@localizer.GetLocalizedHtmlString("ProductCode")',
+        inStock: '@localizer.GetLocalizedHtmlString("InStock")',
+        outOfStock: '@localizer.GetLocalizedHtmlString("OutOfStock")',
+        addToCart: '@localizer.GetLocalizedHtmlString("AddToCart")',
+        remove: '@localizer.GetLocalizedHtmlString("Remove")'
+    };
+</script>
 
 <script src="~/js/wishlist-page.js"
         asp-append-version="true"></script>

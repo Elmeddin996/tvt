@@ -1,0 +1,130 @@
+@model IEnumerable<TVT.Business.DTOs.Products.ProductListDto>
+
+@using System.Globalization
+@using TVT.Web.Services
+@inject LocService localizer
+
+@{
+    var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+}
+
+<div id="rm_livesearch" class="expanded">
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="rm-livesearch-list">
+
+            @foreach (var product in Model)
+            {
+                var productName = currentCulture switch
+                {
+                    "en" => product.NameEn,
+                    "ru" => product.NameRu,
+                    _ => product.NameAz
+                };
+
+                var productSlug = currentCulture switch
+                {
+                    "en" => product.SlugEn,
+                    "ru" => product.SlugRu,
+                    _ => product.SlugAz
+                };
+
+                var image = string.IsNullOrWhiteSpace(product.MainImage)
+                ? "/images/no-image.png"
+                : product.MainImage;
+
+                <div class="rm-livesearch-list-item d-flex align-items-center mb-2 pb-2">
+
+                    <!-- Product Image -->
+                    <div class="rm-livesearch-list-item-image mr-4">
+
+                        <a asp-controller="Product"
+                           asp-action="Index"
+                           asp-route-slug="@productSlug">
+
+                            <img src="@image"
+                                 alt="@productName"
+                                 title="@productName"
+                                 width="80"
+                                 height="80"
+                                 style="object-fit: contain;" />
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- Product Information -->
+                    <div class="rm-livesearch-list-item-info">
+
+                        <!-- Product Name -->
+                        <div class="rm-livesearch-list-item-name">
+
+                            <a asp-controller="Product"
+                               asp-action="Index"
+                               asp-route-slug="@productSlug">
+
+                                @productName
+
+                            </a>
+
+                        </div>
+
+
+                        <!-- Price -->
+                        <div class="rm-livesearch-list-item-price d-flex align-items-center">
+
+                            @if (product.OldPrice.HasValue &&
+                           product.OldPrice.Value > product.Price)
+                            {
+                                <span class="rm-price-old mr-2">
+                                    @product.OldPrice.Value.ToString("0.##") ₼
+                                </span>
+                            }
+
+                            <span class="rm-price">
+                                @product.Price.ToString("0.##") ₼
+                            </span>
+
+                        </div>
+
+
+                        <!-- Product Code -->
+                        <div class="rm-livesearch-list-item-model-sku">
+
+                            @localizer.GetLocalizedHtmlString("ProductCode"):
+
+                            <span class="rm-product-info-code">
+                                @product.Code
+                            </span>
+
+                        </div>
+
+
+                        <!-- Stock -->
+                        <div class="rm-livesearch-list-item-stock">
+
+                            @if (product.StockQuantity > 0)
+                            {
+                                <span class="in-stock">
+                                    @localizer.GetLocalizedHtmlString("InStock")
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="out-of-stock">
+                                    @localizer.GetLocalizedHtmlString("OutOfStock")
+                                </span>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+</div>

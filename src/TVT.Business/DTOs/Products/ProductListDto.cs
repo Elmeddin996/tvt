@@ -16,9 +16,15 @@ public class ProductListDto
 
     public string? Model { get; set; }
 
-    public string CategoryName { get; set; } = null!;
+    public string CategoryNameAz { get; set; } = null!;
+    public string CategoryNameEn { get; set; } = null!;
+    public string CategoryNameRu { get; set; } = null!;
 
+    public string CategoryName { get; set; } = null!;
     public string BrandName { get; set; } = null!;
+    public string BrandNameAz { get; set; } = null!;
+    public string BrandNameEn { get; set; } = null!;
+    public string BrandNameRu { get; set; } = null!;
 
     public string? MainImage { get; set; }
 

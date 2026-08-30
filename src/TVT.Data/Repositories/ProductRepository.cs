@@ -92,17 +92,20 @@ public class ProductRepository : GenericRepository<Product>, IProductRepository
         search = search.Trim().ToLower();
 
         var query = DbSet
-            .AsNoTracking()
-            .Include(x => x.ProductImages)
-            .Include(x => x.Category)
-            .Include(x => x.Brand)
-            .Where(x =>
-                x.IsActive &&
-                (
-                    x.NameAz.ToLower().Contains(search) ||
-                    x.Code.ToLower().Contains(search) ||
-                    x.Model.ToLower().Contains(search)
-                ));
+    .AsNoTracking()
+    .Include(x => x.ProductImages)
+    .Include(x => x.Category)
+    .Include(x => x.Brand)
+    .Where(x =>
+        x.IsActive &&
+        !x.IsDeleted &&
+        (
+            x.NameAz.ToLower().Contains(search) ||
+            x.NameEn.ToLower().Contains(search) ||
+            x.NameRu.ToLower().Contains(search) ||
+            x.Code.ToLower().Contains(search) ||
+            (x.Model != null && x.Model.ToLower().Contains(search))
+        ));
 
         if (categoryId.HasValue)
         {

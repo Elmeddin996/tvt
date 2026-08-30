@@ -1,5 +1,27 @@
 @model TVT.Web.ViewModels.Layout.LayoutViewModel
 
+@using System.Globalization
+@using TVT.Web.Services
+@inject LocService localizer
+
+@{
+    var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+    var address = currentCulture switch
+    {
+        "en" => Model.Setting?.AddressEn,
+        "ru" => Model.Setting?.AddressRu,
+        _ => Model.Setting?.AddressAz
+    };
+
+    var workingHours = currentCulture switch
+    {
+        "en" => Model.Setting?.WorkingHoursEn,
+        "ru" => Model.Setting?.WorkingHoursRu,
+        _ => Model.Setting?.WorkingHoursAz
+    };
+}
+
 
 <header>
     <div class="container-fluid container-sm">
@@ -24,26 +46,26 @@
                 <button id="menu_toggle_button"
                         type="button"
                         class="rm-btn primary d-flex align-items-center justify-content-between"
-                        aria-label="Məhsul kataloqu">
+                        aria-label="@localizer.GetLocalizedHtmlString("ProductCatalog")">
 
                     <span class="rm-btn-icon">
 
                         <img class="catalog-icon"
                              src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--footer-catalog-icon"
-                             alt="Kataloq"
+                             alt="@localizer.GetLocalizedHtmlString("ProductCatalog")"
                              width="14"
                              height="14" />
 
                         <img class="close-icon"
                              src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--close-catalog-icon"
-                             alt="Bağla"
+                             alt="@localizer.GetLocalizedHtmlString("Close")"
                              width="14"
                              height="14" />
 
                     </span>
 
                     <span class="rm-btn-text">
-                        Məhsul kataloqu
+                        @localizer.GetLocalizedHtmlString("ProductCatalog")
                     </span>
 
                 </button>
@@ -60,16 +82,16 @@
                            type="text"
                            name="q"
                            value="@Context.Request.Query["q"]"
-                           placeholder="Axtar"
+                           placeholder="@localizer.GetLocalizedHtmlString("Search")"
                            class="w-100 h-100" />
 
                     <button type="submit"
                             id="rm-search-button"
                             class="btn-search d-flex align-items-center justify-content-center"
-                            aria-label="Axtar">
+                            aria-label="@localizer.GetLocalizedHtmlString("Search")">
 
                         <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--header-search-icon"
-                             alt="Axtar"
+                             alt="@localizer.GetLocalizedHtmlString("Search")"
                              width="20"
                              height="20" />
 
@@ -80,7 +102,7 @@
                          class="d-flex align-items-center justify-content-center">
 
                         <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--livesearch-close-icon"
-                             alt="Bağla"
+                             alt="@localizer.GetLocalizedHtmlString("Close")"
                              width="25"
                              height="25" />
 
@@ -96,10 +118,12 @@
 
                         <div class="rm-dropdown-toggle">
 
-                            <span>Ünvan:</span>
+                            <span>
+                                @localizer.GetLocalizedHtmlString("Address")
+                            </span>
 
                             <span class="rm-header-address-link">
-                                @Model.Setting?.AddressAz
+                                @address
                             </span>
 
                         </div>
@@ -113,7 +137,7 @@
                                     <div class="d-flex align-items-center">
 
                                         <div class="rm-header-location-address">
-                                            @Model.Setting?.AddressAz
+                                            @address
                                         </div>
 
                                         <button class="rm-btn secondary ml-auto">
@@ -135,7 +159,9 @@
 
                                         <div class="rm-header-location-phones">
 
-                                            <span>Əlaqə nömrəmiz:</span>
+                                            <span>
+                                                @localizer.GetLocalizedHtmlString("ContactNumbers")
+                                            </span>
 
                                             <a href="tel:@Model.Setting?.Phone1">
                                                 @Model.Setting?.Phone1
@@ -145,11 +171,14 @@
 
                                         <div class="rm-header-location-shedule">
 
-                                            <span>İş saatlarımız:</span>
+                                            <span>
+                                                @localizer.GetLocalizedHtmlString("WorkingHours")
+                                            </span>
+
                                             <br />
 
                                             <span>
-                                                @Model.Setting?.WorkingHoursAz
+                                                @workingHours
                                             </span>
 
                                         </div>
@@ -162,7 +191,6 @@
                                 </div>
 
                             </div>
-
                         </div>
 
                     </div>
@@ -175,7 +203,7 @@
 
                     <div class="rm-header-phones-icon">
                         <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--header-phones-icon"
-                             alt="Telefon"
+                             alt="@localizer.GetLocalizedHtmlString("Phone")"
                              width="30"
                              height="30" />
                     </div>
@@ -208,13 +236,13 @@
                 <button id="cart"
                         type="button"
                         class="rm-header-cart d-flex flex-column align-items-center"
-                        title="Səbət"
+                        title="@localizer.GetLocalizedHtmlString("Cart")"
                         onclick="tvtCart.open();">
 
                     <span class="rm-header-cart-icon position-relative">
 
                         <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--header-cart-icon"
-                             alt="Səbət"
+                             alt="@localizer.GetLocalizedHtmlString("Cart")"
                              width="21"
                              height="21" />
 

@@ -1,8 +1,11 @@
+@using System.Globalization
 @using TVT.Business.Abstractions.Services
+@using TVT.Web.Services
 @using TVT.Web.ViewModels.Layout
 
 @inject ISettingService SettingService
 @inject ICategoryService CategoryService
+@inject LocService localizer
 
 @{
     var model = new LayoutViewModel
@@ -10,14 +13,59 @@
                 Setting = await SettingService.GetAsync(),
                 Categories = await CategoryService.GetAllAsync()
             };
+
+    var setting = model.Setting;
+
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+    var address = culture switch
+    {
+        "en" => setting?.AddressEn,
+        "ru" => setting?.AddressRu,
+        _ => setting?.AddressAz
+    };
+
+    var workingHours = culture switch
+    {
+        "en" => setting?.WorkingHoursEn,
+        "ru" => setting?.WorkingHoursRu,
+        _ => setting?.WorkingHoursAz
+    };
+
+    var footerText = culture switch
+    {
+        "en" => setting?.FooterTextEn,
+        "ru" => setting?.FooterTextRu,
+        _ => setting?.FooterTextAz
+    };
+
+    var seoTitle = culture switch
+    {
+        "en" => setting?.DefaultSeoTitleEn,
+        "ru" => setting?.DefaultSeoTitleRu,
+        _ => setting?.DefaultSeoTitleAz
+    };
+
+    var seoDescription = culture switch
+    {
+        "en" => setting?.DefaultSeoDescriptionEn,
+        "ru" => setting?.DefaultSeoDescriptionRu,
+        _ => setting?.DefaultSeoDescriptionAz
+    };
+
+    var seoKeywords = culture switch
+    {
+        "en" => setting?.DefaultSeoKeywordsEn,
+        "ru" => setting?.DefaultSeoKeywordsRu,
+        _ => setting?.DefaultSeoKeywordsAz
+    };
 }
 
 <!DOCTYPE html>
 
-<html lang="az"
+<html lang="@culture"
       dir="ltr"
       prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb# business: https://ogp.me/ns/business# place: http://ogp.me/ns/place#">
-<meta charset="utf-8" />
 <head>
     <meta charset="utf-8" />
 
@@ -25,13 +73,16 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <title>@ViewData["Title"] - TVT</title>
+    <title>
+        @(ViewData["Title"] ?? seoTitle ?? setting?.CompanyName ?? "TVT")
+    </title>
 
     <meta name="description"
-          content="@(ViewData["Description"] ?? "TVT Elektronika və Texnologiya Məhsulları")" />
+          content="@(ViewData["Description"] ?? seoDescription ?? "")" />
+
 
     <meta name="keywords"
-          content="TVT, Elektronika, Kamera, Təhlükəsizlik sistemləri, Şəbəkə avadanlıqları" />
+          content="@seoKeywords" />
 
     <meta name="author" content="TVT" />
 
@@ -40,12 +91,18 @@
     <base href="~/" />
 
     <!-- Open Graph -->
-    <meta property="og:title" content="@ViewData["Title"]" />
-    <meta property="og:description" content="@(ViewData["Description"] ?? "TVT Elektronika və Texnologiya Məhsulları")" />
+    <meta property="og:title"
+          content="@(ViewData["Title"] ?? seoTitle ?? setting?.CompanyName ?? "TVT")" />
+    <meta property="og:description"
+          content="@(ViewData["Description"] ?? seoDescription ?? "")" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="TVT" />
+    <meta property="og:site_name"
+          content="@setting?.CompanyName" />
     <meta property="og:url" content="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}")" />
-    <meta property="og:image" content="~/images/logo.png" />
+    @if (!string.IsNullOrWhiteSpace(setting?.Logo))
+    {
+        <meta property="og:image" content="@setting.Logo" />
+    }
 
     <!-- Favicon -->
     <link rel="icon"
@@ -58,9 +115,12 @@
           href="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}")" />
 
     <!-- Preload Logo -->
-    <link rel="preload"
-          as="image"
-          href="~/images/logo.png" />
+    @if (!string.IsNullOrWhiteSpace(setting?.Logo))
+    {
+        <link rel="preload"
+              as="image"
+              href="@setting.Logo" />
+    }
 
     <!-- CSS -->
 
@@ -118,10 +178,10 @@
 
         <div onclick="tvtCart.open();"
              class="oct-fixed-bar-item oct-fixed-bar-item-cart"
-             title="Səbət">
+             title="@localizer.GetLocalizedHtmlString("Cart")">
 
             <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--fixed-bar-cart"
-                 alt="Səbət"
+                              alt="@localizer.GetLocalizedHtmlString("Cart")"
                  width="24"
                  height="24">
 
@@ -135,10 +195,11 @@
         <a asp-controller="Wishlist"
            asp-action="Index"
            class="oct-fixed-bar-item oct-fixed-bar-item-wishlist"
-           title="İstək siyahısı">
+           title="@localizer.GetLocalizedHtmlString("Wishlist")"
+           >
 
             <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--fixed-bar-wishlist"
-                 alt="İstək siyahısı"
+                 alt="@localizer.GetLocalizedHtmlString("Wishlist")"
                  width="24"
                  height="20">
 
@@ -152,10 +213,12 @@
     <nav id="rm_mobile_nav"
          class="d-lg-none fixed-top d-flex align-items-center justify-content-between">
 
+
+
         <button type="button"
                 id="rm_mobile_menu_button"
                 class="rm-btn primary rm_mobile_sidebar_toggle"
-                aria-label="Menu">
+                aria-label="@localizer.GetLocalizedHtmlString("Menu")">
 
             <span class="rm-btn-icon">
                 <span></span>
@@ -169,11 +232,11 @@
 
             <button type="button"
                     class="rm-mobile-nav-buttons-btn rm-mobile-locatons-btn"
-                    onclick="rmSidebar('Ünvan', 'locations');"
-                    aria-label="Locations">
+                    onclick="rmSidebar('@localizer.GetLocalizedHtmlString("Address")', 'locations');"
+                    aria-label="@localizer.GetLocalizedHtmlString("Address")">
 
                 <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--mobile-locations-icon"
-                     alt="Ünvan"
+                     alt="@localizer.GetLocalizedHtmlString("Address")"
                      width="20"
                      height="20">
 
@@ -181,11 +244,11 @@
 
             <button type="button"
                     class="rm-mobile-nav-buttons-btn rm-mobile-contacts-btn"
-                    onclick="rmSidebar('Əlaqə', 'contacts');"
-                    aria-label="Contacts">
+                    onclick="rmSidebar('@localizer.GetLocalizedHtmlString("Contact")', 'contacts');"
+                    aria-label="@localizer.GetLocalizedHtmlString("Contact")">
 
                 <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--mobile-contacts-icon"
-                     alt="Əlaqə"
+                     alt="@localizer.GetLocalizedHtmlString("Contact")"
                      width="21"
                      height="21">
 
@@ -195,10 +258,14 @@
 
     </nav>
     <div id="rm_sidebar" class="rm-sidebar">
+
+
         <div class="rm-sidebar-content">
 
             <div class="rm-sidebar-title d-flex alig-items-center justify-content-between">
-                <span class="rm-sidebar-title-text">Menyu</span>
+                <span class="rm-sidebar-title-text">
+                    @localizer.GetLocalizedHtmlString("Menu")
+                </span>
 
                 <span class="rm-sidebar-title-close modal-close">
                     <span aria-hidden="true" class="modal-close-icon modal-close-left"></span>
@@ -206,11 +273,10 @@
                 </span>
             </div>
 
-            @{
-                var setting = model.Setting;
-            }
+           
 
             <div id="rm_sidebar_content"></div>
+
 
             <div id="rm_sidebar_contacts-template" class="d-none">
 
@@ -225,7 +291,7 @@
                             <div class="rm_mobile_menu_first-item rm_mobile_menu_phones">
 
                                 <div class="rm-content-title">
-                                    Əlaqə nömrələrimiz:
+                                    @localizer.GetLocalizedHtmlString("ContactNumbers")
                                 </div>
 
                                 @if (!string.IsNullOrWhiteSpace(setting?.Phone1))
@@ -253,16 +319,16 @@
 
 
                         @* Working Hours *@
-                        @if (!string.IsNullOrWhiteSpace(setting?.WorkingHoursAz))
+                        @if (!string.IsNullOrWhiteSpace(workingHours))
                         {
                             <div class="rm_mobile_menu_first-item rm_mobile_menu_shedule">
 
                                 <div class="rm-content-title">
-                                    İş vaxtı
+                                    @localizer.GetLocalizedHtmlString("WorkingHours")
                                 </div>
 
                                 <div>
-                                    @Html.Raw(setting.WorkingHoursAz)
+                                    @workingHours
                                 </div>
 
                             </div>
@@ -288,7 +354,9 @@
                                                 <i class="fab fa-telegram"></i>
                                             </span>
 
-                                            <span>Telegram</span>
+                                            <span>
+                                                @localizer.GetLocalizedHtmlString("Telegram")
+                                            </span>
 
                                         </a>
 
@@ -309,7 +377,9 @@
                                                 <i class="fab fa-whatsapp"></i>
                                             </span>
 
-                                            <span>WhatsApp</span>
+                                            <span>
+                                                @localizer.GetLocalizedHtmlString("WhatsApp")
+                                            </span>
 
                                         </a>
 
@@ -329,7 +399,7 @@
                             <div class="rm_mobile_menu_first-item rm_mobile_menu_shedule">
 
                                 <div class="rm-content-title">
-                                    Sosial şəbəkələr
+                                    @localizer.GetLocalizedHtmlString("SocialNetworks")
                                 </div>
 
                                 <ul class="rm-social list-unstyled d-flex flex-wrap">
@@ -417,83 +487,70 @@
                            class="rm-btn dark w-100 text-center">
 
                             <span class="rm-btn-text">
-                                Ünvanımız
+                                @localizer.GetLocalizedHtmlString("OurAddress")
                             </span>
 
                         </a>
 
                     </div>
 
+
+
                 </div>
 
             </div>
 
+
+
         </div>
+
     </div>
 
-  @*   <nav id="top" class="top-nav d-none d-lg-block">
+    <nav id="top" class="top-nav d-none d-lg-block">
 
-        <div class="container d-flex justify-content-between">
-
-            <ul class="top-nav-info-list list-unstyled d-flex align-items-center text-uppercase">
-
-                <li>
-                    <a href="javascript:void(0);">
-                        <div class="dropdown">
-                            <i class="fas fa-user-circle"></i>
-                            Şirkət
-
-                            <div class="dropdown-content">
-                                <a asp-controller="About" asp-action="Index">Haqqımızda</a>
-                                <a asp-controller="Certificate" asp-action="Index">Sertifikatlarımız</a>
-                                <a asp-controller="Partner" asp-action="Index">Partnyorlarımız</a>
-                                <a asp-controller="Brand" asp-action="Index">Brendlər</a>
-                            </div>
-                        </div>
-                    </a>
-                </li>
-
-                <li>
-                    <a asp-controller="Blog" asp-action="Index">
-                        <i class="fas fa-rss-square"></i>
-                        Bloq/Xəbərlər
-                    </a>
-                </li>
-
-                <li>
-                    <a asp-controller="Quote" asp-action="Index">
-                        <i class="fas fa-cog"></i>
-                        Qiymət təklifi al
-                    </a>
-                </li>
-
-                <li>
-                    <a asp-controller="Campaign" asp-action="Index">
-                        <span class="text-danger fw-bold">
-                            <i class="fab fa-hotjar"></i>
-                            Endirimlər
-                        </span>
-                    </a>
-                </li>
-
-            </ul>
+        <div class="container d-flex justify-content-end">
 
             <div class="top-nav-account-links list-unstyled d-flex">
 
-                <div id="oct_desktop_language" class="top-nav-account-links-item rm-dropdown-box">
+                <div id="oct_desktop_language"
+                     class="top-nav-account-links-item rm-dropdown-box">
 
                     <div id="language" class="language">
 
-                        <button class="btn-lang rm-dropdown-toggle d-flex align-items-center">
+                        <button type="button"
+                                class="btn-lang rm-dropdown-toggle d-flex align-items-center">
 
-                            <img src="~/images/flags/az.png"
-                                 alt="Azərbaycan"
-                                 title="Azərbaycan"
-                                 class="lang"
-                                 width="16"
-                                 height="11" />
+                            @if (culture == "ru")
+                            {
+                                <img src="~/catalog/language/ru-ru/ru-ru.png"
+                                     alt="Русский"
+                                     title="Русский"
+                                     class="lang"
+                                     width="16"
+                                     height="11" />
+                            }
+                            else if (culture == "en")
+                            {
+                                <img src="~/catalog/language/en-en/en-us.png"
+                                     alt="English"
+                                     title="English"
+                                     class="lang"
+                                     width="16"
+                                     height="11" />
+                            }
+                            else
+                            {
+                                <img src="~/catalog/language/az-az/az-az.png"
+                                     alt="Azərbaycan"
+                                     title="Azərbaycan"
+                                     class="lang"
+                                     width="16"
+                                     height="11" />
+                            }
 
-                            <span>Dil</span>
+                            <span>
+                                @localizer.GetLocalizedHtmlString("Language")
+                            </span>
 
                         </button>
 
@@ -501,34 +558,97 @@
 
                             <ul class="rm-dropdown-inner list-unstyled">
 
-                                <li>
-                                    <button class="btn-block language-select active-item">
-                                        <img src="~/images/flags/az.png"
-                                             alt="Azərbaycan"
-                                             width="16"
-                                             height="11" />
-                                        Azərbaycan
-                                    </button>
-                                </li>
+                                <!-- Azərbaycan -->
 
                                 <li>
-                                    <button class="btn-block language-select">
-                                        <img src="~/images/flags/ru.png"
-                                             alt="Русский"
-                                             width="16"
-                                             height="11" />
-                                        Русский
-                                    </button>
+                                    <form asp-controller="Localization"
+                                          asp-action="SetLanguage"
+                                          method="post">
+
+                                        <input type="hidden"
+                                               name="culture"
+                                               value="az-AZ" />
+
+                                        <input type="hidden"
+                                               name="returnUrl"
+                                               value="@Context.Request.Path@Context.Request.QueryString" />
+
+                                        <button type="submit"
+                                                class="btn-block language-select @(culture == "az" ? "active-item" : "")">
+
+                                            <img src="~/catalog/language/az-az/az-az.png"
+                                                 alt="Azərbaycan"
+                                                 title="Azərbaycan"
+                                                 width="16"
+                                                 height="11" />
+
+                                            Azərbaycan
+
+                                        </button>
+
+                                    </form>
                                 </li>
 
+                                <!-- Русский -->
+
                                 <li>
-                                    <button class="btn-block language-select">
-                                        <img src="~/images/flags/en.png"
-                                             alt="English"
-                                             width="16"
-                                             height="11" />
-                                        English
-                                    </button>
+                                    <form asp-controller="Localization"
+                                          asp-action="SetLanguage"
+                                          method="post">
+
+                                        <input type="hidden"
+                                               name="culture"
+                                               value="ru-RU" />
+
+                                        <input type="hidden"
+                                               name="returnUrl"
+                                               value="@Context.Request.Path@Context.Request.QueryString" />
+
+                                        <button type="submit"
+                                                class="btn-block language-select @(culture == "ru" ? "active-item" : "")">
+
+                                            <img src="~/catalog/language/ru-ru/ru-ru.png"
+                                                 alt="Русский"
+                                                 title="Русский"
+                                                 width="16"
+                                                 height="11" />
+
+                                            Русский
+
+                                        </button>
+
+                                    </form>
+                                </li>
+
+                                <!-- English -->
+
+                                <li>
+                                    <form asp-controller="Localization"
+                                          asp-action="SetLanguage"
+                                          method="post">
+
+                                        <input type="hidden"
+                                               name="culture"
+                                               value="en-US" />
+
+                                        <input type="hidden"
+                                               name="returnUrl"
+                                               value="@Context.Request.Path@Context.Request.QueryString" />
+
+                                        <button type="submit"
+                                                class="btn-block language-select @(culture == "en" ? "active-item" : "")">
+
+                                            <img src="~/catalog/language/en-en/en-us.png"
+                                                 alt="English"
+                                                 title="English"
+                                                 width="16"
+                                                 height="11" />
+
+                                            English
+
+                                        </button>
+
+                                    </form>
                                 </li>
 
                             </ul>
@@ -539,23 +659,11 @@
 
                 </div>
 
-                <div class="top-nav-account-links-item rm-dropdown-box">
-
-                    <span onclick="octPopupLogin();"
-                          class="d-flex align-items-center"
-                          role="button"
-                          aria-haspopup="true"
-                          title="Hesabım">
-                        Hesabım
-                    </span>
-
-                </div>
-
             </div>
 
         </div>
 
-    </nav> *@
+    </nav>
 
 
     <partial name="_Header" model="model" />
@@ -563,7 +671,7 @@
 
     
 
-    @RenderBody();
+    @RenderBody()
 
     <partial name="_Footer" model="model" />
 
@@ -642,6 +750,5 @@
 
 </body>
 
-<!-- Mirrored from aem-elektron.az/ by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Jul 2026 18:41:22 GMT -->
 </html>
 

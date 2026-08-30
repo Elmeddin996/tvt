@@ -1,9 +1,21 @@
 @model TVT.Web.ViewModels.Category.CategoryPageViewModel
 
-@{
-    ViewData["Title"] = Model.Category.NameAz;
-}
+@using System.Globalization
+@using TVT.Web.Services
+@inject LocService localizer
 
+@{
+    var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+    var categoryName = currentCulture switch
+    {
+        "en" => Model.Category.NameEn,
+        "ru" => Model.Category.NameRu,
+        _ => Model.Category.NameAz
+    };
+
+    ViewData["Title"] = categoryName;
+}
 
 <div id="product-category" class="container">
     <nav aria-label="breadcrumb">
@@ -16,7 +28,7 @@
             </li>
 
             <li class="breadcrumb-item rm-breadcrumb-item">
-                @Model.Category.NameAz
+                @categoryName
             </li>
 
         </ul>
@@ -28,7 +40,7 @@
     <main>
         <div class="row">
             <div class="col-12 rm-page-title">
-                <h1>@Model.Category.NameAz</h1>
+                <h1>@categoryName</h1>
             </div>
         </div>
         <div class="row no-gutters">
@@ -46,13 +58,15 @@
                                         <span></span>
                                     </span>
 
-                                    <span>Filtr</span>
+                                    <span>
+                                        @localizer.GetLocalizedHtmlString("Filter")
+                                    </span>
                                 </div>
 
                                 <button type="button"
                                         id="tvt-filter-close"
                                         class="tvt-filter-close"
-                                        aria-label="Filtri bağla">
+                                        aria-label="@localizer.GetLocalizedHtmlString("CloseFilter")">
                                     <span></span>
                                     <span></span>
                                 </button>
@@ -75,7 +89,9 @@
 
                                         <div class="tvt-filter">
                                             <div class="tvt-filter-header">
-                                                <span class="tvt-filter-title">İstehsalçı</span>
+                                                <span class="tvt-filter-title">
+                                                    @localizer.GetLocalizedHtmlString("Manufacturer")
+                                                </span>
                                             </div>
 
                                             <div class="tvt-filter-content">
@@ -125,7 +141,8 @@
                                                                 class="tvt-show-more">
 
                                                             <span class="tvt-show-more-text">
-                                                                Daha @(brands.Count - visibleBrandCount) göstər
+                                                                @localizer.GetLocalizedHtmlString("ShowMoreBrands")
+                                                                @(brands.Count - visibleBrandCount)
                                                             </span>
 
                                                             <span class="tvt-show-more-arrow"></span>
@@ -136,7 +153,7 @@
                                                 else
                                                 {
                                                     <div class="tvt-filter-empty">
-                                                        İstehsalçı tapılmadı
+                                                        @localizer.GetLocalizedHtmlString("ManufacturerNotFound")
                                                     </div>
                                                 }
 
@@ -147,7 +164,9 @@
                                         <div class="tvt-filter tvt-price-filter">
 
                                             <div class="tvt-filter-header">
-                                                <span class="tvt-filter-title">Qiymət</span>
+                                                <span class="tvt-filter-title">
+                                                    @localizer.GetLocalizedHtmlString("Price")
+                                                </span>
                                             </div>
 
                                             <div class="tvt-filter-content">
@@ -218,7 +237,9 @@
                                         <div class="tvt-filter tvt-stock-filter">
 
                                             <div class="tvt-filter-header">
-                                                <span class="tvt-filter-title">Stok</span>
+                                                <span class="tvt-filter-title">
+                                                    @localizer.GetLocalizedHtmlString("Stock")
+                                                </span>
                                             </div>
 
                                             <div class="tvt-filter-content">
@@ -231,9 +252,7 @@
 
                                                     <span class="tvt-radio"></span>
 
-                                                    <span class="tvt-filter-name">
-                                                        Stokda var
-                                                    </span>
+                                                    @localizer.GetLocalizedHtmlString("InStock")
 
                                                     <span class="tvt-filter-count">
                                                         @Model.FilterOptions.InStockCount
@@ -248,9 +267,7 @@
 
                                                     <span class="tvt-radio"></span>
 
-                                                    <span class="tvt-filter-name">
-                                                        Stokda yoxdur
-                                                    </span>
+                                                    @localizer.GetLocalizedHtmlString("OutOfStock")
 
                                                     <span class="tvt-filter-count">
                                                         @Model.FilterOptions.OutOfStockCount
@@ -269,12 +286,12 @@
                                     <button type="button"
                                             id="tvt-reset-filters"
                                             class="tvt-filter-reset">
-                                        Sıfırla
+                                        @localizer.GetLocalizedHtmlString("Reset")
                                     </button>
 
                                     <button type="submit"
                                             class="tvt-filter-submit">
-                                        Filtrləri tətbiq et
+                                        @localizer.GetLocalizedHtmlString("ApplyFilters")
                                     </button>
 
                                 </div>
@@ -311,7 +328,7 @@
                                     </span>
 
                                     <span class="rm-btn-text">
-                                        Filtr
+                                        @localizer.GetLocalizedHtmlString("Filter")
                                     </span>
 
                                 </button>
@@ -328,13 +345,13 @@
 
                             <span class="rm-btn-icon">
                                 <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--category-catalog-icon"
-                                     alt="Kataloq"
+                                     alt="@localizer.GetLocalizedHtmlString("ProductCatalog")"
                                      width="15"
                                      height="14">
                             </span>
 
                             <span class="rm-btn-text">
-                                Kataloq
+                                @localizer.GetLocalizedHtmlString("ProductCatalog")
                             </span>
 
                         </button>
@@ -356,24 +373,39 @@
 
                                         <a asp-controller="Category"
                                            asp-action="Index"
-                                           asp-route-slug="@category.SlugAz"
+                                           asp-route-slug="@(currentCulture == "en"
+                                             ? category.SlugEn
+                                             : currentCulture == "ru"
+                                                 ? category.SlugRu
+                                                 : category.SlugAz)"
                                            class="d-flex flex-column justify-content-between align-items-center text-center">
-
                                             @if (!string.IsNullOrWhiteSpace(category.Image))
                                             {
                                                 <span class="rm-category-wall-item-image">
 
                                                     <img src="@category.Image"
-                                                         alt="@category.NameAz"
-                                                         title="@category.NameAz"
+                                                         alt="@(currentCulture == "en"
+                                                        ? category.NameEn
+                                                        : currentCulture == "ru"
+                                                            ? category.NameRu
+                                                            : category.NameAz)"
+                                                              title="@(currentCulture == "en"
+                                                          ? category.NameEn
+                                                          : currentCulture == "ru"
+                                                              ? category.NameRu
+                                                              : category.NameAz)"
                                                          width="95"
-                                                         height="95">
+                                                         height="95">                                            
 
                                                 </span>
                                             }
 
                                             <span>
-                                                @category.NameAz
+                                                @(currentCulture == "en"
+                                                    ? category.NameEn
+                                                    : currentCulture == "ru"
+                                                    ? category.NameRu
+                                                    : category.NameAz)
                                             </span>
 
                                         </a>
@@ -397,9 +429,12 @@
                         else
                         {
                             <div class="col-12 py-5 text-center">
-                                <h4>Məhsul tapılmadı</h4>
+                                <h4>
+                                    @localizer.GetLocalizedHtmlString("ProductsNotFound")
+                                </h4>
+
                                 <p class="text-muted">
-                                    Bu kateqoriyada hazırda məhsul yoxdur.
+                                    @localizer.GetLocalizedHtmlString("NoProductsInCategory")
                                 </p>
                             </div>
                         }

@@ -1,5 +1,8 @@
+@using TVT.Web.Services
+@inject LocService localizer
+
 @{
-    ViewData["Title"] = "Səbət";
+    ViewData["Title"] = localizer.GetLocalizedHtmlString("Cart");
 }
 
 <style>
@@ -270,14 +273,16 @@
 <div class="container tvt-cart-page">
 
     <div class="tvt-cart-title">
-        Səbət
+        @localizer.GetLocalizedHtmlString("Cart")
     </div>
 
     <div id="cart-container">
 
         <!-- Loading -->
         <div id="cart-loading" class="text-center py-5">
-            <span>Səbət yüklənir...</span>
+            <span>
+                @localizer.GetLocalizedHtmlString("CartLoading")
+            </span>
         </div>
 
 
@@ -286,16 +291,18 @@
              class="text-center"
              style="display: none;">
 
-            <h3>Səbətiniz boşdur</h3>
+            <h3>
+                @localizer.GetLocalizedHtmlString("EmptyCart")
+            </h3>
 
             <p class="text-muted">
-                Səbətinizdə hələ məhsul yoxdur.
+                @localizer.GetLocalizedHtmlString("CartEmptyMessage")
             </p>
 
             <a href="/"
                class="rm-btn dark d-inline-flex align-items-center justify-content-center px-4">
 
-                Məhsullara bax
+                @localizer.GetLocalizedHtmlString("ViewProducts")
 
             </a>
 
@@ -317,7 +324,7 @@
                 <div class="tvt-cart-summary-row">
 
                     <span class="tvt-cart-summary-label">
-                        Məhsul sayı
+                        @localizer.GetLocalizedHtmlString("ProductCount")
                     </span>
 
                     <strong id="cart-total-quantity"
@@ -331,7 +338,7 @@
                 <div class="tvt-cart-summary-row tvt-cart-summary-total">
 
                     <span class="tvt-cart-summary-label">
-                        Ümumi
+                        @localizer.GetLocalizedHtmlString("Total")
                     </span>
 
                     <strong id="cart-total-price">
@@ -345,7 +352,7 @@
 
                     <a href="/"
                        class="tvt-cart-continue">
-                        Alış-verişə davam et
+                        @localizer.GetLocalizedHtmlString("ContinueShopping")
                     </a>
 
                 </div>
@@ -358,6 +365,12 @@
 
 </div>
 
+
+<script>
+    window.tvtCartLocalization = {
+        remove: '@localizer.GetLocalizedHtmlString("Remove")'
+    };
+</script>
 
 <script src="~/js/cart-page.js"
         asp-append-version="true"></script>

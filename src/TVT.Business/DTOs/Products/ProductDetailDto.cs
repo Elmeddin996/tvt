@@ -9,7 +9,9 @@ public class ProductDetailDto
 
     public int CategoryId { get; set; }
     public int BrandId { get; set; }
-    public string BrandName { get; set; } = null!;
+    public string BrandNameAz { get; set; } = null!;
+    public string BrandNameEn { get; set; } = null!;
+    public string BrandNameRu { get; set; } = null!;
 
     public string Code { get; set; } = null!;
     public string? Model { get; set; }

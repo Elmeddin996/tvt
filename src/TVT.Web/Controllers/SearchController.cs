@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using TVT.Business.Abstractions.Services;
+using TVT.Business.DTOs.Products;
 using TVT.Core.Common.Pagination;
 using TVT.Web.ViewModels.Search;
 
@@ -18,7 +19,6 @@ public class SearchController : Controller
         _categoryService = categoryService;
     }
 
-    [HttpGet]
     [HttpGet]
     public async Task<IActionResult> Index(
     string? q,
@@ -47,5 +47,28 @@ public class SearchController : Controller
         }
 
         return View(model);
+    }
+
+    [HttpGet]
+    [HttpGet]
+    public async Task<IActionResult> LiveSearch(string keyword)
+    {
+        if (string.IsNullOrWhiteSpace(keyword))
+        {
+            return PartialView("_LiveSearch", new List<ProductListDto>());
+        }
+
+        var request = new PagedRequest
+        {
+            Page = 1,
+            PageSize = 5
+        };
+
+        var result = await _productService.SearchAsync(
+            keyword,
+            null,
+            request);
+
+        return PartialView("_LiveSearch", result.Items);
     }
 }

@@ -1,7 +1,13 @@
 @model TVT.Web.ViewModels.Search.SearchViewModel
 
+@using System.Globalization
+@using TVT.Web.Services
+@inject LocService localizer
+
 @{
-    ViewData["Title"] = "Search";
+    var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+    ViewData["Title"] = localizer.GetLocalizedHtmlString("Search");
 }
 
 <div class="container mt-5">
@@ -9,8 +15,13 @@
     <div id="product-search" class="container">
         <nav aria-label="breadcrumb">
             <ul class="breadcrumb rm-breadcrumb">
-                <li class="breadcrumb-item rm-breadcrumb-item"><a href="https://aem-elektron.az/"><i class="fa fa-home"></i></a></li>
-                <li class="breadcrumb-item rm-breadcrumb-item">Axtarış</li>
+                <li class="breadcrumb-item rm-breadcrumb-item">
+                    <a asp-controller="Home"
+                       asp-action="Index"><i class="fa fa-home"></i></a>
+                </li>
+                <li class="breadcrumb-item rm-breadcrumb-item">
+                    @localizer.GetLocalizedHtmlString("Search")
+                </li>
             </ul>
         </nav>
 
@@ -19,11 +30,12 @@
                 <h1>
                     @if (!string.IsNullOrWhiteSpace(Model.Search))
                     {
-                        @:Axtarış - @Model.Search
+                        @localizer.GetLocalizedHtmlString("Search")
+                        @: - @Model.Search
                     }
                     else
                     {
-                        @:Axtarış
+                        @localizer.GetLocalizedHtmlString("Search")
                     }
                 </h1>
             </div>
@@ -43,7 +55,7 @@
                             <div class="form-group">
 
                                 <label class="rm-control-label" for="input-search">
-                                    Axtarış kriteriyaları
+                                    @localizer.GetLocalizedHtmlString("SearchCriteria")
                                 </label>
 
                                 <div class="rm-search-block-form d-flex flex-column flex-md-row">
@@ -52,13 +64,13 @@
                                            id="input-search"
                                            name="q"
                                            value="@Model.Search"
-                                           placeholder="Axtarış"
+                                           placeholder="@localizer.GetLocalizedHtmlString("Search")"
                                            class="form-control" />
 
                                     <select name="category_id" class="rm-select">
 
                                         <option value="">
-                                            Bütün kateqoriyalar
+                                            @localizer.GetLocalizedHtmlString("AllCategories")
                                         </option>
 
                                         @foreach (var category in Model.Categories)
@@ -66,7 +78,11 @@
                                             <option value="@category.Id"
                                                     selected="@(Model.CategoryId == category.Id)">
 
-                                                @category.NameAz
+                                                @(currentCulture == "en"
+                                                    ? category.NameEn
+                                                    : currentCulture == "ru"
+                                                    ? category.NameRu
+                                                    : category.NameAz)
 
                                             </option>
                                         }
@@ -81,7 +97,7 @@
                             <button type="submit"
                                     class="rm-btn dark">
 
-                                Axtar
+                                @localizer.GetLocalizedHtmlString("Search")
 
                             </button>
 
@@ -95,15 +111,35 @@
                         @if (Model.Products.Items.Any())
                         {
                             <span>
-                                "@Model.Search" üçün
-                                <strong>@Model.Products.TotalCount</strong>
-                                məhsul tapıldı
+                                @if (currentCulture == "en")
+                                {
+                                    @($"{Model.Products.TotalCount} products found for \"{Model.Search}\"")
+                                }
+                                else if (currentCulture == "ru")
+                                {
+                                    @($"По запросу \"{Model.Search}\" найдено {Model.Products.TotalCount} товаров")
+                                }
+                                else
+                                {
+                                    @($"\"{Model.Search}\" üçün {Model.Products.TotalCount} məhsul tapıldı")
+                                }
                             </span>
                         }
                         else
                         {
                             <span>
-                                "@Model.Search" üçün nəticə tapılmadı
+                                @if (currentCulture == "en")
+                                {
+                                    @($"No results found for \"{Model.Search}\"")
+                                }
+                                else if (currentCulture == "ru")
+                                {
+                                    @($"По запросу \"{Model.Search}\" ничего не найдено")
+                                }
+                                else
+                                {
+                                    @($"\"{Model.Search}\" üçün nəticə tapılmadı")
+                                }
                             </span>
                         }
 

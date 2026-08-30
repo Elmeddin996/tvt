@@ -63,6 +63,35 @@ document.addEventListener('DOMContentLoaded', async function () {
        Render Cart
        ========================= */
 
+
+    function getCurrentCulture() {
+
+        const lang =
+            document.documentElement.lang || 'az';
+
+        return lang.toLowerCase().split('-')[0];
+    }
+
+
+    function getLocalizedProductField(product, field) {
+
+        const culture = getCurrentCulture();
+
+        const suffixMap = {
+            az: 'Az',
+            en: 'En',
+            ru: 'Ru'
+        };
+
+        const suffix =
+            suffixMap[culture] || 'Az';
+
+        return product[field + suffix]
+            || product[field + 'Az']
+            || '';
+    }
+
+
     function renderCart(products, cart) {
 
         if (!products || products.length === 0) {
@@ -137,18 +166,20 @@ document.addEventListener('DOMContentLoaded', async function () {
                     <div class="me-3">
 
                         <img src="${image}"
-                             alt="${product.nameAz || ''}"
+                             alt="${getLocalizedProductField(product, 'name')}"
                              style="width: 90px; height: 90px; object-fit: contain;">
 
                     </div>
 
                     <div>
 
-                        <a href="/Product/Index?slug=${encodeURIComponent(product.slugAz || '')}"
+                        <a href="/Product/Index?slug=${encodeURIComponent(
+                            getLocalizedProductField(product, 'slug')
+                        )}"
                            class="text-decoration-none">
 
                             <h5 class="mb-2">
-                                ${product.nameAz || ''}
+                                ${getLocalizedProductField(product, 'name')}
                             </h5>
 
                         </a>
@@ -190,10 +221,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 
                 <button type="button"
-                        class="btn btn-sm btn-outline-danger ms-4 cart-remove"
-                        data-product-id="${product.id}">
-                    Sil
-                </button>
+        class="btn btn-sm btn-outline-danger ms-4 cart-remove"
+        data-product-id="${product.id}">
+    ${window.tvtCartLocalization.remove}
+</button>
 
             `;
 

@@ -1,6 +1,13 @@
 @model TVT.Web.ViewModels.Home.HomeViewModel
 
 
+@using System.Globalization
+@using TVT.Web.Services
+
+@{
+    var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+}
+
 <style>
     .tvt-new-products .rm-module-col {
         flex: 0 0 50%;
@@ -161,8 +168,11 @@
         <div class="row row-padding-top">
 
             <div class="col-12 rm-module-header">
-                <span>Populyar kateqoriyalar</span>
+                <span>
+                    @localizer.GetLocalizedHtmlString("PopularCategories")
+                </span>
             </div>
+           
 
         </div>
 
@@ -174,7 +184,11 @@
 
                     <a asp-controller="Category"
                        asp-action="Detail"
-                       asp-route-slug="@category.SlugAz"
+                       asp-route-slug="@(currentCulture == "en"
+        ? category.SlugEn
+        : currentCulture == "ru"
+            ? category.SlugRu
+            : category.SlugAz)"
                        class="d-flex flex-column justify-content-between align-items-center text-center">
 
                         <span class="rm-category-wall-item-image">
@@ -182,8 +196,16 @@
                             @if (!string.IsNullOrWhiteSpace(category.Image))
                             {
                                 <img src="@category.Image"
-                                     alt="@category.NameAz"
-                                     title="@category.NameAz"
+                                     alt="@(currentCulture == "en"
+            ? category.NameEn
+            : currentCulture == "ru"
+                ? category.NameRu
+                : category.NameAz)"
+                                     title="@(currentCulture == "en"
+              ? category.NameEn
+              : currentCulture == "ru"
+                  ? category.NameRu
+                  : category.NameAz)"
                                      width="95"
                                      height="95"
                                      loading="lazy" />
@@ -198,7 +220,11 @@
                         </span>
 
                         <span>
-                            @category.NameAz
+                            @(currentCulture == "en"
+                                ? category.NameEn
+                                : currentCulture == "ru"
+                                ? category.NameRu
+                                : category.NameAz)
                         </span>
 
                     </a>
@@ -246,7 +272,9 @@
 
             <div class="row row-padding-top">
                 <div class="col-12 rm-module-header">
-                    <span>Yeni gələnlər</span>
+                    <span>
+                        @localizer.GetLocalizedHtmlString("NewArrivals")
+                    </span>
                 </div>
             </div>
 

@@ -1,6 +1,26 @@
 @model TVT.Business.DTOs.Products.ProductListDto
 
+@using System.Globalization
+@using TVT.Web.Services
+@inject LocService localizer
+
 @{
+    var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+    var productName = currentCulture switch
+    {
+        "en" => Model.NameEn,
+        "ru" => Model.NameRu,
+        _ => Model.NameAz
+    };
+
+    var productSlug = currentCulture switch
+    {
+        "en" => Model.SlugEn,
+        "ru" => Model.SlugRu,
+        _ => Model.SlugAz
+    };
+
     var image = string.IsNullOrWhiteSpace(Model.MainImage)
         ? "/images/no-image.png"
         : Model.MainImage;
@@ -14,17 +34,17 @@
             {
                 <div class="rm-module-stickers">
                     <span class="rm-module-stickers-sticker rm-module-stickers-sticker-stickers_new">
-                        Yeni
+                        @localizer.GetLocalizedHtmlString("New")
                     </span>
                 </div>
             }
 
             <div class="rm-module-buttons list-unstyled d-flex justify-content-center flex-md-column order-1">
                 
-                <button aria-label="Wishlist"
+                <button aria-label="@localizer.GetLocalizedHtmlString("Wishlist")"
                         type="button"
                         onclick="tvtWishlist.toggle(@Model.Id);"
-                        title="Arzu siyahısına əlavə et"
+                        title="@localizer.GetLocalizedHtmlString("AddToWishlist")"
                         data-wishlist-product-id="@Model.Id"
                         class="rm-module-buttons-item wishlist d-flex align-items-center justify-content-center">
                     <span></span>
@@ -36,15 +56,15 @@
                 <a class="order-0"
                    asp-controller="Product"
                    asp-action="Index"
-                   asp-route-slug="@Model.SlugAz">
+                   asp-route-slug="@productSlug">
 
                     <img src="@image"
                          data-srcset="@image"
                          srcset="@image"
                          sizes="100vw"
                          class="img-fluid oct-lazy"
-                         alt="@Model.NameAz"
-                         title="@Model.NameAz"
+                         alt="@productName"
+                         title="@productName"
                          width="228"
                          height="228" />
 
@@ -56,26 +76,29 @@
             <div class="rm-module-title">
                 <a asp-controller="Product"
                    asp-action="Index"
-                   asp-route-slug="@Model.SlugAz">
+                   asp-route-slug="@productSlug">
 
-                    @Model.NameAz
+                    @productName
 
                 </a>
             </div>
             @if (Model.StockQuantity > 0)
             {
                 <div class="rm-module-stock">
-                    Stokda var
+                    @localizer.GetLocalizedHtmlString("InStock")
                 </div>
             }
             else
             {
                 <div class="rm-module-stock rm-out-of-stock">
-                    Stokda yoxdur
+                    @localizer.GetLocalizedHtmlString("OutOfStock")
                 </div>
             }
             <div class="rm-category-product-model">
-                <span>Məhsulun kodu: </span>@Model.Code
+                <span>
+                    @localizer.GetLocalizedHtmlString("ProductCode"):
+                </span>
+                @Model.Code
             </div>
 
 
@@ -96,12 +119,14 @@
                     </span>
 
                     <button type="button"
-                            aria-label="To cart"
+                            aria-label="@localizer.GetLocalizedHtmlString("AddToCart")"
                             class="rm-btn secondary rm-cart-btn d-flex align-items-center justify-content-center justify-content-md-start"
                             onclick="tvtCart.add(@Model.Id, 1)">
 
                         <span class="rm-cart-btn-icon"></span>
-                        <span class="rm-btn-text">Səbətə at</span>
+                        <span class="rm-btn-text">
+                            @localizer.GetLocalizedHtmlString("AddToCart")
+                        </span>
 
                     </button>
 

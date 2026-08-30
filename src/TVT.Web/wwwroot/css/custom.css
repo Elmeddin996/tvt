@@ -913,7 +913,6 @@ a.knopka:active {
 
 /* =========================================
    TVT MOBILE CATALOG
-   AEM STYLE
    ========================================= */
 
 .tvt-mobile-menu {
@@ -1425,3 +1424,44 @@ a.knopka:active {
     font-weight: 400;
     line-height: 1.3;
 }
+
+
+/* Mobile language switcher */
+.tvt-mobile-language-switcher {
+    width: 100%;
+    padding: 20px 15px;
+    margin-top: 10px;
+    border-top: 1px solid #eeeeee;
+    gap: 10px;
+}
+
+    .tvt-mobile-language-switcher form {
+        margin: 0;
+        padding: 0;
+    }
+
+.tvt-mobile-language-btn {
+    width: 42px;
+    height: 32px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #dddddd;
+    background: #ffffff;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+    .tvt-mobile-language-btn img {
+        display: block;
+        width: 16px;
+        height: 11px;
+        object-fit: cover;
+    }
+
+    .tvt-mobile-language-btn.active {
+        border-color: #0067ad;
+        box-shadow: 0 0 0 1px #0067ad;
+    }

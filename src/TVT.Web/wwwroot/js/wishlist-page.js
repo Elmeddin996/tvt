@@ -17,6 +17,42 @@ document.addEventListener('DOMContentLoaded', async function () {
        Wishlist
        ========================= */
 
+
+    function getCurrentCulture() {
+
+        const lang =
+            document.documentElement.getAttribute('lang');
+
+        if (lang === 'en') {
+            return 'en';
+        }
+
+        if (lang === 'ru') {
+            return 'ru';
+        }
+
+        return 'az';
+    }
+
+
+    function getLocalizedProductField(product, field) {
+
+        const culture = getCurrentCulture();
+
+        const suffixMap = {
+            az: 'Az',
+            en: 'En',
+            ru: 'Ru'
+        };
+
+        const suffix =
+            suffixMap[culture] || 'Az';
+
+        return product[field + suffix]
+            || product[field + 'Az']
+            || '';
+    }
+
     function getWishlist() {
 
         try {
@@ -152,29 +188,31 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                 <div class="wishlist-item-info">
 
-                    <a href="/Product/Index?slug=${encodeURIComponent(product.slugAz || '')}"
+                    <a href="/Product/Index?slug=${encodeURIComponent(getLocalizedProductField(product, 'slug') || '')}"
                        class="wishlist-item-image-link">
 
                         <img src="${image}"
                              class="wishlist-item-image"
-                             alt="${product.nameAz || ''}">
+                             alt="${getLocalizedProductField(product, 'name')}">
 
                     </a>
 
 
                     <div class="wishlist-item-details">
 
-                        <a href="/Product/Index?slug=${encodeURIComponent(product.slugAz || '')}"
+                       <a href="/Product/Index?slug=${encodeURIComponent(
+                           getLocalizedProductField(product, 'slug') || ''
+                       )}"
                            class="wishlist-item-title">
 
-                            ${product.nameAz || ''}
+                            ${getLocalizedProductField(product, 'name')}
 
                         </a>
 
 
                         <div class="wishlist-item-code">
 
-                            Məhsulun kodu:
+                            ${window.tvtWishlistLocalization.productCode}:
                             ${product.code || ''}
 
                         </div>
@@ -184,13 +222,13 @@ document.addEventListener('DOMContentLoaded', async function () {
 
                     ? `
                                     <div class="wishlist-item-stock">
-                                        Stokda var
+                                       ${window.tvtWishlistLocalization.inStock}
                                     </div>
                                   `
 
                     : `
                                     <div class="wishlist-item-stock out-of-stock">
-                                        Stokda yoxdur
+                                        ${window.tvtWishlistLocalization.outOfStock}
                                     </div>
                                   `
                 }
@@ -261,7 +299,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                         <span class="rm-cart-btn-icon"></span>
 
                         <span class="rm-btn-text">
-                            Səbətə at
+                           ${window.tvtWishlistLocalization.addToCart}
                         </span>
 
                     </button>
@@ -272,7 +310,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     <button type="button"
                             class="wishlist-item-remove"
                             data-product-id="${product.id}"
-                            aria-label="Arzu siyahısından sil">
+                            aria-label="${window.tvtWishlistLocalization.remove}">
 
                         <i class="fas fa-times"></i>
 

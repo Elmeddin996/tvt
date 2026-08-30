@@ -1,11 +1,18 @@
 @model TVT.Web.ViewModels.Layout.LayoutViewModel
 
+@using TVT.Web.Resources
+@using TVT.Web.Services
+@inject LocService localizer
+
 @{
     var categories = Model.Categories;
 
     var parents = categories
         .Where(x => x.ParentId == null)
         .ToList();
+
+    var currentCulture = System.Globalization.CultureInfo.CurrentUICulture
+        .TwoLetterISOLanguageName;
 }
 
 <style>
@@ -40,20 +47,32 @@
 
                         <a asp-controller="Category"
                            asp-action="Index"
-                           asp-route-slug="@parent.SlugAz"
+                           asp-route-slug="@(currentCulture == "en"
+        ? parent.SlugEn
+        : currentCulture == "ru"
+            ? parent.SlugRu
+            : parent.SlugAz)"
                            class="rm-menu-list-item-link d-flex align-items-center">
 
                             @if (!string.IsNullOrWhiteSpace(parent.Icon))
                             {
                                 <img class="tvt-mobile-menu-icon"
                                      src="@parent.Icon"
-                                     alt="@parent.NameAz"
+                                     alt="@(currentCulture == "en"
+                    ? parent.NameEn
+                    : currentCulture == "ru"
+                        ? parent.NameRu
+                        : parent.NameAz)"
                                      width="38"
-                                     height="38"/>
+                                     height="38" />
                             }
 
                             <span class="rm-menu-list-item-name" style="margin-left: 15px;">
-                                @parent.NameAz
+                                @(currentCulture == "en"
+                                    ? parent.NameEn
+                                    : currentCulture == "ru"
+                                    ? parent.NameRu
+                                    : parent.NameAz)
                             </span>
 
                         </a>
@@ -84,11 +103,19 @@
 
                                             <a asp-controller="Category"
                                                asp-action="Index"
-                                               asp-route-slug="@child.SlugAz"
+                                               asp-route-slug="@(currentCulture == "en"
+        ? child.SlugEn
+        : currentCulture == "ru"
+            ? child.SlugRu
+            : child.SlugAz)"
                                                class="rm-menu-list-item-link d-flex align-items-center">
 
                                                 <span class="rm-menu-list-item-name">
-                                                    @child.NameAz
+                                                    @(currentCulture == "en"
+                                                        ? child.NameEn
+                                                        : currentCulture == "ru"
+                                                        ? child.NameRu
+                                                        : child.NameAz)
                                                 </span>
 
                                             </a>
@@ -115,11 +142,19 @@
 
                                                                 <a asp-controller="Category"
                                                                    asp-action="Index"
-                                                                   asp-route-slug="@subChild.SlugAz"
+                                                                   asp-route-slug="@(currentCulture == "en"
+        ? subChild.SlugEn
+        : currentCulture == "ru"
+            ? subChild.SlugRu
+            : subChild.SlugAz)"
                                                                    class="rm-menu-list-item-link d-flex align-items-center">
 
                                                                     <span class="rm-menu-list-item-name">
-                                                                        @subChild.NameAz
+                                                                        @(currentCulture == "en"
+                                                                            ? subChild.NameEn
+                                                                            : currentCulture == "ru"
+                                                                            ? subChild.NameRu
+                                                                            : subChild.NameAz)
                                                                     </span>
 
                                                                 </a>
@@ -161,7 +196,7 @@
         <button type="button"
                 class="tvt-mobile-menu-back"
                 id="tvt-mobile-menu-back"
-                aria-label="Geri">
+                aria-label="@localizer.GetLocalizedHtmlString("Back")">
             <span class="tvt-mobile-menu-back-icon"></span>
             <span id="tvt-mobile-menu-back-text"></span>
         </button>
@@ -169,7 +204,7 @@
         <button type="button"
                 class="tvt-mobile-menu-close"
                 id="tvt-mobile-menu-close"
-                aria-label="Bağla">
+                aria-label="@localizer.GetLocalizedHtmlString("Close")">
             <span></span>
             <span></span>
         </button>
@@ -184,10 +219,10 @@
         <div class="tvt-mobile-menu-level active"
              id="tvt-mobile-menu-main"
              data-level="0"
-             data-title="Menyu">
+             data-title="@localizer.GetLocalizedHtmlString("Menu")">
 
             <div class="tvt-mobile-menu-title">
-                Menyu
+                @localizer.GetLocalizedHtmlString("Menu")
             </div>
 
             <div class="tvt-mobile-menu-list">
@@ -206,7 +241,7 @@
                         </span>
 
                         <span class="tvt-mobile-menu-catalog-text">
-                            Məhsul kataloqu
+                            @localizer.GetLocalizedHtmlString("ProductCatalog")
                         </span>
 
                     </button>
@@ -214,7 +249,7 @@
                     <button type="button"
                             class="tvt-mobile-menu-next"
                             data-target="tvt-mobile-menu-catalog"
-                            aria-label="Məhsul kataloqu">
+                            aria-label="@localizer.GetLocalizedHtmlString("ProductCatalog")"
 
                         <span></span>
 
@@ -229,16 +264,101 @@
 
                     <span class="tvt-mobile-menu-wishlist-icon" style="background: rgb(0, 103, 173) !important;">
                         <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--fixed-bar-wishlist"
-                             alt="İstək siyahısı"
+                             alt="@localizer.GetLocalizedHtmlString("Wishlist")"
                              width="20"
                              height="20" />
                     </span>
 
                     <span class="tvt-mobile-menu-wishlist-text">
-                        Seçilmişlər
+                        @localizer.GetLocalizedHtmlString("Wishlist")
                     </span>
 
                 </a>
+
+                <div class="tvt-mobile-language-switcher d-flex justify-content-center align-items-center">
+
+                    <!-- Azərbaycan -->
+                    <form asp-controller="Localization"
+                          asp-action="SetLanguage"
+                          method="post">
+
+                        <input type="hidden"
+                               name="culture"
+                               value="az-AZ" />
+
+                        <input type="hidden"
+                               name="returnUrl"
+                               value="@Context.Request.Path@Context.Request.QueryString" />
+
+                        <button type="submit"
+                                class="tvt-mobile-language-btn @(currentCulture  == "az" ? "active" : "")"
+                                title="Azərbaycan">
+
+                            <img src="~/catalog/language/az-az/az-az.png"
+                                 alt="Azərbaycan"
+                                 width="16"
+                                 height="11" />
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- English -->
+                    <form asp-controller="Localization"
+                          asp-action="SetLanguage"
+                          method="post">
+
+                        <input type="hidden"
+                               name="culture"
+                               value="en-US" />
+
+                        <input type="hidden"
+                               name="returnUrl"
+                               value="@Context.Request.Path@Context.Request.QueryString" />
+
+                        <button type="submit"
+                                class="tvt-mobile-language-btn @(currentCulture  == "en" ? "active" : "")"
+                                title="English">
+
+                            <img src="~/catalog/language/en-en/en-us.png"
+                                 alt="English"
+                                 width="16"
+                                 height="11" />
+
+                        </button>
+
+                    </form>
+
+
+                    <!-- Русский -->
+                    <form asp-controller="Localization"
+                          asp-action="SetLanguage"
+                          method="post">
+
+                        <input type="hidden"
+                               name="culture"
+                               value="ru-RU" />
+
+                        <input type="hidden"
+                               name="returnUrl"
+                               value="@Context.Request.Path@Context.Request.QueryString" />
+
+                        <button type="submit"
+                                class="tvt-mobile-language-btn @(currentCulture  == "ru" ? "active" : "")"
+                                title="Русский">
+
+                            <img src="~/catalog/language/ru-ru/ru-ru.png"
+                                 alt="Русский"
+                                 width="16"
+                                 height="11" />
+
+                        </button>
+
+                    </form>
+
+                </div>
+
             </div>
 
         </div>
@@ -250,10 +370,10 @@
         <div class="tvt-mobile-menu-level"
              id="tvt-mobile-menu-catalog"
              data-level="1"
-             data-title="Məhsul kataloqu"
+             data-title="@localizer.GetLocalizedHtmlString("ProductCatalog")"
              data-parent="tvt-mobile-menu-main">
 
-            
+
 
             <div class="tvt-mobile-menu-list">
 
@@ -267,20 +387,32 @@
 
                         <a asp-controller="Category"
                            asp-action="Index"
-                           asp-route-slug="@parent.SlugAz"
+                           asp-route-slug="@(currentCulture == "en"
+        ? parent.SlugEn
+        : currentCulture == "ru"
+            ? parent.SlugRu
+            : parent.SlugAz)"
                            class="tvt-mobile-menu-link">
 
                             @if (!string.IsNullOrWhiteSpace(parent.Icon))
                             {
                                 <img class="tvt-mobile-menu-icon"
                                      src="@parent.Icon"
-                                     alt="@parent.NameAz"
+                                     alt="@(currentCulture == "en"
+                    ? parent.NameEn
+                    : currentCulture == "ru"
+                        ? parent.NameRu
+                        : parent.NameAz)"
                                      width="33"
                                      height="33" />
                             }
 
                             <span>
-                                @parent.NameAz
+                                @(currentCulture == "en"
+                                    ? parent.NameEn
+                                    : currentCulture == "ru"
+                                    ? parent.NameRu
+                                    : parent.NameAz)
                             </span>
 
                         </a>
@@ -290,7 +422,7 @@
                             <button type="button"
                                     class="tvt-mobile-menu-next"
                                     data-target="tvt-mobile-parent-@parent.Id"
-                                    aria-label="Alt kateqoriyalar">
+                                    aria-label="@localizer.GetLocalizedHtmlString("Subcategories")">
 
                                 <span></span>
 
@@ -304,7 +436,7 @@
 
         </div>
 
-      
+
 
         <!-- LEVEL 2 - CATEGORY CHILDREN -->
         @foreach (var parent in parents)
@@ -319,10 +451,14 @@
             <div class="tvt-mobile-menu-level"
                  id="tvt-mobile-parent-@parent.Id"
                  data-level="2"
-                 data-title="@parent.NameAz"
+                 data-title="@(currentCulture == "en"
+    ? parent.NameEn
+    : currentCulture == "ru"
+        ? parent.NameRu
+        : parent.NameAz)"
                  data-parent="tvt-mobile-menu-catalog">
 
-               
+
 
                 <div class="tvt-mobile-menu-list">
 
@@ -336,11 +472,19 @@
 
                             <a asp-controller="Category"
                                asp-action="Index"
-                               asp-route-slug="@child.SlugAz"
+                               asp-route-slug="@(currentCulture == "en"
+        ? child.SlugEn
+        : currentCulture == "ru"
+            ? child.SlugRu
+            : child.SlugAz)"
                                class="tvt-mobile-menu-link">
 
                                 <span>
-                                    @child.NameAz
+                                    @(currentCulture == "en"
+                                        ? child.NameEn
+                                        : currentCulture == "ru"
+                                        ? child.NameRu
+                                        : child.NameAz)
                                 </span>
 
                             </a>
@@ -350,7 +494,7 @@
                                 <button type="button"
                                         class="tvt-mobile-menu-next"
                                         data-target="tvt-mobile-child-@child.Id"
-                                        aria-label="Alt kateqoriyalar">
+                                        aria-label="@localizer.GetLocalizedHtmlString("Subcategories")">
 
                                     <span></span>
 
@@ -379,7 +523,11 @@
             <div class="tvt-mobile-menu-level"
                  id="tvt-mobile-child-@child.Id"
                  data-level="3"
-                 data-title="@child.NameAz"
+                 data-title="@(currentCulture == "en"
+    ? child.NameEn
+    : currentCulture == "ru"
+        ? child.NameRu
+        : child.NameAz)"
                  data-parent="tvt-mobile-parent-@child.ParentId">
 
 
@@ -392,11 +540,19 @@
 
                             <a asp-controller="Category"
                                asp-action="Index"
-                               asp-route-slug="@subChild.SlugAz"
+                               asp-route-slug="@(currentCulture == "en"
+        ? subChild.SlugEn
+        : currentCulture == "ru"
+            ? subChild.SlugRu
+            : subChild.SlugAz)"
                                class="tvt-mobile-menu-link">
 
                                 <span>
-                                    @subChild.NameAz
+                                    @(currentCulture == "en"
+                                        ? subChild.NameEn
+                                        : currentCulture == "ru"
+                                        ? subChild.NameRu
+                                        : subChild.NameAz)
                                 </span>
 
                             </a>
@@ -410,6 +566,9 @@
         }
 
 
+
     </div>
+
+
 
 </div>
