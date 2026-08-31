@@ -11,6 +11,7 @@ public interface IUnitOfWork
     IPageRepository Pages { get; }
     ISliderRepository Sliders { get; }
     IMiniSliderRepository MiniSliders { get; }
+    IMobileSliderRepository MobileSliders { get; }
     ISettingRepository Settings { get; }
     ISubscriberRepository Subscribers { get; }
     IContactMessageRepository ContactMessages { get; }

@@ -28,6 +28,7 @@ public static class ServiceRegistration
         services.AddScoped<IPageRepository, PageRepository>();
         services.AddScoped<ISliderRepository, SliderRepository>();
         services.AddScoped<IMiniSliderRepository, MiniSliderRepository>();
+        services.AddScoped<IMobileSliderRepository, MobileSliderRepository>();
         services.AddScoped<ISettingRepository, SettingRepository>();
         services.AddScoped<ISubscriberRepository, SubscriberRepository>();
         services.AddScoped<IContactMessageRepository, ContactMessageRepository>();

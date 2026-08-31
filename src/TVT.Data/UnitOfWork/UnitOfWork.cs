@@ -17,6 +17,7 @@ public class UnitOfWork : IUnitOfWork
         IPageRepository pageRepository,
         ISliderRepository sliderRepository,
         IMiniSliderRepository miniSliderRepository,
+        IMobileSliderRepository mobileSliderRepository,
         ISettingRepository settingRepository,
         ISubscriberRepository subscriberRepository,
         IContactMessageRepository contactMessageRepository,
@@ -39,8 +40,11 @@ public class UnitOfWork : IUnitOfWork
 
         News = newsRepository;
         Pages = pageRepository;
+
         Sliders = sliderRepository;
         MiniSliders = miniSliderRepository;
+        MobileSliders = mobileSliderRepository;
+
         Settings = settingRepository;
         Subscribers = subscriberRepository;
         ContactMessages = contactMessageRepository;
@@ -67,6 +71,8 @@ public class UnitOfWork : IUnitOfWork
     public ISliderRepository Sliders { get; }
 
     public IMiniSliderRepository MiniSliders { get; }
+
+    public IMobileSliderRepository MobileSliders { get; }
 
     public ISettingRepository Settings { get; }
 

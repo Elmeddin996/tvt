@@ -1,0 +1,178 @@
+@model TVT.Web.Areas.Admin.ViewModels.MobileSliders.EditMobileSliderViewModel
+
+@{
+    ViewData["Title"] = "Edit Mobile Slider";
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="mb-1">
+                Edit Mobile Slider
+            </h2>
+
+            <p class="text-muted mb-0">
+                Update mobile slider information.
+            </p>
+        </div>
+
+        <a asp-area="Admin"
+           asp-controller="MobileSlider"
+           asp-action="Index"
+           class="btn btn-secondary">
+            Back
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-body">
+
+            <form asp-area="Admin"
+                  asp-controller="MobileSlider"
+                  asp-action="Edit"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                @Html.AntiForgeryToken()
+
+                <input asp-for="MobileSlider.Id" type="hidden" />
+                <input asp-for="MobileSlider.Image" type="hidden" />
+
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+
+                <!-- Current Image -->
+                @if (!string.IsNullOrWhiteSpace(Model.MobileSlider.Image))
+                {
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Current Image
+                        </label>
+
+                        <div>
+                            <img src="@Model.MobileSlider.Image"
+                                 alt="Current Mobile Slider"
+                                 class="img-thumbnail"
+                                 style="max-width: 320px; max-height: 240px; object-fit: contain;" />
+                        </div>
+
+                    </div>
+                }
+
+
+                <!-- New Image -->
+
+                <div class="mb-3">
+
+                    <label asp-for="ImageFile"
+                           class="form-label">
+                        Replace Image
+                    </label>
+
+                    <input asp-for="ImageFile"
+                           type="file"
+                           class="form-control"
+                           accept="image/*" />
+
+                    <span asp-validation-for="ImageFile"
+                          class="text-danger">
+                    </span>
+
+                    <div class="form-text">
+                        Yeni şəkil seçməsəniz, mövcud şəkil saxlanılacaq.
+                    </div>
+
+                </div>
+
+
+                <!-- Link -->
+
+                <div class="mb-3">
+
+                    <label asp-for="MobileSlider.Link"
+                           class="form-label">
+                        Link
+                    </label>
+
+                    <input asp-for="MobileSlider.Link"
+                           class="form-control" />
+
+                    <span asp-validation-for="MobileSlider.Link"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Sort Order -->
+
+                <div class="mb-3">
+
+                    <label asp-for="MobileSlider.SortOrder"
+                           class="form-label">
+                        Sort Order
+                    </label>
+
+                    <input asp-for="MobileSlider.SortOrder"
+                           type="number"
+                           class="form-control"
+                           min="0" />
+
+                    <span asp-validation-for="MobileSlider.SortOrder"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+
+                <!-- Active -->
+
+                <div class="form-check mb-4">
+
+                    <input asp-for="MobileSlider.IsActive"
+                           class="form-check-input" />
+
+                    <label asp-for="MobileSlider.IsActive"
+                           class="form-check-label">
+                        Active
+                    </label>
+
+                </div>
+
+
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        Save Changes
+                    </button>
+
+                    <a asp-area="Admin"
+                       asp-controller="MobileSlider"
+                       asp-action="Index"
+                       class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

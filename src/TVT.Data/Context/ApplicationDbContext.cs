@@ -28,6 +28,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Slider> Sliders { get; set; }
     public DbSet<MiniSlider> MiniSliders { get; set; }
+    public DbSet<MobileSlider> MobileSliders { get; set; } = null!;
 
     public DbSet<ContactMessage> ContactMessages { get; set; }
 
@@ -37,6 +38,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<News> News { get; set; }
 
+
     public DbSet<CategorySpecificationGroup> CategorySpecificationGroups => Set<CategorySpecificationGroup>();
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -44,4 +46,5 @@ public class ApplicationDbContext : DbContext
         base.OnModelCreating(builder);
         builder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
+
 }

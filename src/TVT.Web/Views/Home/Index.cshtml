@@ -27,10 +27,42 @@
             max-width: 25%;
         }
     }
+
+    .tvt-home-mobile-slider {
+        display: none;
+    }
+
+    @@media (max-width: 767px) {
+
+        .tvt-home-desktop-sliders {
+            display: none !important;
+        }
+
+        .tvt-home-mobile-slider {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+            .tvt-home-mobile-slider .splide {
+                width: 100%;
+            }
+
+            .tvt-home-mobile-slider .splide__slide {
+                width: 100%;
+            }
+
+            .tvt-home-mobile-slider img {
+                display: block;
+                width: 100%;
+                height: auto;
+                object-fit: cover;
+            }
+    }
 </style>
 
 <div id="common-home" class="container">
-    <div class="row row-padding-top">
+    <div class="row row-padding-top tvt-home-desktop-sliders">
         <div class="col-xl-9">
             <div id="ocdbanner-46" class="ocdbanner">
 
@@ -162,6 +194,77 @@
 
             </div>
         </div>
+    </div>
+    <div class="tvt-home-mobile-slider">
+
+        @if (Model.MobileSliders != null &&
+        Model.MobileSliders.Any())
+        {
+            <div id="tvt-mobile-home-slider"
+                 class="splide">
+
+                <div class="splide__track">
+
+                    <ul class="splide__list">
+
+                        @foreach (var mobileSlider in Model.MobileSliders)
+                        {
+                            <li class="splide__slide">
+
+                                @if (!string.IsNullOrWhiteSpace(mobileSlider.Link))
+                                {
+                                    <a href="@mobileSlider.Link">
+
+                                        <img src="@mobileSlider.Image"
+                                             alt=""
+                                             loading="lazy"
+                                             class="img-responsive" />
+
+                                    </a>
+                                }
+                                else
+                                {
+                                    <img src="@mobileSlider.Image"
+                                         alt=""
+                                         loading="lazy"
+                                         class="img-responsive" />
+                                }
+
+                            </li>
+                        }
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+
+                    const mobileHomeSlider =
+                        document.getElementById('tvt-mobile-home-slider');
+
+                    if (mobileHomeSlider &&
+                        typeof Splide !== 'undefined') {
+
+                        new Splide(mobileHomeSlider, {
+                            rewind: true,
+                            type: 'loop',
+                            perPage: 1,
+                            perMove: 1,
+                            autoplay: true,
+                            interval: 3000,
+                            arrows: true,
+                            pagination: true
+                        }).mount();
+
+                    }
+
+                });
+            </script>
+        }
+
     </div>
     <div class="rm-category-wall">
 

@@ -1,102 +1,96 @@
-@model TVT.Web.ViewModels.Layout.LayoutViewModel
+@using System.Globalization
+@using TVT.Business.Abstractions.Services
+@using TVT.Web.Services
+
+@inject ISettingService SettingService
+@inject ICategoryService CategoryService
+@inject LocService localizer
+
+@{
+    var setting = await SettingService.GetAsync();
+    var categories = await CategoryService.GetAllAsync();
+
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+    var address = culture switch
+    {
+        "en" => setting?.AddressEn,
+        "ru" => setting?.AddressRu,
+        _ => setting?.AddressAz
+    };
+
+    var workingHours = culture switch
+    {
+        "en" => setting?.WorkingHoursEn,
+        "ru" => setting?.WorkingHoursRu,
+        _ => setting?.WorkingHoursAz
+    };
+
+    var footerText = culture switch
+    {
+        "en" => setting?.FooterTextEn,
+        "ru" => setting?.FooterTextRu,
+        _ => setting?.FooterTextAz
+    };
+}
 
 <footer class="tvt-footer">
 
     <div class="container">
 
-        <div class="tvt-footer-main">
+        <!-- =========================
+             FOOTER CONTENT
+             ========================= -->
 
-            <!-- Company -->
-            <div class="tvt-footer-column tvt-footer-company">
+        <div class="tvt-footer-grid">
 
-                @if (!string.IsNullOrWhiteSpace(Model.Setting?.Logo))
-                {
+            <!-- =========================
+                 BRAND
+                 ========================= -->
+
+            <div class="tvt-footer-column tvt-footer-brand-column">
+
+                <div class="tvt-footer-brand">
+
                     <a asp-controller="Home"
                        asp-action="Index"
-                       class="tvt-footer-logo">
+                       class="tvt-footer-logo-link">
 
-                        <img src="@Model.Setting.Logo"
-                             alt="@Model.Setting.CompanyName" />
+                        @if (!string.IsNullOrWhiteSpace(setting?.Logo))
+                        {
+                            <img src="@setting.Logo"
+                                 alt="@setting.CompanyName"
+                                 class="tvt-footer-logo" />
+                        }
+                        else
+                        {
+                            <span class="tvt-footer-company-name">
+                                @(setting?.CompanyName ?? "TVT")
+                            </span>
+                        }
 
                     </a>
-                }
-                else if (!string.IsNullOrWhiteSpace(Model.Setting?.CompanyName))
-                {
-                    <a asp-controller="Home"
-                       asp-action="Index"
-                       class="tvt-footer-company-name">
 
-                        @Model.Setting.CompanyName
 
-                    </a>
-                }
-
-                @if (!string.IsNullOrWhiteSpace(Model.Setting?.FooterTextAz))
-                {
-                    <div class="tvt-footer-description">
-                        @Html.Raw(Model.Setting.FooterTextAz)
-                    </div>
-                }
-
-                <div class="tvt-footer-social">
-
-                    @if (!string.IsNullOrWhiteSpace(Model.Setting?.Facebook))
+                    @if (!string.IsNullOrWhiteSpace(footerText))
                     {
-                        <a href="@Model.Setting.Facebook"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           aria-label="Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
+                        <p class="tvt-footer-description">
+                            @Html.Raw(footerText)
+                        </p>
                     }
 
-                    @if (!string.IsNullOrWhiteSpace(Model.Setting?.Instagram))
-                    {
-                        <a href="@Model.Setting.Instagram"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    }
 
-                    @if (!string.IsNullOrWhiteSpace(Model.Setting?.Youtube))
+                    @if (!string.IsNullOrWhiteSpace(setting?.Email))
                     {
-                        <a href="@Model.Setting.Youtube"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           aria-label="YouTube">
-                            <i class="fab fa-youtube"></i>
-                        </a>
-                    }
+                        <a href="mailto:@setting.Email"
+                           class="tvt-footer-brand-email">
 
-                    @if (!string.IsNullOrWhiteSpace(Model.Setting?.Telegram))
-                    {
-                        <a href="@Model.Setting.Telegram"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           aria-label="Telegram">
-                            <i class="fab fa-telegram-plane"></i>
-                        </a>
-                    }
+                            <i class="fas fa-envelope"></i>
 
-                    @if (!string.IsNullOrWhiteSpace(Model.Setting?.WhatsApp))
-                    {
-                        <a href="@Model.Setting.WhatsApp"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           aria-label="WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    }
+                            <span>
+                                @setting.Email
+                            </span>
 
-                    @if (!string.IsNullOrWhiteSpace(Model.Setting?.TikTok))
-                    {
-                        <a href="@Model.Setting.TikTok"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           aria-label="TikTok">
-                            <i class="fab fa-tiktok"></i>
                         </a>
                     }
 
@@ -105,147 +99,383 @@
             </div>
 
 
-            <!-- Contact -->
-            <div class="tvt-footer-column">
+            <!-- =========================
+                 CONTACT
+                 ========================= -->
 
-                <h4 class="tvt-footer-title">
-                    Əlaqə
-                </h4>
+            <div class="tvt-footer-column tvt-footer-accordion">
 
-                <ul class="tvt-footer-list">
+                <button type="button"
+                        class="tvt-footer-column-title tvt-footer-accordion-toggle">
 
-                    @if (!string.IsNullOrWhiteSpace(Model.Setting?.Phone1))
+                    <span>
+                        @localizer.GetLocalizedHtmlString("ContactInformation")
+                    </span>
+
+                    <i class="fas fa-chevron-down"></i>
+
+                </button>
+
+
+                <div class="tvt-footer-column-content">
+
+                    @if (!string.IsNullOrWhiteSpace(address))
                     {
-                        <li>
+                        <div class="tvt-footer-contact-item">
 
-                            <i class="fas fa-phone-alt"></i>
-
-                            <a href="@($"tel:{Model.Setting.Phone1}")">
-                                @Model.Setting.Phone1
-                            </a>
-
-                        </li>
-                    }
-
-                    @if (!string.IsNullOrWhiteSpace(Model.Setting?.Phone2))
-                    {
-                        <li>
-
-                            <i class="fas fa-phone-alt"></i>
-
-                            <a href="@($"tel:{Model.Setting.Phone2}")">
-                                @Model.Setting.Phone2
-                            </a>
-
-                        </li>
-                    }
-
-                    @if (!string.IsNullOrWhiteSpace(Model.Setting?.Email))
-                    {
-                        <li>
-
-                            <i class="fas fa-envelope"></i>
-
-                            <a href="mailto:@Model.Setting.Email">
-                                @Model.Setting.Email
-                            </a>
-
-                        </li>
-                    }
-
-                    @if (!string.IsNullOrWhiteSpace(Model.Setting?.AddressAz))
-                    {
-                        <li>
-
-                            <i class="fas fa-map-marker-alt"></i>
-
-                            <span>
-                                @Model.Setting.AddressAz
+                            <span class="tvt-footer-contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
                             </span>
 
-                        </li>
+                            <div>
+                                <span class="tvt-footer-contact-label">
+                                    @localizer.GetLocalizedHtmlString("Address")
+                                </span>
+
+                                <span class="tvt-footer-contact-value">
+                                    @address
+                                </span>
+                            </div>
+
+                        </div>
                     }
 
-                </ul>
+
+                    @if (!string.IsNullOrWhiteSpace(setting?.Phone1))
+                    {
+                        <div class="tvt-footer-contact-item">
+
+                            <span class="tvt-footer-contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </span>
+
+                            <div>
+                                <span class="tvt-footer-contact-label">
+                                    @localizer.GetLocalizedHtmlString("Phone")
+                                </span>
+
+                                <a href="tel:@setting.Phone1"
+                                   class="tvt-footer-contact-value">
+                                    @setting.Phone1
+                                </a>
+                            </div>
+
+                        </div>
+                    }
+
+
+                    @if (!string.IsNullOrWhiteSpace(setting?.Phone2))
+                    {
+                        <div class="tvt-footer-contact-item">
+
+                            <span class="tvt-footer-contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </span>
+
+                            <div>
+                                <span class="tvt-footer-contact-label">
+                                    @localizer.GetLocalizedHtmlString("Phone")
+                                </span>
+
+                                <a href="tel:@setting.Phone2"
+                                   class="tvt-footer-contact-value">
+                                    @setting.Phone2
+                                </a>
+                            </div>
+
+                        </div>
+                    }
+
+
+                    @if (!string.IsNullOrWhiteSpace(setting?.WhatsApp))
+                    {
+                        <div class="tvt-footer-contact-item">
+
+                            <span class="tvt-footer-contact-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </span>
+
+                            <div>
+                                <span class="tvt-footer-contact-label">
+                                    WhatsApp
+                                </span>
+
+                                <a href="@setting.WhatsApp"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="tvt-footer-contact-value">
+
+                                    @localizer.GetLocalizedHtmlString("ContactViaWhatsApp")
+
+                                </a>
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
 
             </div>
 
 
-            <!-- Working Hours -->
-            <div class="tvt-footer-column">
+            <!-- =========================
+                 WORKING HOURS / SOCIAL
+                 ========================= -->
 
-                <h4 class="tvt-footer-title">
-                    İş vaxtı
-                </h4>
+            <div class="tvt-footer-column tvt-footer-accordion">
 
-                @if (!string.IsNullOrWhiteSpace(Model.Setting?.WorkingHoursAz))
-                {
-                    <div class="tvt-footer-working-hours">
-                        @Html.Raw(Model.Setting.WorkingHoursAz)
-                    </div>
-                }
+                <button type="button"
+                        class="tvt-footer-column-title tvt-footer-accordion-toggle">
 
-                <a asp-controller="Contact"
-                   asp-action="Index"
-                   class="tvt-footer-contact-button">
+                    <span>
+                        @localizer.GetLocalizedHtmlString("WorkingHours")
+                    </span>
 
-                    Əlaqə səhifəsi
+                    <i class="fas fa-chevron-down"></i>
 
-                </a>
+                </button>
+
+
+                <div class="tvt-footer-column-content">
+
+                    @if (!string.IsNullOrWhiteSpace(workingHours))
+                    {
+                        <div class="tvt-footer-working-hours">
+                            @Html.Raw(workingHours)
+                        </div>
+                    }
+
+
+                    @if (!string.IsNullOrWhiteSpace(setting?.Facebook) ||
+                    !string.IsNullOrWhiteSpace(setting?.Instagram) ||
+                    !string.IsNullOrWhiteSpace(setting?.Youtube) ||
+                    !string.IsNullOrWhiteSpace(setting?.Telegram) ||
+                    !string.IsNullOrWhiteSpace(setting?.TikTok))
+                    {
+                        <div class="tvt-footer-social-title">
+                            @localizer.GetLocalizedHtmlString("SocialNetworks")
+                        </div>
+
+                        <div class="tvt-footer-social">
+
+                            @if (!string.IsNullOrWhiteSpace(setting?.Facebook))
+                            {
+                                <a href="@setting.Facebook"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   aria-label="Facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(setting?.Instagram))
+                            {
+                                <a href="@setting.Instagram"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   aria-label="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(setting?.Youtube))
+                            {
+                                <a href="@setting.Youtube"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   aria-label="YouTube">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(setting?.Telegram))
+                            {
+                                <a href="@setting.Telegram"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   aria-label="Telegram">
+                                    <i class="fab fa-telegram-plane"></i>
+                                </a>
+                            }
+
+                            @if (!string.IsNullOrWhiteSpace(setting?.TikTok))
+                            {
+                                <a href="@setting.TikTok"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   aria-label="TikTok">
+                                    <i class="fab fa-tiktok"></i>
+                                </a>
+                            }
+
+                        </div>
+                    }
+
+                </div>
 
             </div>
 
 
-            <!-- Information -->
-            <div class="tvt-footer-column">
+            <!-- =========================
+                 CATEGORIES
+                 ========================= -->
 
-                <h4 class="tvt-footer-title">
-                    Məlumat
-                </h4>
+            <div class="tvt-footer-column tvt-footer-accordion">
 
-                <ul class="tvt-footer-links">
+                <button type="button"
+                        class="tvt-footer-column-title tvt-footer-accordion-toggle">
 
-                    <li>
-                        <a asp-controller="Home"
-                           asp-action="Index">
-                            Ana səhifə
-                        </a>
-                    </li>
+                    <span>
+                        @localizer.GetLocalizedHtmlString("Categories")
+                    </span>
 
-                    <li>
-                        <a asp-controller="Contact"
-                           asp-action="Index">
-                            Əlaqə
-                        </a>
-                    </li>
+                    <i class="fas fa-chevron-down"></i>
 
-                   
+                </button>
 
-                </ul>
+
+                <div class="tvt-footer-column-content">
+
+                    <ul class="tvt-footer-links">
+
+                        @foreach (var category in categories
+                        .Where(x => x.IsActive)
+                        .Take(6))
+                        {
+                            var categoryName = culture switch
+                            {
+                                "en" => category.NameEn,
+                                "ru" => category.NameRu,
+                                _ => category.NameAz
+                            };
+
+                            var categorySlug = culture switch
+                            {
+                                "en" => category.SlugEn,
+                                "ru" => category.SlugRu,
+                                _ => category.SlugAz
+                            };
+
+                            <li>
+                                <a asp-controller="Category"
+                                   asp-action="Index"
+                                   asp-route-slug="@categorySlug">
+                                    @categoryName
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+
+                </div>
 
             </div>
 
         </div>
 
 
-        <!-- Footer Bottom -->
+        <!-- =========================
+             QUICK LINKS
+             ========================= -->
+
+        <div class="tvt-footer-quick-links">
+
+            <a asp-controller="Home"
+               asp-action="Index">
+                @localizer.GetLocalizedHtmlString("Home")
+            </a>
+
+            <a asp-controller="Search"
+               asp-action="Index">
+                @localizer.GetLocalizedHtmlString("Search")
+            </a>
+
+            <a asp-controller="Product"
+               asp-action="Index">
+                @localizer.GetLocalizedHtmlString("Products")
+            </a>
+
+            <a asp-controller="Wishlist"
+               asp-action="Index">
+                @localizer.GetLocalizedHtmlString("Wishlist")
+            </a>
+
+            <a asp-controller="Cart"
+               asp-action="Index">
+                @localizer.GetLocalizedHtmlString("Cart")
+            </a>
+
+            <a asp-controller="Contact"
+               asp-action="Index">
+                @localizer.GetLocalizedHtmlString("Contact")
+            </a>
+
+        </div>
+
+
+        <!-- =========================
+             BOTTOM
+             ========================= -->
+
         <div class="tvt-footer-bottom">
 
-            <div>
-                © 2026
-                @Model.Setting?.CompanyName.
-                Bütün hüquqlar qorunur.
-            </div>
+            <div class="tvt-footer-copyright">
 
-            <a href="https://wa.me/994505481996"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="tvt-footer-developer">
-                Created by Elmeddin Mirzeyev
-            </a>
+               
+
+                <span class="tvt-footer-separator">•</span>
+
+                <span>
+                    @(setting?.CompanyName ?? "TVT")
+                    © 2026
+                </span>
+
+                <span class="tvt-footer-separator">•</span>
+
+                <span>
+                    Created by
+                    <a href="https://wa.me/994505481996"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        Elmeddin Mirzeyev
+                    </a>
+                </span>
+
+            </div>
 
         </div>
 
     </div>
 
 </footer>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const toggles =
+            document.querySelectorAll('.tvt-footer-accordion-toggle');
+
+        toggles.forEach(function (toggle) {
+
+            toggle.addEventListener('click', function () {
+
+                if (window.innerWidth >= 768) {
+                    return;
+                }
+
+                const column =
+                    toggle.closest('.tvt-footer-accordion');
+
+                if (!column) {
+                    return;
+                }
+
+                column.classList.toggle('open');
+
+            });
+
+        });
+
+    });
+</script>

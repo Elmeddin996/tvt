@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using TVT.Business.Abstractions.Services;
+using TVT.Core.Entities;
 using TVT.Web.Models;
 using TVT.Web.ViewModels.Home;
 
@@ -14,11 +15,13 @@ public class HomeController : Controller
     private readonly IMiniSliderService _miniSliderService;
     private readonly ICategoryService _categoryService;
     private readonly IProductService _productService;
+    private readonly IMobileSliderService _mobileSliderService;
 
     public HomeController(
     ILogger<HomeController> logger,
     ISliderService sliderService,
     IMiniSliderService miniSliderService,
+    IMobileSliderService mobileSliderService,
     ICategoryService categoryService,
     IProductService productService)
     {
@@ -27,6 +30,7 @@ public class HomeController : Controller
         _miniSliderService = miniSliderService;
         _categoryService = categoryService;
         _productService = productService;
+        _mobileSliderService = mobileSliderService;
     }
 
     public async Task<IActionResult> Index()
@@ -34,6 +38,7 @@ public class HomeController : Controller
         var sliders = await _sliderService.GetActiveSlidersAsync();
 
         var miniSliders = await _miniSliderService.GetActiveAsync();
+        var mobileSliders = await _mobileSliderService.GetActiveAsync();
 
         var categories = await _categoryService.GetAllAsync();
 
@@ -43,6 +48,7 @@ public class HomeController : Controller
         {
             Sliders = sliders,
             MiniSliders = miniSliders,
+            MobileSliders = mobileSliders,
             Categories = categories,
             NewProducts = newProducts.Take(9).ToList()
         };

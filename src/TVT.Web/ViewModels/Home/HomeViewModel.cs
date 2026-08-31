@@ -1,5 +1,6 @@
 using TVT.Business.DTOs.Categories;
 using TVT.Business.DTOs.MiniSliders;
+using TVT.Business.DTOs.MobileSliders;
 using TVT.Business.DTOs.Products;
 using TVT.Business.DTOs.Sliders;
 
@@ -11,4 +12,6 @@ public class HomeViewModel
     public IReadOnlyList<MiniSliderListDto> MiniSliders { get; set; } = [];
     public IReadOnlyList<CategoryListDto> Categories { get; set; } = [];
     public IReadOnlyList<ProductListDto> NewProducts { get; set; } = [];
+    public IReadOnlyList<MobileSliderListDto> MobileSliders { get; set; }
+    = new List<MobileSliderListDto>();
 }

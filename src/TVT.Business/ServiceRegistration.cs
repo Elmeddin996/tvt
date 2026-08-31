@@ -18,6 +18,7 @@ public static class ServiceRegistration
         services.AddScoped<IBrandService, BrandService>();
         services.AddScoped<ISliderService, SliderService>();
         services.AddScoped<IMiniSliderService, MiniSliderService>();
+        services.AddScoped<IMobileSliderService, MobileSliderService>();
         services.AddScoped<IProductImageService, ProductImageService>();
         services.AddScoped<ISpecificationGroupService, SpecificationGroupService>();
         services.AddScoped<ISpecificationService, SpecificationService>();
