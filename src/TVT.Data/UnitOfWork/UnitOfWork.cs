@@ -1,5 +1,6 @@
 using TVT.Core.Abstractions.Repositories;
 using TVT.Core.Abstractions.UnitOfWork;
+using TVT.Core.Entities;
 using TVT.Data.Context;
 
 namespace TVT.Data.UnitOfWork;
@@ -11,6 +12,7 @@ public class UnitOfWork : IUnitOfWork
     public UnitOfWork(
         ApplicationDbContext context,
         IProductRepository productRepository,
+        IOrderRepository orderRepository,
         ICategoryRepository categoryRepository,
         IBrandRepository brandRepository,
         INewsRepository newsRepository,
@@ -29,6 +31,7 @@ public class UnitOfWork : IUnitOfWork
         _context = context;
 
         Products = productRepository;
+        Orders = orderRepository;
         ProductImages = productImageRepository;
         ProductSpecifications = productSpecificationRepository;
 
@@ -52,6 +55,7 @@ public class UnitOfWork : IUnitOfWork
 
     public IProductRepository Products { get; }
 
+    public IOrderRepository Orders { get; }
     public IProductImageRepository ProductImages { get; }
 
     public IProductSpecificationRepository ProductSpecifications { get; }

@@ -357,9 +357,11 @@
                             };
 
                             <li>
-                                <a asp-controller="Category"
-                                   asp-action="Index"
-                                   asp-route-slug="@categorySlug">
+                                <a href="@Url.RouteUrl("category", new
+    {
+        culture = culture,
+        slug = categorySlug
+    })">
                                     @categoryName
                                 </a>
                             </li>
@@ -390,10 +392,7 @@
                 @localizer.GetLocalizedHtmlString("Search")
             </a>
 
-            <a asp-controller="Product"
-               asp-action="Index">
-                @localizer.GetLocalizedHtmlString("Products")
-            </a>
+            
 
             <a asp-controller="Wishlist"
                asp-action="Index">
@@ -432,14 +431,30 @@
 
                 <span class="tvt-footer-separator">•</span>
 
-                <span>
+               @*  <span>
                     Created by
                     <a href="https://wa.me/994505481996"
                        target="_blank"
                        rel="noopener noreferrer">
                         Elmeddin Mirzeyev
                     </a>
-                </span>
+                </span> *@
+                <button type="button"
+                        id="tvt-dev-signature"
+                        aria-label="Developer"
+                        style="
+            right: 10px;
+            bottom: 5px;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            background: transparent;
+            cursor: default;
+            z-index: 9999;
+        ">
+                </button>
 
             </div>
 
@@ -451,6 +466,38 @@
 
 
 <script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const button = document.getElementById("tvt-dev-signature");
+
+        if (!button) {
+            return;
+        }
+
+        let clicks = 0;
+        let timer;
+
+        button.addEventListener("click", function () {
+            clicks++;
+
+            clearTimeout(timer);
+
+            timer = setTimeout(function () {
+                clicks = 0;
+            }, 1500);
+
+            if (clicks === 5) {
+                clicks = 0;
+
+                window.open(
+                    "https://wa.me/994505481996",
+                    "_blank"
+                );
+            }
+        });
+    });
+
+
     document.addEventListener('DOMContentLoaded', function () {
 
         const toggles =

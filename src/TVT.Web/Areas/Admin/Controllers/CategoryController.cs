@@ -9,7 +9,7 @@ using TVT.Core.Common.Pagination;
 namespace TVT.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class CategoryController : Controller
+public class CategoryController : BaseAdminController
 {
     private readonly ICategoryService _categoryService;
     private readonly IFileService _fileService;

@@ -7,7 +7,7 @@ using TVT.Web.Services;
 namespace TVT.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class SettingsController : Controller
+public class SettingsController : BaseAdminController
 {
     private readonly ISettingService _settingService;
     private readonly IFileService _fileService;
@@ -51,6 +51,8 @@ public class SettingsController : Controller
                 Facebook = setting.Facebook,
                 Instagram = setting.Instagram,
                 Youtube = setting.Youtube,
+                YoutubeVideo1 = setting.YoutubeVideo1,
+                YoutubeVideo2 = setting.YoutubeVideo2,
                 TikTok = setting.TikTok,
                 Telegram = setting.Telegram,
                 WhatsApp = setting.WhatsApp,

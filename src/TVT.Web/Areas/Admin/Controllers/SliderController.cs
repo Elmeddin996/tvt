@@ -8,7 +8,7 @@ using TVT.Web.Services;
 namespace TVT.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class SliderController : Controller
+public class SliderController : BaseAdminController
 {
     private readonly ISliderService _sliderService;
     private readonly IFileService _fileService;

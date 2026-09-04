@@ -30,6 +30,10 @@ public class UpdateSettingDto
 
     public string? Youtube { get; set; }
 
+    public string? YoutubeVideo1 { get; set; }
+
+    public string? YoutubeVideo2 { get; set; }
+
     public string? TikTok { get; set; }
 
     public string? Telegram { get; set; }

@@ -72,9 +72,9 @@
                                 </button>
                             </div>
 
-                            <form method="get" asp-controller="Category" asp-action="Index" class="tvt-filter-form">
+                            <form method="get"  class="tvt-filter-form">
 
-                                <input type="hidden" name="slug" value="@Context.Request.Query["slug"]" />
+                                
                                 <div class="ocf-body">
 
                                     <div class="ocf-filter-list ocf-clearfix">
@@ -171,6 +171,20 @@
 
                                             <div class="tvt-filter-content">
 
+                                                @{
+                                                    var filterMinPrice = Model.FilterOptions.MinPrice
+                                                    .ToString(CultureInfo.InvariantCulture);
+
+                                                    var filterMaxPrice = Model.FilterOptions.MaxPrice
+                                                    .ToString(CultureInfo.InvariantCulture);
+
+                                                    var selectedMinPrice =
+                                                    Context.Request.Query["minPrice"].FirstOrDefault();
+
+                                                    var selectedMaxPrice =
+                                                    Context.Request.Query["maxPrice"].FirstOrDefault();
+                                                }
+
                                                 <div class="tvt-price-inputs">
 
                                                     <div class="tvt-price-input-wrapper">
@@ -178,11 +192,11 @@
                                                                id="tvt-min-price"
                                                                name="minPrice"
                                                                class="tvt-price-input"
-                                                               min="@Model.FilterOptions.MinPrice"
-                                                               max="@Model.FilterOptions.MaxPrice"
+                                                               min="@filterMinPrice"
+                                                               max="@filterMaxPrice"
                                                                step="0.01"
-                                                               value="@Context.Request.Query["minPrice"]"
-                                                               placeholder="@Model.FilterOptions.MinPrice.ToString("0.##")" />
+                                                               value="@selectedMinPrice"
+                                                               placeholder="@filterMinPrice" />
 
                                                         <span class="tvt-price-currency">₼</span>
                                                     </div>
@@ -194,11 +208,11 @@
                                                                id="tvt-max-price"
                                                                name="maxPrice"
                                                                class="tvt-price-input"
-                                                               min="@Model.FilterOptions.MinPrice"
-                                                               max="@Model.FilterOptions.MaxPrice"
+                                                               min="@filterMinPrice"
+                                                               max="@filterMaxPrice"
                                                                step="0.01"
-                                                               value="@Context.Request.Query["maxPrice"]"
-                                                               placeholder="@Model.FilterOptions.MaxPrice.ToString("0.##")" />
+                                                               value="@selectedMaxPrice"
+                                                               placeholder="@filterMaxPrice" />
 
                                                         <span class="tvt-price-currency">₼</span>
                                                     </div>
@@ -213,18 +227,18 @@
                                                     <input type="range"
                                                            id="tvt-min-range"
                                                            class="tvt-range"
-                                                           min="@Model.FilterOptions.MinPrice"
-                                                           max="@Model.FilterOptions.MaxPrice"
+                                                           min="@filterMinPrice"
+                                                           max="@filterMaxPrice"
                                                            step="0.01"
-                                                           value="@(Context.Request.Query["minPrice"].FirstOrDefault() ?? Model.FilterOptions.MinPrice.ToString(System.Globalization.CultureInfo.InvariantCulture))" />
+                                                           value="@(selectedMinPrice ?? filterMinPrice)" />
 
                                                     <input type="range"
                                                            id="tvt-max-range"
                                                            class="tvt-range"
-                                                           min="@Model.FilterOptions.MinPrice"
-                                                           max="@Model.FilterOptions.MaxPrice"
+                                                           min="@filterMinPrice"
+                                                           max="@filterMaxPrice"
                                                            step="0.01"
-                                                           value="@(Context.Request.Query["maxPrice"].FirstOrDefault() ?? Model.FilterOptions.MaxPrice.ToString(System.Globalization.CultureInfo.InvariantCulture))" />
+                                                           value="@(selectedMaxPrice ?? filterMaxPrice)" />
 
                                                 </div>
 
@@ -371,13 +385,15 @@
                                 {
                                     <div class="col-6 col-sm-4 col-lg-3 col-xl-2 rm-category-wall-item">
 
-                                        <a asp-controller="Category"
-                                           asp-action="Index"
-                                           asp-route-slug="@(currentCulture == "en"
-                                             ? category.SlugEn
-                                             : currentCulture == "ru"
-                                                 ? category.SlugRu
-                                                 : category.SlugAz)"
+                                        <a href="@Url.RouteUrl("category", new
+{
+    culture = currentCulture,
+    slug = currentCulture == "en"
+        ? category.SlugEn
+        : currentCulture == "ru"
+            ? category.SlugRu
+            : category.SlugAz
+})"
                                            class="d-flex flex-column justify-content-between align-items-center text-center">
                                             @if (!string.IsNullOrWhiteSpace(category.Image))
                                             {

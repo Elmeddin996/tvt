@@ -35,11 +35,17 @@ public class CategoryRepository : GenericRepository<Category>, ICategoryReposito
             .AnyAsync(x => x.ParentId == categoryId && x.IsActive);
     }
 
-    public async Task<Category?> GetBySlugAsync(string slug)
+    public async Task<Category?> GetBySlugAsync(string slug, string culture)
     {
         return await DbSet
             .AsNoTracking()
-            .FirstOrDefaultAsync(c => c.IsActive && (c.SlugAz == slug || c.SlugEn == slug || c.SlugRu == slug));
+            .FirstOrDefaultAsync(c =>
+                c.IsActive &&
+                (
+                    (culture == "az-AZ" && c.SlugAz == slug) ||
+                    (culture == "en-US" && c.SlugEn == slug) ||
+                    (culture == "ru-RU" && c.SlugRu == slug)
+                ));
     }
 
     public override async Task<List<Category>> GetAllAsync()

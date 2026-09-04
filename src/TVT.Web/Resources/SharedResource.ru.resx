@@ -345,4 +345,28 @@
   <data name="ContactViaWhatsApp" xml:space="preserve">
     <value>Связаться через WhatsApp</value>
   </data>
+  <data name="BackToHome" xml:space="preserve">
+    <value>Вернуться на главную</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Имя</value>
+  </data>
+  <data name="OrderCompletedTitle" xml:space="preserve">
+    <value>Ваш заказ успешно принят</value>
+  </data>
+  <data name="OrderContactMessage" xml:space="preserve">
+    <value>Наши сотрудники свяжутся с вами в ближайшее время.</value>
+  </data>
+  <data name="OrderedProducts" xml:space="preserve">
+    <value>Заказанные товары</value>
+  </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>Номер заказа</value>
+  </data>
+  <data name="OrderReceivedMessage" xml:space="preserve">
+    <value>Ваш заказ успешно принят.</value>
+  </data>
+  <data name="OrderTotal" xml:space="preserve">
+    <value>Общая сумма заказа</value>
+  </data>
 </root>

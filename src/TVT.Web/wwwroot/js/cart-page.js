@@ -420,6 +420,205 @@ document.addEventListener('DOMContentLoaded', async function () {
     );
 
 
+    /* =========================
+   Checkout
+   ========================= */
+
+    const checkoutButton =
+        document.getElementById('checkout-button');
+
+    const checkoutFormContainer =
+        document.getElementById('checkout-form-container');
+
+    const submitOrderButton =
+        document.getElementById('submit-order-button');
+
+
+    if (submitOrderButton) {
+
+        submitOrderButton.addEventListener('click', async function () {
+
+            const customerName =
+                document.getElementById('checkout-customer-name').value.trim();
+
+            const phone =
+                document.getElementById('checkout-phone').value.trim();
+
+            const email =
+                document.getElementById('checkout-email').value.trim();
+
+            const address =
+                document.getElementById('checkout-address').value.trim();
+
+            const errorElement =
+                document.getElementById('checkout-error');
+
+
+            errorElement.style.display = 'none';
+            errorElement.textContent = '';
+
+
+            if (!customerName || !phone || !address) {
+
+                errorElement.textContent =
+                    'Please fill in all required fields.';
+
+                errorElement.style.display = 'block';
+
+                return;
+            }
+
+
+            const phoneDigits =
+                phone.replace(/\D/g, '');
+
+            if (phoneDigits.length < 10) {
+
+                errorElement.textContent =
+                    'Please enter a valid phone number. Minimum 10 digits required.';
+
+                errorElement.style.display = 'block';
+
+                return;
+            }
+
+
+            if (email) {
+
+                const emailRegex =
+                    /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                if (!emailRegex.test(email)) {
+
+                    errorElement.textContent =
+                        'Please enter a valid email address.';
+
+                    errorElement.style.display = 'block';
+
+                    return;
+                }
+
+            }
+
+
+            const cart = getCart();
+
+
+            if (!cart.length) {
+
+                errorElement.textContent =
+                    'Your cart is empty.';
+
+                errorElement.style.display = 'block';
+
+                return;
+            }
+
+
+            const orderData = {
+
+                customerName: customerName,
+
+                phone: phone,
+
+                email: email || null,
+
+                address: address,
+
+                items: cart.map(function (item) {
+
+                    return {
+                        productId: item.productId,
+                        quantity: item.quantity
+                    };
+
+                })
+
+            };
+
+
+            submitOrderButton.disabled = true;
+
+            submitOrderButton.textContent = 'Processing...';
+
+
+            try {
+
+                const response = await fetch('/Order/Create', {
+
+                    method: 'POST',
+
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+
+                    body: JSON.stringify(orderData)
+
+                });
+
+
+                const result = await response.json();
+
+
+                if (!response.ok || !result.success) {
+
+                    throw new Error(
+                        result.message || 'Order could not be created.'
+                    );
+
+                }
+
+
+                localStorage.removeItem('tvt_cart');
+
+
+                if (typeof tvtCart !== 'undefined') {
+                    tvtCart.updateHeader();
+                }
+
+
+                window.location.href =
+                    '/Order/Success?id=' + result.orderId;
+
+            }
+            catch (error) {
+
+                console.error(error);
+
+                errorElement.textContent =
+                    error.message || 'Order could not be created.';
+
+                errorElement.style.display = 'block';
+
+                submitOrderButton.disabled = false;
+
+                submitOrderButton.textContent =
+                    'Checkout';
+
+            }
+
+        });
+
+    }
+
+
+    if (checkoutButton) {
+
+        checkoutButton.addEventListener('click', function () {
+
+            checkoutFormContainer.style.display = 'block';
+
+            checkoutFormContainer.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+        });
+
+    }
+
+
+
     /* Initial load */
 
     await loadCart();

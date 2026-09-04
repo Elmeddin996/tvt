@@ -345,4 +345,28 @@
   <data name="ContactViaWhatsApp" xml:space="preserve">
     <value>WhatsApp ilə əlaqə</value>
   </data>
+  <data name="BackToHome" xml:space="preserve">
+    <value>Ana səhifəyə qayıt</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Ad</value>
+  </data>
+  <data name="OrderCompletedTitle" xml:space="preserve">
+    <value>Sifarişiniz uğurla qəbul edildi</value>
+  </data>
+  <data name="OrderContactMessage" xml:space="preserve">
+    <value>Əməkdaşlarımız sizinlə tezliklə əlaqə saxlayacaq.</value>
+  </data>
+  <data name="OrderedProducts" xml:space="preserve">
+    <value>Sifariş etdiyiniz məhsullar</value>
+  </data>
+  <data name="OrderNumber" xml:space="preserve">
+    <value>Sifariş nömrəsi</value>
+  </data>
+  <data name="OrderReceivedMessage" xml:space="preserve">
+    <value>Sifarişiniz uğurla qəbul edildi.</value>
+  </data>
+  <data name="OrderTotal" xml:space="preserve">
+    <value>Sifarişin ümumi məbləği</value>
+  </data>
 </root>

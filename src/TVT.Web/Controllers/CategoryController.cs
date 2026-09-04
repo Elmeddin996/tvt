@@ -21,6 +21,7 @@ public class CategoryController : Controller
 
     [HttpGet]
     public async Task<IActionResult> Index(
+        string culture,
         string slug,
         int page = 1,
         int pageSize = 20,
@@ -29,7 +30,19 @@ public class CategoryController : Controller
         decimal? maxPrice = null,
         bool? inStock = null)
     {
-        if (string.IsNullOrWhiteSpace(slug))
+        if (string.IsNullOrWhiteSpace(culture) ||
+            string.IsNullOrWhiteSpace(slug))
+            return NotFound();
+
+        var cultureCode = culture.ToLowerInvariant() switch
+        {
+            "az" => "az-AZ",
+            "en" => "en-US",
+            "ru" => "ru-RU",
+            _ => null
+        };
+
+        if (cultureCode == null)
             return NotFound();
 
         if (page < 1)
@@ -38,7 +51,10 @@ public class CategoryController : Controller
         if (pageSize <= 0)
             pageSize = 20;
 
-        var category = await _categoryService.GetBySlugAsync(slug);
+        var category =
+            await _categoryService.GetBySlugAsync(
+                slug,
+                cultureCode);
 
         if (category is null)
             return NotFound();

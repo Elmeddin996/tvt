@@ -6,7 +6,7 @@ using TVT.Web.Areas.Admin.ViewModels.SpecificationGroups;
 namespace TVT.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class SpecificationGroupController : Controller
+public class SpecificationGroupController : BaseAdminController
 {
     private readonly ISpecificationGroupService _specificationGroupService;
     private readonly ICategoryService _categoryService;

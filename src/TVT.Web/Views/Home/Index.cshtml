@@ -7,8 +7,61 @@
 @{
     var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 }
-
 <style>
+    .tvt-home-videos {
+        width: 100%;
+        margin: 40px 0;
+    }
+
+    .tvt-home-videos-row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -10px;
+    }
+
+    .tvt-home-video-item {
+        width: 50%;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .tvt-home-iframe-video {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .tvt-home-youtube-host {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+    }
+
+    .tvt-home-video-iframe {
+        width: 100%;
+        height: 100%;
+        display: block;
+        border: 0;
+    }
+
+    @@media (max-width: 767px) {
+
+        .tvt-home-videos-row {
+            margin: 0;
+        }
+
+        .tvt-home-video-item {
+            width: 100%;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+            .tvt-home-video-item:last-child {
+                margin-bottom: 0;
+            }
+    }
+
+
     .tvt-new-products .rm-module-col {
         flex: 0 0 50%;
         max-width: 50%;
@@ -27,6 +80,7 @@
             max-width: 25%;
         }
     }
+
 
     .tvt-home-mobile-slider {
         display: none;
@@ -60,7 +114,6 @@
             }
     }
 </style>
-
 <div id="common-home" class="container">
     <div class="row row-padding-top tvt-home-desktop-sliders">
         <div class="col-xl-9">
@@ -281,17 +334,28 @@
 
         <div class="row no-gutters">
 
+            @{
+                var categoryCulture = currentCulture switch
+                {
+                    "en" => "en",
+                    "ru" => "ru",
+                    _ => "az"
+                };
+            }
+
             @foreach (var category in Model.Categories.Take(12))
             {
                 <div class="col-6 col-sm-3 col-lg-2 rm-category-wall-item">
 
-                    <a asp-controller="Category"
-                       asp-action="Detail"
-                       asp-route-slug="@(currentCulture == "en"
+                    <a href="@Url.RouteUrl("category", new
+{
+    culture = categoryCulture,
+    slug = currentCulture == "en"
         ? category.SlugEn
         : currentCulture == "ru"
             ? category.SlugRu
-            : category.SlugAz)"
+            : category.SlugAz
+})"
                        class="d-flex flex-column justify-content-between align-items-center text-center">
 
                         <span class="rm-category-wall-item-image">
@@ -392,5 +456,91 @@
             </div>
 
         </section>
+    }
+
+
+    @if (!string.IsNullOrWhiteSpace(Model.YoutubeVideo1) ||
+    !string.IsNullOrWhiteSpace(Model.YoutubeVideo2))
+    {
+        <section class="tvt-home-videos">
+
+            <div class="tvt-home-videos-row">
+
+                @if (!string.IsNullOrWhiteSpace(Model.YoutubeVideo1))
+                {
+                    <div class="tvt-home-video-item">
+
+                        <div class="tvt-home-iframe-video">
+                            <div class="tvt-home-youtube-host">
+
+                                <iframe src="@GetYoutubeEmbedUrl(Model.YoutubeVideo1)"
+                                        loading="lazy"
+                                        class="tvt-home-video-iframe"
+                                        title="YouTube video player"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerpolicy="strict-origin-when-cross-origin"
+                                        allowfullscreen>
+                                </iframe>
+
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+                @if (!string.IsNullOrWhiteSpace(Model.YoutubeVideo2))
+                {
+                    <div class="tvt-home-video-item">
+
+                        <div class="tvt-home-iframe-video">
+                            <div class="tvt-home-youtube-host">
+
+                                <iframe src="@GetYoutubeEmbedUrl(Model.YoutubeVideo2)"
+                                        loading="lazy"
+                                        class="tvt-home-video-iframe"
+                                        title="YouTube video player"
+                                        frameborder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                        referrerpolicy="strict-origin-when-cross-origin"
+                                        allowfullscreen>
+                                </iframe>
+
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+        </section>
+    }
+
+    @functions {
+        private string GetYoutubeEmbedUrl(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+                return "";
+
+            if (url.Contains("youtu.be/"))
+            {
+                var id = url.Split("youtu.be/")[1].Split('?', '&')[0];
+                return $"https://www.youtube.com/embed/{id}";
+            }
+
+            if (url.Contains("watch?v="))
+            {
+                var id = url.Split("watch?v=")[1].Split('&')[0];
+                return $"https://www.youtube.com/embed/{id}";
+            }
+
+            if (url.Contains("/embed/"))
+            {
+                return url;
+            }
+
+            return url;
+        }
     }
 </div>

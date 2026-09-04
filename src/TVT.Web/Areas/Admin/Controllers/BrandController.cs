@@ -8,7 +8,7 @@ using TVT.Web.Services;
 namespace TVT.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class BrandController : Controller
+public class BrandController : BaseAdminController
 {
     private readonly IBrandService _brandService;
     private readonly IFileService _fileService;

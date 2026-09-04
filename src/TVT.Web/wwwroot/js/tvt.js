@@ -127,35 +127,27 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-
     const resetButton = document.getElementById("tvt-reset-filters");
 
-    if (resetButton) {
-        resetButton.addEventListener("click", function () {
-
-            const form = document.querySelector(".tvt-filter-form");
-
-            if (!form) {
-                return;
-            }
-
-            const slugInput = form.querySelector('input[name="slug"]');
-
-            if (!slugInput || !slugInput.value) {
-                return;
-            }
-
-            const url = new URL(
-                window.location.origin + "/Category"
-            );
-
-            url.searchParams.set("slug", slugInput.value);
-
-            window.location.href = url.toString();
-        });
+    if (!resetButton) {
+        return;
     }
 
+    resetButton.addEventListener("click", function () {
+        const url = new URL(window.location.href);
+
+        // Filterləri təmizlə
+        url.searchParams.delete("brandIds");
+        url.searchParams.delete("minPrice");
+        url.searchParams.delete("maxPrice");
+        url.searchParams.delete("inStock");
+        url.searchParams.delete("page");
+        url.searchParams.delete("pageSize");
+
+        window.location.href = url.toString();
+    });
 });
+
 
 document.addEventListener("DOMContentLoaded", function () {
 

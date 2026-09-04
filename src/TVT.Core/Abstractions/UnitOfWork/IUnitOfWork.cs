@@ -5,6 +5,7 @@ namespace TVT.Core.Abstractions.UnitOfWork;
 public interface IUnitOfWork
 {
     IProductRepository Products { get; }
+    IOrderRepository Orders { get; }
     ICategoryRepository Categories { get; }
     IBrandRepository Brands { get; }
     INewsRepository News { get; }

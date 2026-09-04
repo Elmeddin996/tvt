@@ -13,5 +13,8 @@ public class HomeViewModel
     public IReadOnlyList<CategoryListDto> Categories { get; set; } = [];
     public IReadOnlyList<ProductListDto> NewProducts { get; set; } = [];
     public IReadOnlyList<MobileSliderListDto> MobileSliders { get; set; }
-    = new List<MobileSliderListDto>();
+        = new List<MobileSliderListDto>();
+
+    public string? YoutubeVideo1 { get; set; }
+    public string? YoutubeVideo2 { get; set; }
 }

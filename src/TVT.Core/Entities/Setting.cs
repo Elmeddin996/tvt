@@ -31,6 +31,10 @@ public class Setting : BaseEntity
     public string? Telegram { get; set; }
     public string? WhatsApp { get; set; }
 
+    // Homepage Videos
+    public string? YoutubeVideo1 { get; set; }
+    public string? YoutubeVideo2 { get; set; }
+
     // Google Map
     public string? GoogleMap { get; set; }
 

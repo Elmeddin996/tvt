@@ -14,6 +14,7 @@ public static class ServiceRegistration
         services.AddValidatorsFromAssembly(typeof(ServiceRegistration).Assembly);
 
         services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<IOrderService, OrderService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IBrandService, BrandService>();
         services.AddScoped<ISliderService, SliderService>();

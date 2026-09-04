@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace TVT.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class CustomerController : Controller
+public class CustomerController : BaseAdminController
 {
     public IActionResult Index()
     {

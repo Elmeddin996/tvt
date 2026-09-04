@@ -1,0 +1,473 @@
+@model TVT.Business.DTOs.Orders.OrderDetailDto
+
+@using TVT.Web.Services
+
+@inject LocService localizer
+
+@{
+    ViewData["Title"] =
+        localizer.GetLocalizedHtmlString("OrderCompletedTitle");
+}
+
+<div class="container py-5">
+
+    <div class="tvt-order-success">
+
+        <!-- Success Header -->
+
+        <div class="tvt-order-success-header text-center">
+
+            <div class="tvt-success-icon-wrapper">
+
+                <div class="tvt-success-icon"></div>
+
+            </div>
+
+            <h2 class="tvt-order-success-title">
+                @localizer.GetLocalizedHtmlString("OrderCompletedTitle")
+            </h2>
+
+            <p class="tvt-order-success-message">
+                @localizer.GetLocalizedHtmlString("OrderContactMessage")
+            </p>
+
+            <div class="tvt-order-number">
+
+                <span>
+                    @localizer.GetLocalizedHtmlString("OrderNumber")
+                </span>
+
+                <strong>
+                    #@Model.Id
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- Ordered Products -->
+
+        <div class="card border-0 shadow-sm mb-4">
+
+            <div class="card-body">
+
+                <h4 class="mb-4">
+                    @localizer.GetLocalizedHtmlString("OrderedProducts")
+                </h4>
+
+
+                <div class="tvt-order-products">
+
+                    @foreach (var item in Model.Items)
+                    {
+                        <div class="tvt-order-product">
+
+                            <div class="tvt-order-product-info">
+
+                                <div class="tvt-order-product-name">
+                                    @item.ProductName
+                                </div>
+
+                                <div class="text-muted small">
+                                    @localizer.GetLocalizedHtmlString("ProductCode"):
+                                    @item.ProductCode
+                                </div>
+
+                            </div>
+
+
+                            <div class="tvt-order-product-quantity">
+
+                                <span class="text-muted">
+                                    @localizer.GetLocalizedHtmlString("Quantity"):
+                                </span>
+
+                                <strong>
+                                    @item.Quantity
+                                </strong>
+
+                            </div>
+
+
+                            <div class="tvt-order-product-price">
+
+                                <div>
+                                    @item.UnitPrice.ToString("0.00") ₼
+                                </div>
+
+                                <strong>
+                                    @item.TotalPrice.ToString("0.00") ₼
+                                </strong>
+
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Order Total -->
+
+        <div class="card border-0 shadow-sm mb-4">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <span class="fs-5">
+                        @localizer.GetLocalizedHtmlString("OrderTotal")
+                    </span>
+
+                    <strong class="fs-4">
+                        @Model.TotalAmount.ToString("0.00") ₼
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Customer Information -->
+
+        <div class="card border-0 shadow-sm mb-4">
+
+            <div class="card-body">
+
+                <h4 class="mb-4">
+                    @localizer.GetLocalizedHtmlString("ContactInformation")
+                </h4>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <div class="text-muted small">
+                            @localizer.GetLocalizedHtmlString("Name")
+                        </div>
+
+                        <div class="fw-semibold">
+                            @Model.CustomerName
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                        <div class="text-muted small">
+                            @localizer.GetLocalizedHtmlString("Phone")
+                        </div>
+
+                        <div class="fw-semibold">
+                            @Model.Phone
+                        </div>
+
+                    </div>
+
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Email))
+                    {
+                        <div class="col-md-6 mb-3">
+
+                            <div class="text-muted small">
+                                @localizer.GetLocalizedHtmlString("Email")
+                            </div>
+
+                            <div class="fw-semibold">
+                                @Model.Email
+                            </div>
+
+                        </div>
+                    }
+
+
+                    <div class="col-12 mb-2">
+
+                        <div class="text-muted small">
+                            @localizer.GetLocalizedHtmlString("Address")
+                        </div>
+
+                        <div class="fw-semibold">
+                            @Model.Address
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Back Home -->
+
+        <div class="text-center mt-4">
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="btn btn-primary px-4">
+
+                @localizer.GetLocalizedHtmlString("BackToHome")
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+
+    .tvt-order-success {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+
+    /* =========================
+           SUCCESS HEADER
+        ========================= */
+
+    .tvt-order-success-header {
+        margin-bottom: 55px;
+    }
+
+
+    .tvt-success-icon-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+
+
+    /* White outer circle */
+
+    .tvt-success-icon {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        background: #ffffff;
+        border: 2px solid #e9ecef;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+
+        /* Green inner circle */
+
+        .tvt-success-icon::before {
+            content: "";
+            position: absolute;
+            width: 62px;
+            height: 62px;
+            border-radius: 50%;
+            background: #198754;
+        }
+
+
+        /* White check mark */
+
+        .tvt-success-icon::after {
+            content: "";
+            position: absolute;
+            width: 22px;
+            height: 12px;
+            border-left: 4px solid #ffffff;
+            border-bottom: 4px solid #ffffff;
+            transform: rotate(-45deg);
+            top: 33px;
+            left: 33px;
+            z-index: 2;
+        }
+
+
+    .tvt-order-success-title {
+        margin: 0 0 14px;
+        font-size: 30px;
+        font-weight: 700;
+        letter-spacing: -0.4px;
+    }
+
+
+    .tvt-order-success-message {
+        max-width: 600px;
+        margin: 0 auto 25px;
+        color: #6c757d;
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+
+    /* =========================
+           ORDER NUMBER
+        ========================= */
+
+    .tvt-order-number {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        padding: 12px 20px;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        background: #f8f9fa;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    }
+
+
+        .tvt-order-number span {
+            color: #6c757d;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+
+        .tvt-order-number strong {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+
+    /* =========================
+           ORDER PRODUCTS
+        ========================= */
+
+    .tvt-order-product {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: 30px;
+        align-items: center;
+        padding: 18px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+
+        .tvt-order-product:last-child {
+            border-bottom: 0;
+        }
+
+
+    .tvt-order-product-name {
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+
+    .tvt-order-product-quantity {
+        white-space: nowrap;
+    }
+
+
+    .tvt-order-product-price {
+        min-width: 120px;
+        text-align: right;
+    }
+
+
+        .tvt-order-product-price strong {
+            display: block;
+            margin-top: 4px;
+        }
+
+
+    /* =========================
+           MOBILE
+        ========================= */
+
+    @@media (max-width: 767px) {
+
+        .tvt-order-success {
+            width: 100%;
+        }
+
+
+        .tvt-order-success-header {
+            margin-bottom: 40px;
+        }
+
+
+        .tvt-success-icon {
+            width: 78px;
+            height: 78px;
+        }
+
+
+            .tvt-success-icon::before {
+                width: 54px;
+                height: 54px;
+            }
+
+
+            .tvt-success-icon::after {
+                width: 20px;
+                height: 11px;
+                top: 29px;
+                left: 29px;
+                border-left-width: 4px;
+                border-bottom-width: 4px;
+            }
+
+
+        .tvt-order-success-title {
+            font-size: 24px;
+        }
+
+
+        .tvt-order-success-message {
+            font-size: 15px;
+        }
+
+
+        .tvt-order-number {
+            padding: 11px 16px;
+            gap: 10px;
+        }
+
+
+            .tvt-order-number span {
+                font-size: 11px;
+            }
+
+
+            .tvt-order-number strong {
+                font-size: 17px;
+            }
+
+
+        .tvt-order-product {
+            grid-template-columns: 1fr auto;
+            gap: 10px 15px;
+        }
+
+
+        .tvt-order-product-info {
+            grid-column: 1 / -1;
+        }
+
+
+        .tvt-order-product-quantity {
+            grid-column: 1;
+        }
+
+
+        .tvt-order-product-price {
+            grid-column: 2;
+            text-align: right;
+        }
+    }
+
+</style>

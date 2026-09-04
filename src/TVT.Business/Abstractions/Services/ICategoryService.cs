@@ -7,7 +7,9 @@ public interface ICategoryService
 {
     Task<List<CategoryListDto>> GetAllAsync();
     Task<CategoryDetailDto?> GetByIdAsync(int id);
-    Task<CategoryDetailDto?> GetBySlugAsync(string slug);
+    Task<CategoryDetailDto?> GetBySlugAsync(
+    string slug,
+    string culture);
     Task<int> CreateAsync(CreateCategoryDto dto);
     Task UpdateAsync(UpdateCategoryDto dto);
     Task DeleteAsync(int id);

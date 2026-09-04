@@ -1465,3 +1465,322 @@ a.knopka:active {
         border-color: #0067ad;
         box-shadow: 0 0 0 1px #0067ad;
     }
+
+
+
+/* =========================================================
+   TVT SUPPORT WIDGET
+   AEM STYLE
+   ========================================================= */
+
+.tvt-support-widget {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SUPPORT MENU
+   ========================================================= */
+
+.tvt-support-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    margin-bottom: 12px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(12px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+}
+
+
+/* OPEN */
+
+.tvt-support-widget.open .tvt-support-menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   SUPPORT ITEM
+   ========================================================= */
+
+.tvt-support-item {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    flex: 0 0 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    text-decoration: none;
+    color: #ffffff;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+
+    .tvt-support-item:hover {
+        transform: scale(1.04);
+    }
+
+
+/* =========================================================
+   PHONE
+   ========================================================= */
+
+.tvt-support-call {
+    background: rgb(66, 124, 212);
+}
+
+
+/* =========================================================
+   WHATSAPP
+   ========================================================= */
+
+.tvt-support-whatsapp {
+    background: rgb(0, 230, 118);
+}
+
+
+/* =========================================================
+   MENU SVG ICON
+   ========================================================= */
+
+.tvt-support-icon {
+    width: 28px;
+    height: 28px;
+    display: block;
+    flex-shrink: 0;
+    fill: currentColor;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.tvt-support-label {
+    position: absolute;
+    right: 82px;
+    top: 50%;
+    transform: translateY(-50%) translateX(8px);
+    white-space: nowrap;
+    padding: 8px 12px;
+    background: #ffffff;
+    color: #222222;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    z-index: 2;
+}
+
+
+.tvt-support-item:hover .tvt-support-label {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
+}
+
+
+/* =========================================================
+   MAIN BUTTON
+   ========================================================= */
+
+.tvt-support-main {
+    position: relative;
+    width: 70px !important;
+    height: 70px !important;
+    min-width: 70px;
+    min-height: 70px;
+    flex: 0 0 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    background: #427cd4;
+    color: #ffffff;
+    box-sizing: border-box;
+    cursor: pointer;
+    box-shadow: none;
+    transition: background-color 0.25s ease, transform 0.2s ease;
+}
+
+
+    .tvt-support-main:hover {
+        transform: scale(1.04);
+    }
+
+
+    /* =========================================================
+   MAIN SVG
+   ========================================================= */
+
+    .tvt-support-main svg {
+        width: 38px;
+        height: 38px;
+        display: block;
+        fill: currentColor;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+
+/* =========================================================
+   CHAT ICON
+   ========================================================= */
+
+.tvt-support-main-chat {
+    width: 38px !important;
+    height: 38px !important;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+
+/* =========================================================
+   CLOSE / X ICON
+   ========================================================= */
+
+.tvt-support-main-close {
+    display: none;
+    width: 32px;
+    height: 32px;
+    opacity: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+}
+
+
+/* =========================================================
+   OPEN STATE
+   ========================================================= */
+
+.tvt-support-widget.open .tvt-support-main-chat {
+    display: none;
+}
+
+
+.tvt-support-widget.open .tvt-support-main-close {
+    display: block;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+
+/* =========================================================
+   PULSE
+   ========================================================= */
+
+.tvt-support-main {
+    animation: tvt-support-pulse 2s infinite;
+}
+
+
+.tvt-support-widget.open .tvt-support-main {
+    animation: none;
+}
+
+
+@keyframes tvt-support-pulse {
+
+    0% {
+        box-shadow: 0 0 0 0 rgba(66, 124, 212, 0.35);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(66, 124, 212, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(66, 124, 212, 0);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+    .tvt-support-widget {
+        right: 16px;
+        bottom: 16px;
+    }
+
+
+    .tvt-support-menu {
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+
+    .tvt-support-item {
+        width: 60px;
+        height: 60px;
+        flex-basis: 60px;
+    }
+
+
+    .tvt-support-main {
+        width: 60px !important;
+        height: 60px !important;
+        min-width: 60px;
+        min-height: 60px;
+        flex-basis: 60px;
+    }
+
+
+    .tvt-support-icon {
+        width: 25px;
+        height: 25px;
+    }
+
+
+    .tvt-support-main svg {
+        width: 29px;
+        height: 29px;
+    }
+
+
+    .tvt-support-label {
+        right: 70px;
+        padding: 7px 10px;
+        font-size: 13px;
+    }
+}

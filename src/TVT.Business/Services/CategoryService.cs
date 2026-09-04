@@ -47,9 +47,12 @@ public class CategoryService : ICategoryService
         return _mapper.Map<CategoryDetailDto>(category);
     }
 
-    public async Task<CategoryDetailDto?> GetBySlugAsync(string slug)
+    public async Task<CategoryDetailDto?> GetBySlugAsync(
+     string slug,
+     string culture)
     {
-        var category = await _unitOfWork.Categories.GetBySlugAsync(slug);
+        var category = await _unitOfWork.Categories
+            .GetBySlugAsync(slug, culture);
 
         if (category == null)
             return null;

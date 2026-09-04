@@ -45,13 +45,15 @@
 
                     <div class="d-flex align-items-center justify-content-between">
 
-                        <a asp-controller="Category"
-                           asp-action="Index"
-                           asp-route-slug="@(currentCulture == "en"
+                        <a href="@Url.RouteUrl("category", new
+{
+    culture = currentCulture,
+    slug = currentCulture == "en"
         ? parent.SlugEn
         : currentCulture == "ru"
             ? parent.SlugRu
-            : parent.SlugAz)"
+            : parent.SlugAz
+})"
                            class="rm-menu-list-item-link d-flex align-items-center">
 
                             @if (!string.IsNullOrWhiteSpace(parent.Icon))
@@ -101,13 +103,15 @@
 
                                         <div class="d-flex align-items-center justify-content-between">
 
-                                            <a asp-controller="Category"
-                                               asp-action="Index"
-                                               asp-route-slug="@(currentCulture == "en"
+                                            <a href="@Url.RouteUrl("category", new
+{
+    culture = currentCulture,
+    slug = currentCulture == "en"
         ? child.SlugEn
         : currentCulture == "ru"
             ? child.SlugRu
-            : child.SlugAz)"
+            : child.SlugAz
+})"
                                                class="rm-menu-list-item-link d-flex align-items-center">
 
                                                 <span class="rm-menu-list-item-name">
@@ -140,13 +144,15 @@
 
                                                             <div class="d-flex align-items-center justify-content-between">
 
-                                                                <a asp-controller="Category"
-                                                                   asp-action="Index"
-                                                                   asp-route-slug="@(currentCulture == "en"
+                                                                <a href="@Url.RouteUrl("category", new
+{
+    culture = currentCulture,
+    slug = currentCulture == "en"
         ? subChild.SlugEn
         : currentCulture == "ru"
             ? subChild.SlugRu
-            : subChild.SlugAz)"
+            : subChild.SlugAz
+})"
                                                                    class="rm-menu-list-item-link d-flex align-items-center">
 
                                                                     <span class="rm-menu-list-item-name">
@@ -385,13 +391,15 @@
 
                     <div class="tvt-mobile-menu-item">
 
-                        <a asp-controller="Category"
-                           asp-action="Index"
-                           asp-route-slug="@(currentCulture == "en"
+                        <a href="@Url.RouteUrl("category", new
+{
+    culture = currentCulture,
+    slug = currentCulture == "en"
         ? parent.SlugEn
         : currentCulture == "ru"
             ? parent.SlugRu
-            : parent.SlugAz)"
+            : parent.SlugAz
+})"
                            class="tvt-mobile-menu-link">
 
                             @if (!string.IsNullOrWhiteSpace(parent.Icon))
@@ -470,13 +478,15 @@
 
                         <div class="tvt-mobile-menu-item">
 
-                            <a asp-controller="Category"
-                               asp-action="Index"
-                               asp-route-slug="@(currentCulture == "en"
+                            <a href="@Url.RouteUrl("category", new
+{
+    culture = currentCulture,
+    slug = currentCulture == "en"
         ? child.SlugEn
         : currentCulture == "ru"
             ? child.SlugRu
-            : child.SlugAz)"
+            : child.SlugAz
+})"
                                class="tvt-mobile-menu-link">
 
                                 <span>
@@ -538,13 +548,15 @@
                     {
                         <div class="tvt-mobile-menu-item">
 
-                            <a asp-controller="Category"
-                               asp-action="Index"
-                               asp-route-slug="@(currentCulture == "en"
+                            <a href="@Url.RouteUrl("category", new
+{
+    culture = currentCulture,
+    slug = currentCulture == "en"
         ? subChild.SlugEn
         : currentCulture == "ru"
             ? subChild.SlugRu
-            : subChild.SlugAz)"
+            : subChild.SlugAz
+})"
                                class="tvt-mobile-menu-link">
 
                                 <span>

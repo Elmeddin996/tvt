@@ -22,6 +22,7 @@ public static class ServiceRegistration
 
         // Repositories
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IBrandRepository, BrandRepository>();
         services.AddScoped<INewsRepository, NewsRepository>();

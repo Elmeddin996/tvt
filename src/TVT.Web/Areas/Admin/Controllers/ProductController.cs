@@ -11,7 +11,7 @@ using TVT.Web.Services;
 namespace TVT.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-public class ProductController : Controller
+public class ProductController : BaseAdminController
 {
     private readonly IProductService _productService;
     private readonly ICategoryService _categoryService;

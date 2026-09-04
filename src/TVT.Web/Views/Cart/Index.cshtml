@@ -350,10 +350,88 @@
 
                 <div class="tvt-cart-summary-actions">
 
-                    <a href="/"
-                       class="tvt-cart-continue">
-                        @localizer.GetLocalizedHtmlString("ContinueShopping")
-                    </a>
+                    <button type="button"
+                            id="checkout-button"
+                            class="tvt-cart-continue">
+                        @localizer.GetLocalizedHtmlString("Checkout")
+                    </button>
+
+                </div>
+
+                <div id="checkout-form-container" style="display:none; margin-top:30px;">
+
+                    <div class="card border-0 shadow-sm">
+
+                        <div class="card-body">
+
+                            <h4 class="mb-4">
+                                @localizer.GetLocalizedHtmlString("Checkout")
+                            </h4>
+
+                            <div class="mb-3">
+                                <label for="checkout-customer-name" class="form-label">
+                                    @localizer.GetLocalizedHtmlString("Name")
+                                </label>
+
+                                <input type="text"
+                                       id="checkout-customer-name"
+                                       class="form-control"
+                                       maxlength="150"
+                                       required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="checkout-phone" class="form-label">
+                                    @localizer.GetLocalizedHtmlString("Phone")
+                                </label>
+
+                                <input type="tel"
+                                       id="checkout-phone"
+                                       class="form-control"
+                                       placeholder="0501234567"
+                                       maxlength="15"
+                                       inputmode="numeric"
+                                       required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="checkout-email" class="form-label">
+                                    @localizer.GetLocalizedHtmlString("Email")
+                                </label>
+
+                                <input type="email"
+                                       id="checkout-email"
+                                       class="form-control"
+                                       maxlength="150"
+                                       placeholder="example@gmail.com">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="checkout-address" class="form-label">
+                                    @localizer.GetLocalizedHtmlString("Address")
+                                </label>
+
+                                <textarea id="checkout-address"
+                                          class="form-control"
+                                          rows="4"
+                                          maxlength="500"
+                                          required></textarea>
+                            </div>
+
+                            <div id="checkout-error"
+                                 class="alert alert-danger"
+                                 style="display:none;">
+                            </div>
+
+                            <button type="button"
+                                    id="submit-order-button"
+                                    class="btn btn-primary">
+                                @localizer.GetLocalizedHtmlString("Checkout")
+                            </button>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
