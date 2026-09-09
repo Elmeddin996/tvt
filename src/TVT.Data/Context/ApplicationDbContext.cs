@@ -41,6 +41,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Order> Orders { get; set; }
 
     public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<Branch> Branches { get; set; }
 
     public DbSet<CategorySpecificationGroup> CategorySpecificationGroups => Set<CategorySpecificationGroup>();
 

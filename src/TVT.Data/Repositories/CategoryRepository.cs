@@ -8,7 +8,8 @@ namespace TVT.Data.Repositories;
 
 public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
 {
-    public CategoryRepository(ApplicationDbContext context) : base(context)
+    public CategoryRepository(ApplicationDbContext context)
+        : base(context)
     {
     }
 
@@ -17,6 +18,8 @@ public class CategoryRepository : GenericRepository<Category>, ICategoryReposito
         return await DbSet
             .AsNoTracking()
             .Where(x => x.IsActive)
+            .OrderBy(x => x.DisplayOrder)
+            .ThenBy(x => x.NameAz)
             .ToListAsync();
     }
 
@@ -24,7 +27,11 @@ public class CategoryRepository : GenericRepository<Category>, ICategoryReposito
     {
         return await DbSet
             .AsNoTracking()
-            .Where(c => c.ParentId == parentId && c.IsActive)
+            .Where(c =>
+                c.ParentId == parentId &&
+                c.IsActive)
+            .OrderBy(c => c.DisplayOrder)
+            .ThenBy(c => c.NameAz)
             .ToListAsync();
     }
 
@@ -32,19 +39,44 @@ public class CategoryRepository : GenericRepository<Category>, ICategoryReposito
     {
         return await DbSet
             .AsNoTracking()
-            .AnyAsync(x => x.ParentId == categoryId && x.IsActive);
+            .AnyAsync(x =>
+                x.ParentId == categoryId &&
+                x.IsActive);
     }
 
-    public async Task<Category?> GetBySlugAsync(string slug, string culture)
+    public async Task<Category?> GetBySlugAsync(
+        string slug,
+        string culture)
     {
+        if (string.IsNullOrWhiteSpace(slug))
+        {
+            return null;
+        }
+
+        slug = slug.Trim();
+
+        var normalizedSlug = slug.ToLower();
+
         return await DbSet
             .AsNoTracking()
             .FirstOrDefaultAsync(c =>
                 c.IsActive &&
                 (
-                    (culture == "az-AZ" && c.SlugAz == slug) ||
-                    (culture == "en-US" && c.SlugEn == slug) ||
-                    (culture == "ru-RU" && c.SlugRu == slug)
+                    (culture == "az-AZ" &&
+                     c.SlugAz != null &&
+                     c.SlugAz.ToLower() == normalizedSlug)
+
+                    ||
+
+                    (culture == "en-US" &&
+                     c.SlugEn != null &&
+                     c.SlugEn.ToLower() == normalizedSlug)
+
+                    ||
+
+                    (culture == "ru-RU" &&
+                     c.SlugRu != null &&
+                     c.SlugRu.ToLower() == normalizedSlug)
                 ));
     }
 
@@ -53,11 +85,13 @@ public class CategoryRepository : GenericRepository<Category>, ICategoryReposito
         return await DbSet
             .AsNoTracking()
             .Include(x => x.Parent)
-            .OrderBy(x => x.NameAz)
+            .OrderBy(x => x.DisplayOrder)
+            .ThenBy(x => x.NameAz)
             .ToListAsync();
     }
 
-    public async Task<PagedResult<Category>> GetPagedAsync(PagedRequest request)
+    public async Task<PagedResult<Category>> GetPagedAsync(
+        PagedRequest request)
     {
         var query = DbSet
             .AsNoTracking()
@@ -66,7 +100,8 @@ public class CategoryRepository : GenericRepository<Category>, ICategoryReposito
 
         if (!string.IsNullOrWhiteSpace(request.Search))
         {
-            var search = request.Search.Trim().ToLower();
+            var search =
+                request.Search.Trim().ToLower();
 
             query = query.Where(x =>
                 x.NameAz.ToLower().Contains(search) ||
@@ -77,10 +112,12 @@ public class CategoryRepository : GenericRepository<Category>, ICategoryReposito
                 x.SlugRu.ToLower().Contains(search));
         }
 
-        var totalCount = await query.CountAsync();
+        var totalCount =
+            await query.CountAsync();
 
         var items = await query
-            .OrderBy(x => x.NameAz)
+            .OrderBy(x => x.DisplayOrder)
+            .ThenBy(x => x.NameAz)
             .Skip((request.Page - 1) * 20)
             .Take(20)
             .ToListAsync();

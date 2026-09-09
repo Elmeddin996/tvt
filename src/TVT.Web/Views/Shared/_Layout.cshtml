@@ -107,8 +107,9 @@
     <!-- Favicon -->
     <link rel="icon"
           type="image/png"
-          href="~/images/favicon.png"
-          asp-append-version="true" />
+          href="@(string.IsNullOrWhiteSpace(setting?.Logo)
+          ? Url.Content("~/images/favicon.png")
+          : setting.Logo)" />
 
     <!-- Canonical -->
     <link rel="canonical"
@@ -171,6 +172,28 @@
             }
         }
     </script>
+
+    <style>
+        .tvt-top-contact {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            color: inherit;
+            transition: opacity 0.2s ease;
+        }
+
+            .tvt-top-contact i {
+                font-size: 15px;
+            }
+
+            .tvt-top-contact:hover {
+                text-decoration: none;
+                opacity: 0.75;
+            }
+    </style>
 
 </head>
 <body>
@@ -582,8 +605,40 @@
 
     <nav id="top" class="top-nav d-none d-lg-block">
 
-        <div class="container d-flex justify-content-end">
+        <div class="container d-flex justify-content-between">
 
+            <div class="top-nav-account-links list-unstyled d-flex align-items-center">
+
+                <!-- Contact -->
+                <a asp-controller="Contact"
+                   asp-action="Index"
+                   class="tvt-top-contact">
+
+                    <i class="fas fa-phone-alt"></i>
+
+                    <span>
+                        @localizer.GetLocalizedHtmlString("Contact")
+                    </span>
+
+                </a>
+
+
+                <!-- Branches -->
+                <a asp-controller="Branch"
+                   asp-action="Index"
+                   class="tvt-top-contact ml-4">
+
+                    <i class="fas fa-store"></i>
+
+                    <span>
+                        @localizer.GetLocalizedHtmlString("Branches")
+                    </span>
+
+                </a>
+
+            </div>
+
+          
             <div class="top-nav-account-links list-unstyled d-flex">
 
                 <div id="oct_desktop_language"

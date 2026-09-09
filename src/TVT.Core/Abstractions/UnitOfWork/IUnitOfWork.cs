@@ -8,6 +8,7 @@ public interface IUnitOfWork
     IOrderRepository Orders { get; }
     ICategoryRepository Categories { get; }
     IBrandRepository Brands { get; }
+    IBranchRepository Branches { get; }
     INewsRepository News { get; }
     IPageRepository Pages { get; }
     ISliderRepository Sliders { get; }

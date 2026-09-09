@@ -4,11 +4,13 @@
 
 @inject ISettingService SettingService
 @inject ICategoryService CategoryService
+@inject IBranchService BranchService
 @inject LocService localizer
 
 @{
     var setting = await SettingService.GetAsync();
     var categories = await CategoryService.GetAllAsync();
+    var branches = await BranchService.GetAllActiveAsync();
 
     var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 
@@ -33,7 +35,6 @@
         _ => setting?.FooterTextAz
     };
 }
-
 <footer class="tvt-footer">
 
     <div class="container">
@@ -119,22 +120,41 @@
 
                 <div class="tvt-footer-column-content">
 
-                    @if (!string.IsNullOrWhiteSpace(address))
+                    @if (branches.Any())
                     {
                         <div class="tvt-footer-contact-item">
 
                             <span class="tvt-footer-contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
+                                <i class="fas fa-store"></i>
                             </span>
 
-                            <div>
+                            <div style="width:100%;">
+
                                 <span class="tvt-footer-contact-label">
-                                    @localizer.GetLocalizedHtmlString("Address")
+                                    @localizer.GetLocalizedHtmlString("Branches")
                                 </span>
 
-                                <span class="tvt-footer-contact-value">
-                                    @address
-                                </span>
+                                <div class="tvt-footer-contact-value">
+
+                                    @foreach (var branch in branches.OrderBy(x => x.DisplayOrder).ThenBy(x => x.NameAz))
+                                    {
+                                        var branchAddress = culture switch
+                                        {
+                                            "en" => branch.AddressEn,
+                                            "ru" => branch.AddressRu,
+                                            _ => branch.AddressAz
+                                        };
+
+                                        if (!string.IsNullOrWhiteSpace(branchAddress))
+                                        {
+                                            <div style="margin-bottom:8px;">
+                                                @branchAddress
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+
                             </div>
 
                         </div>
@@ -187,32 +207,7 @@
                     }
 
 
-                    @if (!string.IsNullOrWhiteSpace(setting?.WhatsApp))
-                    {
-                        <div class="tvt-footer-contact-item">
-
-                            <span class="tvt-footer-contact-icon">
-                                <i class="fab fa-whatsapp"></i>
-                            </span>
-
-                            <div>
-                                <span class="tvt-footer-contact-label">
-                                    WhatsApp
-                                </span>
-
-                                <a href="@setting.WhatsApp"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="tvt-footer-contact-value">
-
-                                    @localizer.GetLocalizedHtmlString("ContactViaWhatsApp")
-
-                                </a>
-                            </div>
-
-                        </div>
-                    }
-
+                 
                 </div>
 
             </div>
@@ -311,8 +306,35 @@
                         </div>
                     }
 
-                </div>
 
+                </div>
+                <br/>
+
+                    @if (!string.IsNullOrWhiteSpace(setting?.WhatsApp))
+                    {
+                        <div class="tvt-footer-contact-item">
+
+                            <span class="tvt-footer-contact-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </span>
+
+                            <div>
+                                <span class="tvt-footer-contact-label">
+                                    WhatsApp
+                                </span>
+
+                                <a href="@setting.WhatsApp"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   class="tvt-footer-contact-value">
+
+                                    @localizer.GetLocalizedHtmlString("ContactViaWhatsApp")
+
+                                </a>
+                            </div>
+
+                        </div>
+                    }
             </div>
 
 

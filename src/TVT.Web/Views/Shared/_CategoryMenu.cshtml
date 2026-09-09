@@ -281,6 +281,51 @@
 
                 </a>
 
+                <!-- Contact -->
+                <a asp-controller="Contact"
+                   asp-action="Index"
+                   class="tvt-mobile-menu-link tvt-mobile-menu-contact-link"
+                   style="padding-left:16px;">
+
+                    <span class="tvt-mobile-menu-contact-icon"
+                          style="display:flex; align-items:center; justify-content:center; width:24px; height:24px; flex:0 0 24px; margin-right:12px; background:rgb(0, 103, 173); border-radius:2px;">
+
+                        <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--mobile-contacts-icon"
+                             alt="@localizer.GetLocalizedHtmlString("Contact")"
+                             width="20"
+                             height="20"
+                             style="filter: brightness(0) invert(1);" />
+
+                    </span>
+
+                    <span class="tvt-mobile-menu-contact-text">
+                        @localizer.GetLocalizedHtmlString("Contact")
+                    </span>
+
+                </a>
+
+
+                <!-- Branches -->
+                <a asp-controller="Branch"
+                   asp-action="Index"
+                   class="tvt-mobile-menu-link tvt-mobile-menu-contact-link"
+                   style="padding-left:16px;">
+
+                    <span class="tvt-mobile-menu-contact-icon"
+                          style="display:flex; align-items:center; justify-content:center; width:24px; height:24px; flex:0 0 24px; margin-right:12px; background:rgb(0, 103, 173); border-radius:2px;">
+
+                        <i class="fas fa-store"
+                           style="color:#fff; font-size:14px;">
+                        </i>
+
+                    </span>
+
+                    <span class="tvt-mobile-menu-contact-text">
+                        @localizer.GetLocalizedHtmlString("Branches")
+                    </span>
+
+                </a>
+
                 <div class="tvt-mobile-language-switcher d-flex justify-content-center align-items-center">
 
                     <!-- Azərbaycan -->

@@ -8,6 +8,8 @@ public class CategoryListDto
 
     public string? ParentName { get; set; }
 
+    public int DisplayOrder { get; set; }
+
     public string NameAz { get; set; } = null!;
 
     public string NameEn { get; set; } = null!;
@@ -21,6 +23,7 @@ public class CategoryListDto
     public string? Image { get; set; }
 
     public string? Icon { get; set; }
+
     public bool IsActive { get; set; }
 
     public DateTime CreatedDate { get; set; }

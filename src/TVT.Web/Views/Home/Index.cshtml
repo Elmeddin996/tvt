@@ -1,12 +1,12 @@
-@model TVT.Web.ViewModels.Home.HomeViewModel
+    @model TVT.Web.ViewModels.Home.HomeViewModel
 
 
-@using System.Globalization
-@using TVT.Web.Services
+    @using System.Globalization
+    @using TVT.Web.Services
 
-@{
-    var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-}
+    @{
+        var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    }
 <style>
     .tvt-home-videos {
         width: 100%;
@@ -44,6 +44,11 @@
         border: 0;
     }
 
+
+    /* =========================================================
+           MOBILE VIDEOS
+           ========================================================= */
+
     @@media (max-width: 767px) {
 
         .tvt-home-videos-row {
@@ -62,25 +67,49 @@
     }
 
 
+    /* =========================================================
+           NEW PRODUCTS
+           ========================================================= */
+
     .tvt-new-products .rm-module-col {
         flex: 0 0 50%;
         max-width: 50%;
     }
 
+
+    /* Mobile product image area */
+    @@media (max-width: 767px) {
+
+        .tvt-new-products .rm-module-img {
+            min-height: 140px !important;
+            height: 140px !important;
+        }
+    }
+
+
+    /* Tablet / Desktop */
     @@media (min-width: 768px) {
+
         .tvt-new-products .rm-module-col {
             flex: 0 0 33.333333%;
             max-width: 33.333333%;
         }
     }
 
+
+    /* Large Desktop */
     @@media (min-width: 1200px) {
+
         .tvt-new-products .rm-module-col {
             flex: 0 0 25%;
             max-width: 25%;
         }
     }
 
+
+    /* =========================================================
+           MOBILE HOME SLIDER
+           ========================================================= */
 
     .tvt-home-mobile-slider {
         display: none;
@@ -114,433 +143,434 @@
             }
     }
 </style>
-<div id="common-home" class="container">
-    <div class="row row-padding-top tvt-home-desktop-sliders">
-        <div class="col-xl-9">
-            <div id="ocdbanner-46" class="ocdbanner">
 
-                <div class="banner-group group-grid">
-                    <div class="respgrid respgrid-1" data-group="1" data-gutter="30">
+    <div id="common-home" class="container">
+        <div class="row row-padding-top tvt-home-desktop-sliders">
+            <div class="col-xl-9">
+                <div id="ocdbanner-46" class="ocdbanner">
 
-                        <div class="item-grid item-grid-1" data-colspan="12" data-rowspan="6">
-                            <div class="type-slider">
-                                <div id="slider-1-1" class="splide slider-splide-1">
-                                    <div class="splide__track">
-                                        <div class="splide__list">
+                    <div class="banner-group group-grid">
+                        <div class="respgrid respgrid-1" data-group="1" data-gutter="30">
 
-                                            @foreach (var slider in Model.Sliders)
-                                            {
-                                                <div class="splide__slide item-slide">
+                            <div class="item-grid item-grid-1" data-colspan="12" data-rowspan="6">
+                                <div class="type-slider">
+                                    <div id="slider-1-1" class="splide slider-splide-1">
+                                        <div class="splide__track">
+                                            <div class="splide__list">
 
-                                                    @if (!string.IsNullOrWhiteSpace(slider.TitleAz))
-                                                    {
-                                                        <a href="@slider.ButtonLink">
+                                                @foreach (var slider in Model.Sliders)
+                                                {
+                                                    <div class="splide__slide item-slide">
+
+                                                        @if (!string.IsNullOrWhiteSpace(slider.TitleAz))
+                                                        {
+                                                            <a href="@slider.ButtonLink">
+                                                                <img src="@slider.Image"
+                                                                     title="@slider.TitleAz"
+                                                                     alt="@slider.DescriptionAz"
+                                                                     class="img-responsive" />
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
                                                             <img src="@slider.Image"
                                                                  title="@slider.TitleAz"
                                                                  alt="@slider.DescriptionAz"
                                                                  class="img-responsive" />
-                                                        </a>
-                                                    }
-                                                    else
-                                                    {
-                                                        <img src="@slider.Image"
-                                                             title="@slider.TitleAz"
-                                                             alt="@slider.DescriptionAz"
-                                                             class="img-responsive" />
-                                                    }
+                                                        }
 
-                                                </div>
-                                            }
+                                                    </div>
+                                                }
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-
                     </div>
-                </div>
 
-                <script>
-                    var settings = {
-                        gutter: "30px",
-                        itemclass: "#ocdbanner-46 .respgrid-1 .item-grid",
-                        breakpoints: {
-                            "*": {
-                                range: "*",
-                                options: {
-                                    column: 12
+                    <script>
+                        var settings = {
+                            gutter: "30px",
+                            itemclass: "#ocdbanner-46 .respgrid-1 .item-grid",
+                            breakpoints: {
+                                "*": {
+                                    range: "*",
+                                    options: {
+                                        column: 12
+                                    }
                                 }
                             }
-                        }
-                    };
+                        };
 
-                    respgrid("#ocdbanner-46 .respgrid-1", settings);
-                </script>
+                        respgrid("#ocdbanner-46 .respgrid-1", settings);
+                    </script>
 
-                <script>
-                    new Splide("#ocdbanner-46 #slider-1-1", {
-                        rewind: true,
-                        type: "loop",
-                        perPage: 1,
-                        autoplay: true,
-                        interval: 3000
-                    }).mount();
-                </script>
+                    <script>
+                        new Splide("#ocdbanner-46 #slider-1-1", {
+                            rewind: true,
+                            type: "loop",
+                            perPage: 1,
+                            autoplay: true,
+                            interval: 3000
+                        }).mount();
+                    </script>
 
+                </div>
             </div>
-        </div>
-        <div class="col-xl-3">
-            <div id="ocdbanner-82" class="ocdbanner">
+            <div class="col-xl-3">
+                <div id="ocdbanner-82" class="ocdbanner">
 
-                <div class="banner-group group-bootstrap" data-group-rows="1">
-                    <div class="row">
+                    <div class="banner-group group-bootstrap" data-group-rows="1">
+                        <div class="row">
 
-                        <div class="item-banner col-sm-12">
-                            <div class="type-slider">
-                                <div id="slider-1-1" class="splide slider-splide-1">
-                                    <div class="splide__track">
-                                        <div class="splide__list">
+                            <div class="item-banner col-sm-12">
+                                <div class="type-slider">
+                                    <div id="slider-1-1" class="splide slider-splide-1">
+                                        <div class="splide__track">
+                                            <div class="splide__list">
 
-                                            @foreach (var miniSlider in Model.MiniSliders)
-                                            {
-                                                <div class="splide__slide item-slide">
+                                                @foreach (var miniSlider in Model.MiniSliders)
+                                                {
+                                                    <div class="splide__slide item-slide">
 
-                                                    @if (!string.IsNullOrWhiteSpace(miniSlider.Link))
-                                                    {
-                                                        <a href="@miniSlider.Link">
+                                                        @if (!string.IsNullOrWhiteSpace(miniSlider.Link))
+                                                        {
+                                                            <a href="@miniSlider.Link">
+                                                                <img src="@miniSlider.Image"
+                                                                     title=""
+                                                                     alt=""
+                                                                     class="img-responsive" />
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
                                                             <img src="@miniSlider.Image"
                                                                  title=""
                                                                  alt=""
                                                                  class="img-responsive" />
-                                                        </a>
-                                                    }
-                                                    else
-                                                    {
-                                                        <img src="@miniSlider.Image"
-                                                             title=""
-                                                             alt=""
-                                                             class="img-responsive" />
-                                                    }
+                                                        }
 
-                                                </div>
-                                            }
+                                                    </div>
+                                                }
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
-
                     </div>
+
+                    <script>
+                        new Splide("#ocdbanner-82 #slider-1-1", {
+                            rewind: true,
+                            type: "loop",
+                            perPage: 1,
+                            autoplay: true,
+                            interval: 3000
+                        }).mount();
+                    </script>
+
                 </div>
-
-                <script>
-                    new Splide("#ocdbanner-82 #slider-1-1", {
-                        rewind: true,
-                        type: "loop",
-                        perPage: 1,
-                        autoplay: true,
-                        interval: 3000
-                    }).mount();
-                </script>
-
             </div>
         </div>
-    </div>
-    <div class="tvt-home-mobile-slider">
+        <div class="tvt-home-mobile-slider">
 
-        @if (Model.MobileSliders != null &&
-        Model.MobileSliders.Any())
-        {
-            <div id="tvt-mobile-home-slider"
-                 class="splide">
+            @if (Model.MobileSliders != null &&
+            Model.MobileSliders.Any())
+            {
+                <div id="tvt-mobile-home-slider"
+                     class="splide">
 
-                <div class="splide__track">
+                    <div class="splide__track">
 
-                    <ul class="splide__list">
+                        <ul class="splide__list">
 
-                        @foreach (var mobileSlider in Model.MobileSliders)
-                        {
-                            <li class="splide__slide">
+                            @foreach (var mobileSlider in Model.MobileSliders)
+                            {
+                                <li class="splide__slide">
 
-                                @if (!string.IsNullOrWhiteSpace(mobileSlider.Link))
-                                {
-                                    <a href="@mobileSlider.Link">
+                                    @if (!string.IsNullOrWhiteSpace(mobileSlider.Link))
+                                    {
+                                        <a href="@mobileSlider.Link">
 
+                                            <img src="@mobileSlider.Image"
+                                                 alt=""
+                                                 loading="lazy"
+                                                 class="img-responsive" />
+
+                                        </a>
+                                    }
+                                    else
+                                    {
                                         <img src="@mobileSlider.Image"
                                              alt=""
                                              loading="lazy"
                                              class="img-responsive" />
+                                    }
 
-                                    </a>
-                                }
-                                else
-                                {
-                                    <img src="@mobileSlider.Image"
-                                         alt=""
-                                         loading="lazy"
-                                         class="img-responsive" />
-                                }
+                                </li>
+                            }
 
-                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+
+                        const mobileHomeSlider =
+                            document.getElementById('tvt-mobile-home-slider');
+
+                        if (mobileHomeSlider &&
+                            typeof Splide !== 'undefined') {
+
+                            new Splide(mobileHomeSlider, {
+                                rewind: true,
+                                type: 'loop',
+                                perPage: 1,
+                                perMove: 1,
+                                autoplay: true,
+                                interval: 3000,
+                                arrows: true,
+                                pagination: true
+                            }).mount();
+
                         }
 
-                    </ul>
-
-                </div>
-
-            </div>
-
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-
-                    const mobileHomeSlider =
-                        document.getElementById('tvt-mobile-home-slider');
-
-                    if (mobileHomeSlider &&
-                        typeof Splide !== 'undefined') {
-
-                        new Splide(mobileHomeSlider, {
-                            rewind: true,
-                            type: 'loop',
-                            perPage: 1,
-                            perMove: 1,
-                            autoplay: true,
-                            interval: 3000,
-                            arrows: true,
-                            pagination: true
-                        }).mount();
-
-                    }
-
-                });
-            </script>
-        }
-
-    </div>
-    <div class="rm-category-wall">
-
-        <div class="row row-padding-top">
-
-            <div class="col-12 rm-module-header">
-                <span>
-                    @localizer.GetLocalizedHtmlString("PopularCategories")
-                </span>
-            </div>
-           
-
-        </div>
-
-        <div class="row no-gutters">
-
-            @{
-                var categoryCulture = currentCulture switch
-                {
-                    "en" => "en",
-                    "ru" => "ru",
-                    _ => "az"
-                };
-            }
-
-            @foreach (var category in Model.Categories.Take(12))
-            {
-                <div class="col-6 col-sm-3 col-lg-2 rm-category-wall-item">
-
-                    <a href="@Url.RouteUrl("category", new
-{
-    culture = categoryCulture,
-    slug = currentCulture == "en"
-        ? category.SlugEn
-        : currentCulture == "ru"
-            ? category.SlugRu
-            : category.SlugAz
-})"
-                       class="d-flex flex-column justify-content-between align-items-center text-center">
-
-                        <span class="rm-category-wall-item-image">
-
-                            @if (!string.IsNullOrWhiteSpace(category.Image))
-                            {
-                                <img src="@category.Image"
-                                     alt="@(currentCulture == "en"
-            ? category.NameEn
-            : currentCulture == "ru"
-                ? category.NameRu
-                : category.NameAz)"
-                                     title="@(currentCulture == "en"
-              ? category.NameEn
-              : currentCulture == "ru"
-                  ? category.NameRu
-                  : category.NameAz)"
-                                     width="95"
-                                     height="95"
-                                     loading="lazy" />
-                            }
-                            else
-                            {
-                                <span class="rm-category-wall-item-placeholder">
-                                    <i class="fas fa-folder-open"></i>
-                                </span>
-                            }
-
-                        </span>
-
-                        <span>
-                            @(currentCulture == "en"
-                                ? category.NameEn
-                                : currentCulture == "ru"
-                                ? category.NameRu
-                                : category.NameAz)
-                        </span>
-
-                    </a>
-
-                </div>
+                    });
+                </script>
             }
 
         </div>
-
-
-        <!-- Mobile catalog button -->
-
-       @*  <div class="row mt-3 d-md-none">
-
-            <div class="col-12 text-center">
-
-                <button type="button"
-                        class="rm-btn primary rm-footer-catalog-btn w-100 mb-0"
-                        onclick="rmSidebar('Menyu', 'menu', 1);">
-
-                    <span class="rm-btn-icon">
-
-                        <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--footer-catalog-icon"
-                             alt=""
-                             width="14"
-                             height="14" />
-
-                    </span>
-
-                    <span class="rm-btn-text">
-                        Məhsul kataloqu
-                    </span>
-
-                </button>
-
-            </div>
-
-        </div> *@
-
-    </div>
-
-    @if (Model.NewProducts.Any())
-    {
-        <section class="tvt-new-products">
+        <div class="rm-category-wall">
 
             <div class="row row-padding-top">
+
                 <div class="col-12 rm-module-header">
                     <span>
-                        @localizer.GetLocalizedHtmlString("NewArrivals")
+                        @localizer.GetLocalizedHtmlString("PopularCategories")
                     </span>
                 </div>
+           
+
             </div>
 
             <div class="row no-gutters">
 
-                @foreach (var product in Model.NewProducts)
-                {
-                    <partial name="_ProductCardGrid"
-                             model="product" />
+                @{
+                    var categoryCulture = currentCulture switch
+                    {
+                        "en" => "en",
+                        "ru" => "ru",
+                        _ => "az"
+                    };
                 }
 
-            </div>
+                @foreach (var category in Model.Categories.Take(12))
+                {
+                    <div class="col-6 col-sm-3 col-lg-2 rm-category-wall-item">
 
-        </section>
-    }
-
-
-    @if (!string.IsNullOrWhiteSpace(Model.YoutubeVideo1) ||
-    !string.IsNullOrWhiteSpace(Model.YoutubeVideo2))
+                        <a href="@Url.RouteUrl("category", new
     {
-        <section class="tvt-home-videos">
+        culture = categoryCulture,
+        slug = currentCulture == "en"
+            ? category.SlugEn
+            : currentCulture == "ru"
+                ? category.SlugRu
+                : category.SlugAz
+    })"
+                           class="d-flex flex-column justify-content-between align-items-center text-center">
 
-            <div class="tvt-home-videos-row">
+                            <span class="rm-category-wall-item-image">
 
-                @if (!string.IsNullOrWhiteSpace(Model.YoutubeVideo1))
-                {
-                    <div class="tvt-home-video-item">
+                                @if (!string.IsNullOrWhiteSpace(category.Image))
+                                {
+                                    <img src="@category.Image"
+                                         alt="@(currentCulture == "en"
+                ? category.NameEn
+                : currentCulture == "ru"
+                    ? category.NameRu
+                    : category.NameAz)"
+                                         title="@(currentCulture == "en"
+                  ? category.NameEn
+                  : currentCulture == "ru"
+                      ? category.NameRu
+                      : category.NameAz)"
+                                         width="95"
+                                         height="95"
+                                         loading="lazy" />
+                                }
+                                else
+                                {
+                                    <span class="rm-category-wall-item-placeholder">
+                                        <i class="fas fa-folder-open"></i>
+                                    </span>
+                                }
 
-                        <div class="tvt-home-iframe-video">
-                            <div class="tvt-home-youtube-host">
+                            </span>
 
-                                <iframe src="@GetYoutubeEmbedUrl(Model.YoutubeVideo1)"
-                                        loading="lazy"
-                                        class="tvt-home-video-iframe"
-                                        title="YouTube video player"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        referrerpolicy="strict-origin-when-cross-origin"
-                                        allowfullscreen>
-                                </iframe>
+                            <span>
+                                @(currentCulture == "en"
+                                    ? category.NameEn
+                                    : currentCulture == "ru"
+                                    ? category.NameRu
+                                    : category.NameAz)
+                            </span>
 
-                            </div>
-                        </div>
-
-                    </div>
-                }
-
-                @if (!string.IsNullOrWhiteSpace(Model.YoutubeVideo2))
-                {
-                    <div class="tvt-home-video-item">
-
-                        <div class="tvt-home-iframe-video">
-                            <div class="tvt-home-youtube-host">
-
-                                <iframe src="@GetYoutubeEmbedUrl(Model.YoutubeVideo2)"
-                                        loading="lazy"
-                                        class="tvt-home-video-iframe"
-                                        title="YouTube video player"
-                                        frameborder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        referrerpolicy="strict-origin-when-cross-origin"
-                                        allowfullscreen>
-                                </iframe>
-
-                            </div>
-                        </div>
+                        </a>
 
                     </div>
                 }
 
             </div>
 
-        </section>
-    }
 
-    @functions {
-        private string GetYoutubeEmbedUrl(string url)
+            <!-- Mobile catalog button -->
+
+           @*  <div class="row mt-3 d-md-none">
+
+                <div class="col-12 text-center">
+
+                    <button type="button"
+                            class="rm-btn primary rm-footer-catalog-btn w-100 mb-0"
+                            onclick="rmSidebar('Menyu', 'menu', 1);">
+
+                        <span class="rm-btn-icon">
+
+                            <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--footer-catalog-icon"
+                                 alt=""
+                                 width="14"
+                                 height="14" />
+
+                        </span>
+
+                        <span class="rm-btn-text">
+                            Məhsul kataloqu
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div> *@
+
+        </div>
+
+        @if (Model.NewProducts.Any())
         {
-            if (string.IsNullOrWhiteSpace(url))
-                return "";
+            <section class="tvt-new-products">
 
-            if (url.Contains("youtu.be/"))
-            {
-                var id = url.Split("youtu.be/")[1].Split('?', '&')[0];
-                return $"https://www.youtube.com/embed/{id}";
-            }
+                <div class="row row-padding-top">
+                    <div class="col-12 rm-module-header">
+                        <span>
+                            @localizer.GetLocalizedHtmlString("NewArrivals")
+                        </span>
+                    </div>
+                </div>
 
-            if (url.Contains("watch?v="))
-            {
-                var id = url.Split("watch?v=")[1].Split('&')[0];
-                return $"https://www.youtube.com/embed/{id}";
-            }
+                <div class="row no-gutters">
 
-            if (url.Contains("/embed/"))
+                    @foreach (var product in Model.NewProducts)
+                    {
+                        <partial name="_ProductCardGrid"
+                                 model="product" />
+                    }
+
+                </div>
+
+            </section>
+        }
+
+
+        @if (!string.IsNullOrWhiteSpace(Model.YoutubeVideo1) ||
+        !string.IsNullOrWhiteSpace(Model.YoutubeVideo2))
+        {
+            <section class="tvt-home-videos">
+
+                <div class="tvt-home-videos-row">
+
+                    @if (!string.IsNullOrWhiteSpace(Model.YoutubeVideo1))
+                    {
+                        <div class="tvt-home-video-item">
+
+                            <div class="tvt-home-iframe-video">
+                                <div class="tvt-home-youtube-host">
+
+                                    <iframe src="@GetYoutubeEmbedUrl(Model.YoutubeVideo1)"
+                                            loading="lazy"
+                                            class="tvt-home-video-iframe"
+                                            title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerpolicy="strict-origin-when-cross-origin"
+                                            allowfullscreen>
+                                    </iframe>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+
+                    @if (!string.IsNullOrWhiteSpace(Model.YoutubeVideo2))
+                    {
+                        <div class="tvt-home-video-item">
+
+                            <div class="tvt-home-iframe-video">
+                                <div class="tvt-home-youtube-host">
+
+                                    <iframe src="@GetYoutubeEmbedUrl(Model.YoutubeVideo2)"
+                                            loading="lazy"
+                                            class="tvt-home-video-iframe"
+                                            title="YouTube video player"
+                                            frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerpolicy="strict-origin-when-cross-origin"
+                                            allowfullscreen>
+                                    </iframe>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+
+            </section>
+        }
+
+        @functions {
+            private string GetYoutubeEmbedUrl(string url)
             {
+                if (string.IsNullOrWhiteSpace(url))
+                    return "";
+
+                if (url.Contains("youtu.be/"))
+                {
+                    var id = url.Split("youtu.be/")[1].Split('?', '&')[0];
+                    return $"https://www.youtube.com/embed/{id}";
+                }
+
+                if (url.Contains("watch?v="))
+                {
+                    var id = url.Split("watch?v=")[1].Split('&')[0];
+                    return $"https://www.youtube.com/embed/{id}";
+                }
+
+                if (url.Contains("/embed/"))
+                {
+                    return url;
+                }
+
                 return url;
             }
-
-            return url;
         }
-    }
-</div>
+    </div>

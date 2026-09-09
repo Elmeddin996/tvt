@@ -6,6 +6,8 @@ public class CategoryDetailDto
 
     public int? ParentId { get; set; }
 
+    public int DisplayOrder { get; set; }
+
     public string NameAz { get; set; } = null!;
     public string NameEn { get; set; } = null!;
     public string NameRu { get; set; } = null!;

@@ -15,8 +15,8 @@ public class CategoryController : BaseAdminController
     private readonly IFileService _fileService;
 
     public CategoryController(
-     ICategoryService categoryService,
-     IFileService fileService)
+        ICategoryService categoryService,
+        IFileService fileService)
     {
         _categoryService = categoryService;
         _fileService = fileService;
@@ -32,7 +32,8 @@ public class CategoryController : BaseAdminController
             Search = search
         };
 
-        var categories = await _categoryService.GetPagedAsync(request);
+        var categories =
+            await _categoryService.GetPagedAsync(request);
 
         ViewBag.Search = search;
 
@@ -46,7 +47,8 @@ public class CategoryController : BaseAdminController
 
         var model = new CreateCategoryViewModel
         {
-            ParentCategories = await GetParentCategorySelectListAsync()
+            ParentCategories =
+                await GetParentCategorySelectListAsync()
         };
 
         return View(model);
@@ -54,12 +56,14 @@ public class CategoryController : BaseAdminController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(CreateCategoryViewModel model)
+    public async Task<IActionResult> Create(
+        CreateCategoryViewModel model)
     {
         if (!ModelState.IsValid)
         {
             model.ParentCategories =
-                await GetParentCategorySelectListAsync(model.Category.ParentId);
+                await GetParentCategorySelectListAsync(
+                    model.Category.ParentId);
 
             return View(model);
         }
@@ -77,12 +81,14 @@ public class CategoryController : BaseAdminController
                     uploadResult.ErrorMessage!);
 
                 model.ParentCategories =
-                    await GetParentCategorySelectListAsync(model.Category.ParentId);
+                    await GetParentCategorySelectListAsync(
+                        model.Category.ParentId);
 
                 return View(model);
             }
 
-            model.Category.Image = uploadResult.FilePath;
+            model.Category.Image =
+                uploadResult.FilePath;
         }
 
         if (model.IconFile != null)
@@ -98,17 +104,21 @@ public class CategoryController : BaseAdminController
                     uploadResult.ErrorMessage!);
 
                 model.ParentCategories =
-                    await GetParentCategorySelectListAsync(model.Category.ParentId);
+                    await GetParentCategorySelectListAsync(
+                        model.Category.ParentId);
 
                 return View(model);
             }
 
-            model.Category.Icon = uploadResult.FilePath;
+            model.Category.Icon =
+                uploadResult.FilePath;
         }
 
-        await _categoryService.CreateAsync(model.Category);
+        await _categoryService.CreateAsync(
+            model.Category);
 
-        TempData["Success"] = "Category created successfully.";
+        TempData["Success"] =
+            "Category created successfully.";
 
         return RedirectToAction(nameof(Index));
     }
@@ -116,7 +126,8 @@ public class CategoryController : BaseAdminController
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        var category = await _categoryService.GetByIdAsync(id);
+        var category =
+            await _categoryService.GetByIdAsync(id);
 
         if (category == null)
             return NotFound();
@@ -126,7 +137,10 @@ public class CategoryController : BaseAdminController
             Category = new UpdateCategoryDto
             {
                 Id = category.Id,
+
                 ParentId = category.ParentId,
+
+                DisplayOrder = category.DisplayOrder,
 
                 NameAz = category.NameAz,
                 NameEn = category.NameEn,
@@ -146,42 +160,50 @@ public class CategoryController : BaseAdminController
                 IsActive = category.IsActive
             },
 
-            ParentCategories = await GetParentCategorySelectListAsync(
-    selectedValue: category.ParentId,
-    excludeCategoryId: category.Id)
+            ParentCategories =
+                await GetParentCategorySelectListAsync(
+                    selectedValue: category.ParentId,
+                    excludeCategoryId: category.Id)
         };
 
-        ViewData["Title"] = "Edit Category";
+        ViewData["Title"] =
+            "Edit Category";
 
         return View(model);
     }
 
-
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(EditCategoryViewModel model)
+    public async Task<IActionResult> Edit(
+        EditCategoryViewModel model)
     {
         if (!ModelState.IsValid)
         {
             model.ParentCategories =
                 await GetParentCategorySelectListAsync(
-                    selectedValue: model.Category.ParentId,
-                    excludeCategoryId: model.Category.Id);
+                    selectedValue:
+                        model.Category.ParentId,
+                    excludeCategoryId:
+                        model.Category.Id);
 
             return View(model);
         }
 
-        string? oldImage = model.Category.Image;
-        string? oldIcon = model.Category.Icon;
+        string? oldImage =
+            model.Category.Image;
+
+        string? oldIcon =
+            model.Category.Icon;
 
         bool uploadedNewImage = false;
         bool uploadedNewIcon = false;
 
         if (model.ImageFile != null)
         {
-            var uploadResult = await _fileService.UploadAsync(
-                model.ImageFile,
-                "categories");
+            var uploadResult =
+                await _fileService.UploadAsync(
+                    model.ImageFile,
+                    "categories");
 
             if (!uploadResult.Success)
             {
@@ -191,28 +213,36 @@ public class CategoryController : BaseAdminController
 
                 model.ParentCategories =
                     await GetParentCategorySelectListAsync(
-                        selectedValue: model.Category.ParentId,
-                        excludeCategoryId: model.Category.Id);
+                        selectedValue:
+                            model.Category.ParentId,
+                        excludeCategoryId:
+                            model.Category.Id);
 
                 return View(model);
             }
 
-            model.Category.Image = uploadResult.FilePath;
+            model.Category.Image =
+                uploadResult.FilePath;
+
             uploadedNewImage = true;
         }
 
         if (model.IconFile != null)
         {
-            var uploadResult = await _fileService.UploadAsync(
-                model.IconFile,
-                "categories/icons");
+            var uploadResult =
+                await _fileService.UploadAsync(
+                    model.IconFile,
+                    "categories/icons");
 
             if (!uploadResult.Success)
             {
                 if (uploadedNewImage)
                 {
-                    await _fileService.DeleteAsync(model.Category.Image);
-                    model.Category.Image = oldImage;
+                    await _fileService.DeleteAsync(
+                        model.Category.Image);
+
+                    model.Category.Image =
+                        oldImage;
                 }
 
                 ModelState.AddModelError(
@@ -221,33 +251,41 @@ public class CategoryController : BaseAdminController
 
                 model.ParentCategories =
                     await GetParentCategorySelectListAsync(
-                        selectedValue: model.Category.ParentId,
-                        excludeCategoryId: model.Category.Id);
+                        selectedValue:
+                            model.Category.ParentId,
+                        excludeCategoryId:
+                            model.Category.Id);
 
                 return View(model);
             }
 
-            model.Category.Icon = uploadResult.FilePath;
+            model.Category.Icon =
+                uploadResult.FilePath;
+
             uploadedNewIcon = true;
         }
 
         try
         {
-            await _categoryService.UpdateAsync(model.Category);
+            await _categoryService.UpdateAsync(
+                model.Category);
 
             if (uploadedNewImage &&
                 !string.IsNullOrWhiteSpace(oldImage))
             {
-                await _fileService.DeleteAsync(oldImage);
+                await _fileService.DeleteAsync(
+                    oldImage);
             }
 
             if (uploadedNewIcon &&
                 !string.IsNullOrWhiteSpace(oldIcon))
             {
-                await _fileService.DeleteAsync(oldIcon);
+                await _fileService.DeleteAsync(
+                    oldIcon);
             }
 
-            TempData["Success"] = "Category updated successfully.";
+            TempData["Success"] =
+                "Category updated successfully.";
 
             return RedirectToAction(nameof(Index));
         }
@@ -255,22 +293,32 @@ public class CategoryController : BaseAdminController
         {
             if (uploadedNewImage)
             {
-                await _fileService.DeleteAsync(model.Category.Image);
-                model.Category.Image = oldImage;
+                await _fileService.DeleteAsync(
+                    model.Category.Image);
+
+                model.Category.Image =
+                    oldImage;
             }
 
             if (uploadedNewIcon)
             {
-                await _fileService.DeleteAsync(model.Category.Icon);
-                model.Category.Icon = oldIcon;
+                await _fileService.DeleteAsync(
+                    model.Category.Icon);
+
+                model.Category.Icon =
+                    oldIcon;
             }
 
-            ModelState.AddModelError(string.Empty, ex.Message);
+            ModelState.AddModelError(
+                string.Empty,
+                ex.Message);
 
             model.ParentCategories =
                 await GetParentCategorySelectListAsync(
-                    selectedValue: model.Category.ParentId,
-                    excludeCategoryId: model.Category.Id);
+                    selectedValue:
+                        model.Category.ParentId,
+                    excludeCategoryId:
+                        model.Category.Id);
 
             return View(model);
         }
@@ -280,7 +328,8 @@ public class CategoryController : BaseAdminController
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(int id)
     {
-        var category = await _categoryService.GetByIdAsync(id);
+        var category =
+            await _categoryService.GetByIdAsync(id);
 
         if (category == null)
             return NotFound();
@@ -289,31 +338,41 @@ public class CategoryController : BaseAdminController
         {
             await _categoryService.DeleteAsync(id);
 
-            if (!string.IsNullOrWhiteSpace(category.Image))
+            if (!string.IsNullOrWhiteSpace(
+                category.Image))
             {
-                await _fileService.DeleteAsync(category.Image);
+                await _fileService.DeleteAsync(
+                    category.Image);
             }
 
-            if (!string.IsNullOrWhiteSpace(category.Icon))
+            if (!string.IsNullOrWhiteSpace(
+                category.Icon))
             {
-                await _fileService.DeleteAsync(category.Icon);
+                await _fileService.DeleteAsync(
+                    category.Icon);
             }
 
-            TempData["Success"] = "Category deleted successfully.";
+            TempData["Success"] =
+                "Category deleted successfully.";
         }
         catch (InvalidOperationException ex)
         {
-            TempData["Error"] = ex.Message;
+            TempData["Error"] =
+                ex.Message;
         }
 
         return RedirectToAction(nameof(Index));
     }
 
-    private async Task<List<SelectListItem>> GetParentCategorySelectListAsync(
-     int? selectedValue = null,
-     int? excludeCategoryId = null)
+    private async Task<List<SelectListItem>>
+        GetParentCategorySelectListAsync(
+            int? selectedValue = null,
+            int? excludeCategoryId = null)
     {
-        var categories = await _categoryService.GetParentCategoriesAsync(excludeCategoryId);
+        var categories =
+            await _categoryService
+                .GetParentCategoriesAsync(
+                    excludeCategoryId);
 
         return categories
             .Select(x => new SelectListItem

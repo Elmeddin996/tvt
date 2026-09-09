@@ -48,7 +48,6 @@
                 <span asp-validation-for="Category.NameRu" class="text-danger"></span>
             </div>
 
-
             <div class="mb-3">
                 <label asp-for="Category.ParentId" class="form-label">
                     Parent Category
@@ -64,6 +63,23 @@
                       class="text-danger"></span>
             </div>
 
+            <div class="mb-3">
+                <label asp-for="Category.DisplayOrder" class="form-label">
+                    Display Order
+                </label>
+
+                <input asp-for="Category.DisplayOrder"
+                       type="number"
+                       class="form-control"
+                       min="0" />
+
+                <span asp-validation-for="Category.DisplayOrder"
+                      class="text-danger"></span>
+
+                <div class="form-text">
+                    Smaller numbers are displayed first.
+                </div>
+            </div>
 
             <div class="mb-3">
                 <label asp-for="Category.SlugAz" class="form-label"></label>

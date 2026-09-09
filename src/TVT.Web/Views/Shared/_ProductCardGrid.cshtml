@@ -26,37 +26,62 @@
         : Model.MainImage;
 }
 
-<div class="product-layout product-grid rm-module-col col-6 col-md-4">
+<div class="col-12 col-md-4 col-xl-3 rm-module-col"
+     data-width="width-50">
 
-    <div class="rm-module-item d-flex flex-md-column h-100">
+    <div class="rm-module-item d-flex flex-md-column h-100 @(Model.StockQuantity <= 0 ? "rm-no-stock" : "")">
+
         <div class="rm-module-img d-flex flex-column d-md-block">
+
             @if (Model.IsNew)
             {
                 <div class="rm-module-stickers">
-                    <span class="rm-module-stickers-sticker rm-module-stickers-sticker-stickers_new">
+
+                    <div class="rm-module-stickers-sticker rm-module-stickers-sticker-stickers_new">
                         @localizer.GetLocalizedHtmlString("New")
-                    </span>
+                    </div>
+
+                    @if (Model.StockQuantity <= 0)
+                    {
+                        <div class="rm-module-stickers-sticker rm-module-stickers-sticker-stickers_sold">
+                            @localizer.GetLocalizedHtmlString("OutOfStock")
+                        </div>
+                    }
+
+                </div>
+            }
+            else if (Model.StockQuantity <= 0)
+            {
+                <div class="rm-module-stickers">
+
+                    <div class="rm-module-stickers-sticker rm-module-stickers-sticker-stickers_sold">
+                        @localizer.GetLocalizedHtmlString("OutOfStock")
+                    </div>
+
                 </div>
             }
 
             <div class="rm-module-buttons list-unstyled d-flex justify-content-center flex-md-column order-1">
-                
-                <button aria-label="@localizer.GetLocalizedHtmlString("Wishlist")"
-                        type="button"
-                        onclick="tvtWishlist.toggle(@Model.Id);"
+
+                <button type="button"
+                        aria-label="@localizer.GetLocalizedHtmlString("Wishlist")"
                         title="@localizer.GetLocalizedHtmlString("AddToWishlist")"
+                        onclick="tvtWishlist.toggle(@Model.Id);"
                         data-wishlist-product-id="@Model.Id"
                         class="rm-module-buttons-item wishlist d-flex align-items-center justify-content-center">
+
                     <span></span>
+
                 </button>
+
             </div>
-           
 
             <div class="scale">
-                <a class="order-0"
-                   asp-controller="Product"
+
+                <a asp-controller="Product"
                    asp-action="Index"
-                   asp-route-slug="@productSlug">
+                   asp-route-slug="@productSlug"
+                   class="order-0">
 
                     <img src="@image"
                          data-srcset="@image"
@@ -65,15 +90,23 @@
                          class="img-fluid oct-lazy"
                          alt="@productName"
                          title="@productName"
-                         width="228"
-                         height="228" />
+                         width="300"
+                         height="300" />
 
                 </a>
+
             </div>
 
+            <input type="hidden"
+                   name="product_id"
+                   value="@Model.Id" />
+
         </div>
+
         <div class="rm-module-caption d-flex flex-column flex-grow-1">
+
             <div class="rm-module-title">
+
                 <a asp-controller="Product"
                    asp-action="Index"
                    asp-route-slug="@productSlug">
@@ -81,41 +114,53 @@
                     @productName
 
                 </a>
+
             </div>
+
             @if (Model.StockQuantity > 0)
             {
                 <div class="rm-module-stock">
+
                     @localizer.GetLocalizedHtmlString("InStock")
+
                 </div>
             }
             else
             {
                 <div class="rm-module-stock rm-out-of-stock">
+
                     @localizer.GetLocalizedHtmlString("OutOfStock")
+
                 </div>
             }
+
             <div class="rm-category-product-model">
+
                 <span>
                     @localizer.GetLocalizedHtmlString("ProductCode"):
                 </span>
+
                 @Model.Code
+
             </div>
-
-
 
             <div class="rm-module-price-box d-flex flex-column mt-auto">
 
                 @if (Model.OldPrice.HasValue && Model.OldPrice > Model.Price)
                 {
                     <span class="rm-module-price-old">
+
                         @Model.OldPrice.Value.ToString("0.##") ₼
+
                     </span>
                 }
 
                 <div class="rm-module-price-bottom d-flex align-items-md-end justify-content-between flex-column flex-md-row mt-md-auto flex-grow-1">
 
                     <span class="rm-module-price">
+
                         @Model.Price.ToString("0.##") ₼
+
                     </span>
 
                     <button type="button"
@@ -124,6 +169,7 @@
                             onclick="tvtCart.add(@Model.Id, 1)">
 
                         <span class="rm-cart-btn-icon"></span>
+
                         <span class="rm-btn-text">
                             @localizer.GetLocalizedHtmlString("AddToCart")
                         </span>
@@ -133,8 +179,9 @@
                 </div>
 
             </div>
-        </div>
-    </div>
 
+        </div>
+
+    </div>
 
 </div>

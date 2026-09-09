@@ -1,7 +1,7 @@
-@model TVT.Core.Common.Pagination.PagedResult<TVT.Business.DTOs.Orders.OrderListDto>
+@model List<TVT.Business.DTOs.Products.ProductListDto>
 
 @{
-    ViewData["Title"] = "Orders";
+    ViewData["Title"] = "Products";
 }
 
 <partial name="_PageHeader" />
@@ -11,22 +11,61 @@
     <div class="card-header bg-white d-flex justify-content-between align-items-center">
 
         <h5 class="mb-0">
-            Order List
+            Product List
         </h5>
 
-        <div class="text-muted small">
-            Total: @Model.TotalCount
-        </div>
+        <a asp-area="Admin"
+           asp-controller="Product"
+           asp-action="Create"
+           class="btn btn-success">
+            <i class="bi bi-plus-lg"></i>
+            Add Product
+        </a>
 
     </div>
 
+    <div class="card-body border-bottom">
+
+        <form method="get"
+              class="row g-2"
+              role="search">
+
+            <div class="col-md-4">
+
+                <input type="text"
+                       name="search"
+                       value="@ViewBag.Search"
+                       class="form-control"
+                       placeholder="Search..."
+                       autocomplete="off" />
+
+            </div>
+
+            <div class="col-auto">
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                    Search
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Reset
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
 
     <div class="card-body p-0">
 
-        @if (!Model.Items.Any())
+        @if (!Model.Any())
         {
             <div class="alert alert-info m-3">
-                No orders found.
+                No products found.
             </div>
         }
         else
@@ -43,31 +82,36 @@
                                 Id
                             </th>
 
-                            <th>
-                                Customer
+                            <th style="width:90px;">
+                                Image
                             </th>
 
                             <th>
-                                Phone
+                                Code
                             </th>
 
                             <th>
-                                Email
+                                Name
                             </th>
 
-                            <th style="width:130px;">
-                                Total
+                            <th>
+                                Category
                             </th>
 
-                            <th style="width:130px;">
-                                Status
+                            <th style="width:120px;">
+                                Price
                             </th>
 
-                            <th style="width:150px;">
+                            <th style="width:120px;">
+                                Stock
+                            </th>
+
+                            <th>
                                 Created
                             </th>
 
-                            <th class="text-center" style="width:120px;">
+                            <th class="text-center"
+                                style="width:220px;">
                                 Actions
                             </th>
 
@@ -75,33 +119,23 @@
 
                     </thead>
 
-
                     <tbody>
 
-                        @foreach (var order in Model.Items)
+                        @foreach (var product in Model)
                         {
                             <tr>
 
                                 <td>
-                                    @order.Id
+                                    @product.Id
                                 </td>
-
-
-                                <td>
-                                    @order.CustomerName
-                                </td>
-
-
-                                <td>
-                                    @order.Phone
-                                </td>
-
 
                                 <td>
 
-                                    @if (!string.IsNullOrWhiteSpace(order.Email))
+                                    @if (!string.IsNullOrWhiteSpace(product.MainImage))
                                     {
-                                        @order.Email
+                                        <img src="@product.MainImage"
+                                             class="img-thumbnail"
+                                             style="width:60px;height:60px;object-fit:contain;" />
                                     }
                                     else
                                     {
@@ -112,101 +146,73 @@
 
                                 </td>
 
-
                                 <td>
-
-                                    <strong>
-                                        @order.TotalAmount.ToString("0.00") AZN
-                                    </strong>
-
+                                    @product.Code
                                 </td>
 
+                                <td>
+                                    @product.NameAz
+                                </td>
+
+                                <td>
+                                    @product.CategoryName
+                                </td>
+
+                                <td>
+                                    @product.Price.ToString("0.##")
+                                </td>
 
                                 <td>
 
-                                    @switch (order.Status)
+                                    @if (product.StockQuantity == 0)
                                     {
-                                        case "Pending":
-
-                                            <span class="badge bg-warning text-dark">
-                                                Pending
-                                            </span>
-
-                                            break;
-
-
-                                        case "Confirmed":
-
-                                            <span class="badge bg-primary">
-                                                Confirmed
-                                            </span>
-
-                                            break;
-
-
-                                        case "Preparing":
-
-                                            <span class="badge bg-info text-dark">
-                                                Preparing
-                                            </span>
-
-                                            break;
-
-
-                                        case "Shipped":
-
-                                            <span class="badge bg-primary">
-                                                Shipped
-                                            </span>
-
-                                            break;
-
-
-                                        case "Delivered":
-
-                                            <span class="badge bg-success">
-                                                Delivered
-                                            </span>
-
-                                            break;
-
-
-                                        case "Cancelled":
-
-                                            <span class="badge bg-danger">
-                                                Cancelled
-                                            </span>
-
-                                            break;
-
-
-                                        default:
-
-                                            <span class="badge bg-secondary">
-                                                @order.Status
-                                            </span>
-
-                                            break;
+                                        <span class="badge bg-danger">
+                                            Out of Stock
+                                        </span>
+                                    }
+                                    else if (product.StockQuantity <= 10)
+                                    {
+                                        <span class="badge bg-warning text-dark">
+                                            Low (@product.StockQuantity)
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-success">
+                                            @product.StockQuantity
+                                        </span>
                                     }
 
                                 </td>
 
-
                                 <td>
-                                    @order.CreatedDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")
+                                    @product.CreatedDate.ToString("dd.MM.yyyy")
                                 </td>
-
 
                                 <td class="text-center">
 
-                                    <a asp-action="Details"
-                                       asp-route-id="@order.Id"
-                                       class="btn btn-sm btn-primary"
-                                       title="Details">
-
-                                        <i class="bi bi-eye"></i>
-
+                                    <a asp-action="Edit"
+                                       asp-route-id="@product.Id"
+                                       class="btn btn-sm btn-primary">
+                                        <i class="bi bi-pencil-square"></i>
                                     </a>
+
+                                    <form asp-action="Delete"
+                                          asp-route-id="@product.Id"
+                                          method="post"
+                                          class="d-inline">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <button type="submit"
+                                                class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Are you sure you want to delete this product?')">
+
+                                            <i class="bi bi-trash"></i>
+
+                                        </button>
+
+                                    </form>
 
                                 </td>
 
@@ -216,65 +222,6 @@
                     </tbody>
 
                 </table>
-
-            </div>
-        }
-
-
-        @if (Model.TotalPages > 1)
-        {
-            <div class="p-3">
-
-                <nav aria-label="Order pagination">
-
-                    <ul class="pagination justify-content-center mb-0">
-
-                        <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
-
-                            <a class="page-link"
-                               asp-action="Index"
-                               asp-route-page="@(Model.CurrentPage - 1)">
-
-                                <i class="bi bi-chevron-left"></i>
-
-                            </a>
-
-                        </li>
-
-
-                        @for (var pageNumber = 1;
-                       pageNumber <= Model.TotalPages;
-                       pageNumber++)
-                        {
-                            <li class="page-item @(pageNumber == Model.CurrentPage ? "active" : "")">
-
-                                <a class="page-link"
-                                   asp-action="Index"
-                                   asp-route-page="@pageNumber">
-
-                                    @pageNumber
-
-                                </a>
-
-                            </li>
-                        }
-
-
-                        <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
-
-                            <a class="page-link"
-                               asp-action="Index"
-                               asp-route-page="@(Model.CurrentPage + 1)">
-
-                                <i class="bi bi-chevron-right"></i>
-
-                            </a>
-
-                        </li>
-
-                    </ul>
-
-                </nav>
 
             </div>
         }

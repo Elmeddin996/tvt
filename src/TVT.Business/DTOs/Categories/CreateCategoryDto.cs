@@ -4,6 +4,8 @@ public class CreateCategoryDto
 {
     public int? ParentId { get; set; }
 
+    public int DisplayOrder { get; set; }
+
     public string NameAz { get; set; } = null!;
     public string NameEn { get; set; } = null!;
     public string NameRu { get; set; } = null!;
@@ -19,5 +21,6 @@ public class CreateCategoryDto
     public string? Image { get; set; }
 
     public string? Icon { get; set; }
+
     public bool IsActive { get; set; } = true;
 }

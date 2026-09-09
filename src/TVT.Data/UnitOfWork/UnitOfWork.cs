@@ -15,6 +15,7 @@ public class UnitOfWork : IUnitOfWork
         IOrderRepository orderRepository,
         ICategoryRepository categoryRepository,
         IBrandRepository brandRepository,
+        IBranchRepository branchRepository,
         INewsRepository newsRepository,
         IPageRepository pageRepository,
         ISliderRepository sliderRepository,
@@ -37,6 +38,7 @@ public class UnitOfWork : IUnitOfWork
 
         Categories = categoryRepository;
         Brands = brandRepository;
+        Branches = branchRepository;
 
         SpecificationGroups = specificationGroupRepository;
         Specifications = specificationRepository;
@@ -56,6 +58,7 @@ public class UnitOfWork : IUnitOfWork
     public IProductRepository Products { get; }
 
     public IOrderRepository Orders { get; }
+
     public IProductImageRepository ProductImages { get; }
 
     public IProductSpecificationRepository ProductSpecifications { get; }
@@ -67,6 +70,8 @@ public class UnitOfWork : IUnitOfWork
     public ICategoryRepository Categories { get; }
 
     public IBrandRepository Brands { get; }
+
+    public IBranchRepository Branches { get; }
 
     public INewsRepository News { get; }
 

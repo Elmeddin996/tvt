@@ -1,0 +1,316 @@
+@using System.Globalization
+@using TVT.Business.DTOs.Branches
+@using TVT.Web.Services
+
+@model List<BranchListDto>
+
+@inject LocService localizer
+
+@{
+    var culture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+
+    string GetName(BranchListDto branch)
+    {
+        return culture switch
+        {
+            "en" => branch.NameEn,
+            "ru" => branch.NameRu,
+            _ => branch.NameAz
+        };
+    }
+
+    string GetAddress(BranchListDto branch)
+    {
+        return culture switch
+        {
+            "en" => branch.AddressEn,
+            "ru" => branch.AddressRu,
+            _ => branch.AddressAz
+        };
+    }
+
+    string? GetWorkingHours(BranchListDto branch)
+    {
+        return culture switch
+        {
+            "en" => branch.WorkingHoursEn,
+            "ru" => branch.WorkingHoursRu,
+            _ => branch.WorkingHoursAz
+        };
+    }
+}
+
+<div id="information-branches" class="container">
+
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ul class="breadcrumb rm-breadcrumb">
+
+            <li class="breadcrumb-item rm-breadcrumb-item">
+                <a asp-controller="Home" asp-action="Index">
+                    <i class="fa fa-home"></i>
+                </a>
+            </li>
+
+            <li class="breadcrumb-item rm-breadcrumb-item">
+                @localizer.GetLocalizedHtmlString("Branches")
+            </li>
+
+        </ul>
+    </nav>
+
+
+    <!-- Page title -->
+    <div class="content-top-box">
+    </div>
+
+    <main>
+
+        <div class="row">
+            <div class="col-lg-12 rm-page-title">
+
+                <h1>
+                    @localizer.GetLocalizedHtmlString("Branches")
+                </h1>
+
+            </div>
+        </div>
+
+
+        <div id="content">
+
+            @if (Model != null && Model.Any())
+            {
+                foreach (var branch in Model)
+                {
+                    var name = GetName(branch);
+                    var address = GetAddress(branch);
+                    var workingHours = GetWorkingHours(branch);
+
+                    <div class="row no-gutters rm-contact-location">
+
+                        <!-- Branch image -->
+                        <div class="col-lg-6 col-xl-3">
+
+                            @if (!string.IsNullOrWhiteSpace(branch.Image))
+                            {
+                                <img src="@branch.Image"
+                                     alt="@name"
+                                     class="img-fluid d-none d-lg-block" />
+                            }
+                            else
+                            {
+                                <div class="tvt-branch-no-image d-none d-lg-flex">
+                                    <i class="fa fa-store"></i>
+                                </div>
+                            }
+
+                        </div>
+
+
+                        <!-- Branch information -->
+                        <div class="col-lg-6 col-xl-4">
+
+                            <div class="rm-contact-location-info">
+
+                                <!-- Name -->
+                                <div class="rm-contact-location-store-title">
+                                    @name
+                                </div>
+
+
+                                <!-- Address -->
+                                @if (!string.IsNullOrWhiteSpace(address))
+                                {
+                                    <div class="rm-contact-location-address">
+                                        @address
+                                    </div>
+                                }
+
+
+                                <div class="row no-gutters">
+
+                                    <!-- Working hours -->
+                                    @if (!string.IsNullOrWhiteSpace(workingHours))
+                                    {
+                                        <div class="col-xl-6">
+
+                                            <div class="rm-contact-location-title">
+                                                @localizer.GetLocalizedHtmlString("WorkingHours"):
+                                            </div>
+
+                                            <ul class="list-unstyled">
+                                                @foreach (var line in workingHours
+                                                    .Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries))
+                                                {
+                                                    <li>
+                                                        @line
+                                                    </li>
+                                                }
+                                            </ul>
+
+                                        </div>
+                                    }
+
+
+                                    <!-- Contact numbers -->
+                                    <div class="col-xl-6 mt-4 mt-xl-0">
+
+                                        <div class="rm-contact-location-title">
+                                            @localizer.GetLocalizedHtmlString("ContactNumbers")
+                                        </div>
+
+                                        <ul class="list-unstyled">
+
+                                            @if (!string.IsNullOrWhiteSpace(branch.Phone))
+                                            {
+                                                <li class="rm-contact-location-phone">
+                                                    <a href="tel:@branch.Phone">
+                                                        @branch.Phone
+                                                    </a>
+                                                </li>
+                                            }
+
+                                            @if (!string.IsNullOrWhiteSpace(branch.Phone2))
+                                            {
+                                                <li class="rm-contact-location-phone">
+                                                    <a href="tel:@branch.Phone2">
+                                                        @branch.Phone2
+                                                    </a>
+                                                </li>
+                                            }
+
+                                        </ul>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- Description -->
+                                @{
+                                    var description = culture switch
+                                    {
+                                        "en" => branch.DescriptionEn,
+                                        "ru" => branch.DescriptionRu,
+                                        _ => branch.DescriptionAz
+                                    };
+                                }
+
+                                @if (!string.IsNullOrWhiteSpace(description))
+                                {
+                                    <div class="rm-contact-location-description mt-3">
+                                        @Html.Raw(description)
+                                    </div>
+                                }
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Google Maps -->
+                        <div class="col-xl-5">
+
+                            @if (!string.IsNullOrWhiteSpace(branch.GoogleMapsUrl))
+                            {
+                                <iframe src="@branch.GoogleMapsUrl"
+                                        height="450"
+                                        style="width: 100%; border: 0;"
+                                        allowfullscreen
+                                        loading="lazy"
+                                        referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            }
+                            else
+                            {
+                                <div class="tvt-branch-map-empty">
+                                    @localizer.GetLocalizedHtmlString("Address")
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="row">
+
+                    <div class="col-12">
+
+                        <div class="rm-content text-center py-5">
+
+                            <div class="mb-3">
+                                <i class="fa fa-map-marker-alt fa-3x"></i>
+                            </div>
+
+                            <h3>
+                                @localizer.GetLocalizedHtmlString("Branches")
+                            </h3>
+
+                            <p>
+                                @localizer.GetLocalizedHtmlString("NoResults")
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<style>
+
+    .tvt-branch-no-image {
+        width: 100%;
+        min-height: 320px;
+        align-items: center;
+        justify-content: center;
+        font-size: 50px;
+        background: #f5f5f5;
+    }
+
+    .tvt-branch-map-empty {
+        width: 100%;
+        height: 450px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5f5f5;
+        color: #777;
+    }
+
+    .rm-contact-location-description {
+        line-height: 1.7;
+    }
+
+    @@media (max-width: 1199px) {
+
+        .tvt-branch-no-image {
+            min-height: 250px;
+        }
+
+        .tvt-branch-map-empty {
+            height: 350px;
+        }
+
+    }
+
+    @@media (max-width: 991px) {
+
+        .tvt-branch-map-empty {
+            height: 300px;
+        }
+
+    }
+
+</style>

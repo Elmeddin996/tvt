@@ -35,74 +35,86 @@ public class LocalizationController : Controller
             CookieRequestCultureProvider.MakeCookieValue(
                 new RequestCulture(culture)));
 
-        if (!string.IsNullOrWhiteSpace(returnUrl))
+        if (string.IsNullOrWhiteSpace(returnUrl))
         {
-            var uri = new Uri(
-                $"{Request.Scheme}://{Request.Host}{returnUrl}");
+            return Redirect("/");
+        }
 
-            var path = uri.AbsolutePath;
+        var uri = new Uri(
+            $"{Request.Scheme}://{Request.Host}{returnUrl}");
 
-            var segments = path
-                .Split(
-                    '/',
-                    StringSplitOptions.RemoveEmptyEntries);
+        // LocalPath Unicode simvolları decoded formada verir.
+        // Məsələn:
+        // /ru/%D0%9C%D0%BE%D0%BD%D0%B8%D1%82%D0%BE%D1%80%D1%8B
+        // ->
+        // /ru/Мониторы
+        var path = uri.LocalPath;
 
-            // Kateqoriya URL-i:
-            // /az/slug
-            if (segments.Length == 2 &&
-                (segments[0] == "az" ||
-                 segments[0] == "en" ||
-                 segments[0] == "ru"))
+        var segments = path
+            .Split(
+                '/',
+                StringSplitOptions.RemoveEmptyEntries);
+
+        /*
+         * Kateqoriya URL-i:
+         *
+         * /az/slug
+         * /en/slug
+         * /ru/slug
+         */
+        if (segments.Length == 2 &&
+            (segments[0].Equals("az", StringComparison.OrdinalIgnoreCase) ||
+             segments[0].Equals("en", StringComparison.OrdinalIgnoreCase) ||
+             segments[0].Equals("ru", StringComparison.OrdinalIgnoreCase)))
+        {
+            var currentCulture =
+                segments[0].ToLowerInvariant();
+
+            var currentSlug =
+                Uri.UnescapeDataString(segments[1]);
+
+            var currentCultureCode = currentCulture switch
             {
-                var currentCulture = segments[0];
-                var currentSlug = segments[1];
+                "az" => "az-AZ",
+                "en" => "en-US",
+                "ru" => "ru-RU",
+                _ => null
+            };
 
-                var currentCultureCode = currentCulture switch
+            if (currentCultureCode != null)
+            {
+                var category =
+                    await _categoryService.GetBySlugAsync(
+                        currentSlug,
+                        currentCultureCode);
+
+                if (category != null)
                 {
-                    "az" => "az-AZ",
-                    "en" => "en-US",
-                    "ru" => "ru-RU",
-                    _ => null
-                };
-
-                if (currentCultureCode != null)
-                {
-                    var category =
-                        await _categoryService.GetBySlugAsync(
-                            currentSlug,
-                            currentCultureCode);
-
-                    if (category != null)
+                    var newCulture = culture switch
                     {
-                        var newCulture = culture switch
-                        {
-                            "az-AZ" => "az",
-                            "en-US" => "en",
-                            "ru-RU" => "ru",
-                            _ => "az"
-                        };
+                        "az-AZ" => "az",
+                        "en-US" => "en",
+                        "ru-RU" => "ru",
+                        _ => "az"
+                    };
 
-                        var newSlug = newCulture switch
-                        {
-                            "az" => category.SlugAz,
-                            "en" => category.SlugEn,
-                            "ru" => category.SlugRu,
-                            _ => category.SlugAz
-                        };
+                    var newSlug = newCulture switch
+                    {
+                        "az" => category.SlugAz,
+                        "en" => category.SlugEn,
+                        "ru" => category.SlugRu,
+                        _ => category.SlugAz
+                    };
 
-                        if (!string.IsNullOrWhiteSpace(newSlug))
-                        {
-                            return LocalRedirect(
-                                $"/{newCulture}/{newSlug}");
-                        }
+                    if (!string.IsNullOrWhiteSpace(newSlug))
+                    {
+                        return Redirect(
+                            $"/{newCulture}/{newSlug}");
                     }
                 }
             }
         }
 
-        return LocalRedirect(
-            string.IsNullOrWhiteSpace(returnUrl)
-                ? "/"
-                : returnUrl);
+        return Redirect(returnUrl);
     }
 }

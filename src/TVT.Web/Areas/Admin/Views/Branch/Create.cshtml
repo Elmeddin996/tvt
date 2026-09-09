@@ -1,0 +1,426 @@
+@model TVT.Web.Areas.Admin.ViewModels.Branches.CreateBranchViewModel
+
+@{
+    ViewData["Title"] = "Create Branch";
+}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-1">Create Branch</h1>
+            <p class="text-muted mb-0">
+                Add a new store branch.
+            </p>
+        </div>
+
+        <a asp-area="Admin"
+           asp-controller="Branch"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i>
+            Back
+        </a>
+    </div>
+
+    <form asp-area="Admin"
+          asp-controller="Branch"
+          asp-action="Create"
+          method="post"
+          enctype="multipart/form-data">
+
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly"
+             class="text-danger mb-3"></div>
+
+        <div class="row">
+
+            <!-- AZ -->
+            <div class="col-lg-4">
+
+                <div class="card shadow-sm mb-4">
+
+                    <div class="card-header">
+                        <strong>Azərbaycan dili</strong>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.NameAz"
+                                   class="form-label">
+                                Filial adı
+                            </label>
+
+                            <input asp-for="Branch.NameAz"
+                                   class="form-control"
+                                   placeholder="Məsələn: Bakı filialı" />
+
+                            <span asp-validation-for="Branch.NameAz"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.AddressAz"
+                                   class="form-label">
+                                Ünvan
+                            </label>
+
+                            <textarea asp-for="Branch.AddressAz"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Filialın ünvanı"></textarea>
+
+                            <span asp-validation-for="Branch.AddressAz"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.WorkingHoursAz"
+                                   class="form-label">
+                                İş günləri və saatları
+                            </label>
+
+                            <textarea asp-for="Branch.WorkingHoursAz"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="B.e - Ş. 09:00 - 19:00&#10;Bazar: qeyri-iş günü"></textarea>
+
+                            <span asp-validation-for="Branch.WorkingHoursAz"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.DescriptionAz"
+                                   class="form-label">
+                                Açıqlama
+                            </label>
+
+                            <textarea asp-for="Branch.DescriptionAz"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Filial haqqında əlavə məlumat"></textarea>
+
+                            <span asp-validation-for="Branch.DescriptionAz"
+                                  class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- EN -->
+            <div class="col-lg-4">
+
+                <div class="card shadow-sm mb-4">
+
+                    <div class="card-header">
+                        <strong>English</strong>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.NameEn"
+                                   class="form-label">
+                                Branch name
+                            </label>
+
+                            <input asp-for="Branch.NameEn"
+                                   class="form-control"
+                                   placeholder="Example: Baku Branch" />
+
+                            <span asp-validation-for="Branch.NameEn"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.AddressEn"
+                                   class="form-label">
+                                Address
+                            </label>
+
+                            <textarea asp-for="Branch.AddressEn"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Branch address"></textarea>
+
+                            <span asp-validation-for="Branch.AddressEn"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.WorkingHoursEn"
+                                   class="form-label">
+                                Working hours
+                            </label>
+
+                            <textarea asp-for="Branch.WorkingHoursEn"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Mon - Sat: 09:00 - 19:00&#10;Sunday: Closed"></textarea>
+
+                            <span asp-validation-for="Branch.WorkingHoursEn"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.DescriptionEn"
+                                   class="form-label">
+                                Description
+                            </label>
+
+                            <textarea asp-for="Branch.DescriptionEn"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Additional information about the branch"></textarea>
+
+                            <span asp-validation-for="Branch.DescriptionEn"
+                                  class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- RU -->
+            <div class="col-lg-4">
+
+                <div class="card shadow-sm mb-4">
+
+                    <div class="card-header">
+                        <strong>Русский язык</strong>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.NameRu"
+                                   class="form-label">
+                                Название филиала
+                            </label>
+
+                            <input asp-for="Branch.NameRu"
+                                   class="form-control"
+                                   placeholder="Например: Бакинский филиал" />
+
+                            <span asp-validation-for="Branch.NameRu"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.AddressRu"
+                                   class="form-label">
+                                Адрес
+                            </label>
+
+                            <textarea asp-for="Branch.AddressRu"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Адрес филиала"></textarea>
+
+                            <span asp-validation-for="Branch.AddressRu"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.WorkingHoursRu"
+                                   class="form-label">
+                                Рабочие дни и часы
+                            </label>
+
+                            <textarea asp-for="Branch.WorkingHoursRu"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Пн - Сб: 09:00 - 19:00&#10;Воскресенье: выходной"></textarea>
+
+                            <span asp-validation-for="Branch.WorkingHoursRu"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.DescriptionRu"
+                                   class="form-label">
+                                Описание
+                            </label>
+
+                            <textarea asp-for="Branch.DescriptionRu"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Дополнительная информация о филиале"></textarea>
+
+                            <span asp-validation-for="Branch.DescriptionRu"
+                                  class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- General information -->
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header">
+                <strong>Ümumi məlumatlar</strong>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-4">
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.Phone"
+                                   class="form-label">
+                                Əsas telefon
+                            </label>
+
+                            <input asp-for="Branch.Phone"
+                                   type="tel"
+                                   class="form-control"
+                                   placeholder="+994 (50) 000 00 00" />
+
+                            <span asp-validation-for="Branch.Phone"
+                                  class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.Phone2"
+                                   class="form-label">
+                                Əlavə telefon
+                            </label>
+
+                            <input asp-for="Branch.Phone2"
+                                   type="tel"
+                                   class="form-control"
+                                   placeholder="+994 (51) 000 00 00" />
+
+                            <span asp-validation-for="Branch.Phone2"
+                                  class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <div class="mb-3">
+                            <label asp-for="Branch.DisplayOrder"
+                                   class="form-label">
+                                Display Order
+                            </label>
+
+                            <input asp-for="Branch.DisplayOrder"
+                                   type="number"
+                                   min="0"
+                                   class="form-control"
+                                   value="0" />
+
+                            <span asp-validation-for="Branch.DisplayOrder"
+                                  class="text-danger"></span>
+
+                            <div class="form-text">
+                                Kiçik rəqəmlər əvvəl göstərilir.
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="Branch.GoogleMapsUrl"
+                           class="form-label">
+                        Google Maps URL
+                    </label>
+
+                    <input asp-for="Branch.GoogleMapsUrl"
+                           type="url"
+                           class="form-control"
+                           placeholder="https://www.google.com/maps/..." />
+
+                    <span asp-validation-for="Branch.GoogleMapsUrl"
+                          class="text-danger"></span>
+
+                    <div class="form-text">
+                        Filialın Google Maps linkini daxil edin.
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="ImageFile"
+                           class="form-label">
+                        Filial şəkli
+                    </label>
+
+                    <input asp-for="ImageFile"
+                           type="file"
+                           class="form-control"
+                           accept="image/*" />
+
+                    <span asp-validation-for="ImageFile"
+                          class="text-danger"></span>
+
+                    <div class="form-text">
+                        JPG, PNG və digər dəstəklənən şəkil formatları.
+                    </div>
+
+                </div>
+
+                <div class="form-check">
+
+                    <input asp-for="Branch.IsActive"
+                           class="form-check-input" />
+
+                    <label asp-for="Branch.IsActive"
+                           class="form-check-label">
+                        Aktiv filial
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="d-flex justify-content-end gap-2 mb-4">
+
+            <a asp-area="Admin"
+               asp-controller="Branch"
+               asp-action="Index"
+               class="btn btn-outline-secondary">
+                Ləğv et
+            </a>
+
+            <button type="submit"
+                    class="btn btn-primary">
+                <i class="bi bi-check-lg"></i>
+                Filialı yadda saxla
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

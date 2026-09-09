@@ -2,24 +2,16 @@
 
 @using System.Globalization
 @using TVT.Web.Services
+@using TVT.Business.Abstractions.Services
+
 @inject LocService localizer
+@inject IBranchService branchService
 
 @{
-    var currentCulture = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-
-    var address = currentCulture switch
-    {
-        "en" => Model.Setting?.AddressEn,
-        "ru" => Model.Setting?.AddressRu,
-        _ => Model.Setting?.AddressAz
-    };
-
-    var workingHours = currentCulture switch
-    {
-        "en" => Model.Setting?.WorkingHoursEn,
-        "ru" => Model.Setting?.WorkingHoursRu,
-        _ => Model.Setting?.WorkingHoursAz
-    };
+    var branches = (await branchService.GetAllActiveAsync())
+        .OrderBy(x => x.DisplayOrder)
+        .ThenBy(x => x.NameAz)
+        .ToList();
 }
 
 
@@ -116,6 +108,7 @@
 
                     <div class="rm-dropdown-box w-100">
 
+                        <!-- Header toggle -->
                         <div class="rm-dropdown-toggle">
 
                             <span>
@@ -123,74 +116,189 @@
                             </span>
 
                             <span class="rm-header-address-link">
-                                @address
+                                @if (branches.Any())
+                                {
+                                    @branches.First().NameAz
+                                }
+                                else
+                                {
+                                    @localizer.GetLocalizedHtmlString("Branches")
+                                }
                             </span>
 
                         </div>
 
+
+                        <!-- Branch dropdown -->
                         <div class="rm-dropdown">
 
-                            <div id="rm_header_locations" class="rm-dropdown-inner">
+                            <div id="rm_header_locations"
+                                 class="rm-dropdown-inner">
 
-                                <div class="rm-header-location active">
+                                @if (branches.Any())
+                                {
+                                    for (var i = 0; i < branches.Count; i++)
+                                    {
+                                        var branch = branches[i];
 
-                                    <div class="d-flex align-items-center">
+                                       
+
+                                        var branchAddress = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName switch
+                                        {
+                                            "en" => branch.AddressEn,
+                                            "ru" => branch.AddressRu,
+                                            _ => branch.AddressAz
+                                        };
+
+                                        var branchWorkingHours = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName switch
+                                        {
+                                            "en" => branch.WorkingHoursEn,
+                                            "ru" => branch.WorkingHoursRu,
+                                            _ => branch.WorkingHoursAz
+                                        };
+
+                                        <div class="rm-header-location @(i == 0 ? "active" : "")">
+
+                                            <!-- Branch header -->
+                                            <div class="d-flex align-items-center">
+
+                                                <div class="rm-header-location-address">
+
+                                                    
+
+                                                    <span>
+                                                        @branchAddress
+                                                    </span>
+
+                                                </div>
+
+                                                <button type="button"
+                                                        class="rm-btn secondary ml-auto">
+
+                                                    <span class="rm-btn-icon">
+
+                                                        <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--header-location-chevron"
+                                                             alt=""
+                                                             width="18"
+                                                             height="12" />
+
+                                                    </span>
+
+                                                </button>
+
+                                            </div>
+
+
+                                            <!-- Branch details -->
+                                            <div class="rm-header-location-collapsed">
+
+                                                <!-- Phones -->
+                                                @if (!string.IsNullOrWhiteSpace(branch.Phone) ||
+                                               !string.IsNullOrWhiteSpace(branch.Phone2))
+                                                {
+                                                    <div class="rm-header-location-phones">
+
+                                                        <span>
+                                                            @localizer.GetLocalizedHtmlString("ContactNumbers")
+                                                        </span>
+
+                                                        @if (!string.IsNullOrWhiteSpace(branch.Phone))
+                                                        {
+                                                            <a href="tel:@branch.Phone">
+                                                                @branch.Phone
+                                                            </a>
+                                                        }
+
+                                                        @if (!string.IsNullOrWhiteSpace(branch.Phone2))
+                                                        {
+                                                            <a href="tel:@branch.Phone2">
+                                                                @branch.Phone2
+                                                            </a>
+                                                        }
+
+                                                    </div>
+                                                }
+
+
+                                                <!-- Working hours -->
+                                                @if (!string.IsNullOrWhiteSpace(branchWorkingHours))
+                                                {
+                                                    <div class="rm-header-location-shedule">
+
+                                                        <span>
+                                                            @localizer.GetLocalizedHtmlString("WorkingHours")
+                                                        </span>
+
+                                                        <br />
+
+                                                        <span>
+                                                            @Html.Raw(branchWorkingHours)
+                                                        </span>
+
+                                                    </div>
+                                                }
+
+
+                                                <!-- Google Maps -->
+                                                @if (!string.IsNullOrWhiteSpace(branch.GoogleMapsUrl))
+                                                {
+                                                    <div class="rm-header-location-map">
+
+                                                        <div id="tvt-header-location-map-@branch.Id"
+                                                             class="tvt-header-branch-map">
+
+                                                            <iframe src="@branch.GoogleMapsUrl"
+                                                                    height="250"
+                                                                    style="width:100%; border:0;"
+                                                                    allowfullscreen
+                                                                    loading="lazy"
+                                                                    referrerpolicy="no-referrer-when-downgrade">
+                                                            </iframe>
+
+                                                        </div>
+
+                                                    </div>
+                                                }
+
+                                            </div>
+
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <div class="rm-header-location">
 
                                         <div class="rm-header-location-address">
-                                            @address
-                                        </div>
 
-                                        <button class="rm-btn secondary ml-auto">
+                                            @localizer.GetLocalizedHtmlString("Branches")
 
-                                            <span class="rm-btn-icon">
-
-                                                <img src="~/catalog/view/theme/oct_remarket/img/sprite.svg#include--header-location-chevron"
-                                                     alt=""
-                                                     width="18"
-                                                     height="12" />
-
-                                            </span>
-
-                                        </button>
-
-                                    </div>
-
-                                    <div class="rm-header-location-collapsed">
-
-                                        <div class="rm-header-location-phones">
-
-                                            <span>
-                                                @localizer.GetLocalizedHtmlString("ContactNumbers")
-                                            </span>
-
-                                            <a href="tel:@Model.Setting?.Phone1">
-                                                @Model.Setting?.Phone1
-                                            </a>
-
-                                        </div>
-
-                                        <div class="rm-header-location-shedule">
-
-                                            <span>
-                                                @localizer.GetLocalizedHtmlString("WorkingHours")
-                                            </span>
-
-                                            <br />
-
-                                            <span>
-                                                @workingHours
-                                            </span>
-
-                                        </div>
-
-                                        <div class="rm-header-location-map">
                                         </div>
 
                                     </div>
+                                }
 
-                                </div>
+
+                                <!-- All branches button -->
+                                @if (branches.Any())
+                                {
+                                    <div class="d-flex justify-content-center rm-header-location-contacts-btn">
+
+                                        <a asp-controller="Branch"
+                                           asp-action="Index"
+                                           class="rm-btn secondary">
+
+                                            <span class="rm-btn-text">
+                                                @localizer.GetLocalizedHtmlString("Branches")
+                                            </span>
+
+                                        </a>
+
+                                    </div>
+                                }
 
                             </div>
+
                         </div>
 
                     </div>
@@ -252,7 +360,7 @@
 
                     </span>
 
-                    <span id="cart-total" class="rm-header-cart-text">
+                    <span id="cart-total-amount" class="rm-header-cart-text">
                         00 ₼
                     </span>
 

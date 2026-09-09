@@ -369,4 +369,34 @@
   <data name="OrderTotal" xml:space="preserve">
     <value>Sifarişin ümumi məbləği</value>
   </data>
+  <data name="ApplyFilters" xml:space="preserve">
+    <value>Filtrləri tətbiq et</value>
+  </data>
+  <data name="CloseFilter" xml:space="preserve">
+    <value>Filtri bağla</value>
+  </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filtr</value>
+  </data>
+  <data name="Manufacturer" xml:space="preserve">
+    <value>İstehsalçı</value>
+  </data>
+  <data name="ManufacturerNotFound" xml:space="preserve">
+    <value>İstehsalçı tapılmadı</value>
+  </data>
+  <data name="NoProductsInCategory" xml:space="preserve">
+    <value>Bu kateqoriyada məhsul yoxdur</value>
+  </data>
+  <data name="ProductsNotFound" xml:space="preserve">
+    <value>Məhsul tapılmadı</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Sıfırla</value>
+  </data>
+  <data name="ShowMoreBrands" xml:space="preserve">
+    <value>Daha çox marka göstər</value>
+  </data>
+  <data name="Stock" xml:space="preserve">
+    <value>Stok</value>
+  </data>
 </root>

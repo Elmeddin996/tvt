@@ -43,7 +43,11 @@ public class HomeController : Controller
 
         var mobileSliders = await _mobileSliderService.GetActiveAsync();
 
-        var categories = await _categoryService.GetAllAsync();
+        var categories = (await _categoryService.GetAllAsync())
+            .Where(x => x.ParentId == null)
+            .OrderBy(x => x.DisplayOrder)
+            .ThenBy(x => x.NameAz)
+            .ToList();
 
         var newProducts = await _productService.GetNewProductsAsync(9);
 
